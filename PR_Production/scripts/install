@@ -1,0 +1,22 @@
+# Install pip and dependencies
+sudo easy_install pip
+sudo pip install ujson
+sudo pip install gspread
+sudo pip install --upgrade oauth2client
+sudo pip install intelhex
+sudo pip install crcmod
+sudo pip install RPi.GPIO
+
+# Install AVRDude depending on OS
+if uname -a | grep -iq darwin; then
+  # Install brew
+  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+  # Install brew binaries
+  brew install avrdude
+else
+  sudo apt-get update
+  sudo apt-get install gcc-avr binutils-avr gdb-avr avr-libc avrdude
+  sudo apt-get install python-dev
+  sudo pip install pycrypto
+fi
