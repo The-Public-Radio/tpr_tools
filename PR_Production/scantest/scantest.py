@@ -46,13 +46,16 @@ else:
   COUNTRYs.extend([None] * (len(PICs) - len(COUNTRYs)))
 
 print 'STATUS: data cached!'
+print 'STATUS: data received: '
+print PICs
 
 # The infinite loop
 while True:
 
   # Get shipping number
   PIC = raw_input('Please scan shipping number: ')
-  PIC = PIC if PIC[0] == 'L' else PIC[8:]
+  PIC = PIC if PIC[0] == 'L' else PIC[9:]
+  print 'STATUS: PIC received ' + PIC
   # if lern(PIC) != 22:
   #   print 'ERROR: shipping number not 22 characters'
   #   continue
