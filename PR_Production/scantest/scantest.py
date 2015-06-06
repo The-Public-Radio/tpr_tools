@@ -2,6 +2,8 @@ import sys, os, re
 sys.path.append('../config')
 import constants
 import google
+import urllib2
+import ujson
 import tempfile
 import country_code_presets
 
@@ -24,13 +26,18 @@ FREQs = []
 COUNTRYs = []
 
 if not TEST:
-  data = google.sheet.get_all_values()
+  # data = google.sheet.get_all_values()
+
+  url = 'https://spreadsheets.google.com/feeds/list/' + constants.SPREADSHEET_KEY + '/od6/public/values?alt=json'
+  raw = urllib2.urlopen(url).read()
+  print 'STATUS: done downloading!'
+  data = ujson.loads(raw)['feed']['entry']
 
   for row in data:
-    PICs.append(row[constants.COL['PIC'] - 1])
-    SERIALs.append(row[constants.COL['SERIAL'] - 1])
-    FREQs.append(row[constants.COL['FREQ'] - 1])
-    COUNTRYs.append(row[constants.COL['COUNTRY'] - 1])
+    PICs.append(row['gsx$pic']['$t'])
+    SERIALs.append(row['gsx$serial']['$t'])
+    FREQs.append(row['gsx$freq']['$t'])
+    COUNTRYs.append(row['gsx$shippingcountrycode']['$t'])
 
 else:
   PICs = ['Tracking Number', '42011222','42011216', '1Z0363374446316122', None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, '9405510200829591004800', None, None, None, None, None, '9405510200828591075179', None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, '9405510200829591004770', None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, '9405510200881590971187', None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, '9405510200882591104192']
