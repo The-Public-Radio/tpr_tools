@@ -75,8 +75,8 @@ while True:
   INDEX = PICs.index(PIC)
 
   # Check if there's already a serial number for this shipping number
-  if SERIALs[INDEX].trim != '':
-    print 'ERROR: shipping number already has an associated serial number'
+  if SERIALs[INDEX].strip() != '':
+    print 'ERROR: shipping number already has an associated serial number ' + SERIALs[INDEX].strip()
     continue
     
   print 'SUCCESS: shipping number valid and exists in database', PIC
