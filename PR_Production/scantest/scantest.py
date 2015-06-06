@@ -63,12 +63,24 @@ while True:
   PIC = raw_input('Please scan shipping number: ')
   PIC = PIC if PIC[0] == 'L' else PIC[9:]
   print 'STATUS: PIC received ' + PIC
-  # if lern(PIC) != 22:
+
+  # Check length of shipping number
+  # if len(PIC) != 22:
   #   print 'ERROR: shipping number not 22 characters'
   #   continue
+
   if PIC not in PICs:
     print 'ERROR: shipping number not found'
     continue
+
+  # Get row # of shipping label
+  INDEX = PICs.index(PIC)
+
+  # Check if there's already a serial number for this shipping number
+  if SERIALs[INDEX].trim != '':
+    print 'ERROR: shipping number already has an associated serial number'
+    continue
+    
   print 'SUCCESS: shipping number valid and exists in database', PIC
 
   # Get serial number
@@ -82,7 +94,6 @@ while True:
   print 'SUCCESS: serial number valid', SERIAL
 
   # Get frequency
-  INDEX = PICs.index(PIC)
   FREQ = FREQs[INDEX]
   print 'STATUS: using frequency', FREQ
 
