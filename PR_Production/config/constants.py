@@ -1,5 +1,5 @@
 GOOGLE_CREDENTIALS = 'config/creds.json'
-SPREADSHEET_KEY = '1nIryj50yzO8-TlaOMa2pqKDhSTY6Du2Rr4BFszI4EUU'#'1-EGfK3dHh24X8zoXzpqRP0dJvDkVwvDxS42ciiui7k8'
+SPREADSHEET_KEY = '1-EGfK3dHh24X8zoXzpqRP0dJvDkVwvDxS42ciiui7k8'
 
 STATUS = {
   'shipping_label_created': 'shipping_label_created',
