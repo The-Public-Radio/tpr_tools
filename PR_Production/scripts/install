@@ -1,7 +1,7 @@
 # Install python-dev if on linux
 if uname -a | grep -iq linux; then
   sudo apt-get update
-  sudo apt-get install python-dev
+  sudo apt-get -y install python-dev
 fi
 
 # Install pip and dependencies
@@ -21,7 +21,6 @@ if uname -a | grep -iq darwin; then
   # Install brew binaries
   brew install avrdude
 else
-  sudo apt-get install gcc-avr binutils-avr gdb-avr avr-libc avrdude
-  sudo apt-get install python-dev
+  sudo apt-get install -y gcc-avr binutils-avr gdb-avr avr-libc avrdude
   sudo pip install pycrypto
 fi
