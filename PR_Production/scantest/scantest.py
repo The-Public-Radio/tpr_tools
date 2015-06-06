@@ -53,8 +53,6 @@ else:
   COUNTRYs.extend([None] * (len(PICs) - len(COUNTRYs)))
 
 print 'STATUS: data cached!'
-print 'STATUS: data received: '
-print PICs
 
 # The infinite loop
 while True:
