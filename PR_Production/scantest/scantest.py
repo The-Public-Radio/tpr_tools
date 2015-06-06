@@ -139,8 +139,8 @@ while True:
 
   # Updating main database and local cache
   print 'STATUS: updating database'
-  google.sheet.update_cell(INDEX + 1, constants.COL['SERIAL'], SERIAL)
-  google.sheet.update_cell(INDEX + 1, constants.COL['STATUS'], constants.STATUS['serial_number_assigned'])
+  google.sheet.update_cell(INDEX + 2, constants.COL['SERIAL'], SERIAL)
+  google.sheet.update_cell(INDEX + 2, constants.COL['STATUS'], constants.STATUS['serial_number_assigned'])
   SERIALs[INDEX] = SERIAL
 
   print 'STATUS: success! now do the next one...'
