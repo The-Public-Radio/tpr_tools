@@ -52,7 +52,7 @@ while True:
 
   # Get shipping number
   PIC = raw_input('Please scan shipping number: ')
-  PIC =  re.sub(r'(\d*\^\])?', '', PIC)
+  PIC = PIC if PIC[0] == 'L' else PIC[8:]
   # if lern(PIC) != 22:
   #   print 'ERROR: shipping number not 22 characters'
   #   continue
