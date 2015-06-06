@@ -1,3 +1,9 @@
+# Install python-dev if on linux
+if uname -a | grep -iq linux; then
+  sudo apt-get update
+  sudo apt-get install python-dev
+fi
+
 # Install pip and dependencies
 sudo easy_install pip
 sudo pip install ujson
@@ -15,7 +21,6 @@ if uname -a | grep -iq darwin; then
   # Install brew binaries
   brew install avrdude
 else
-  sudo apt-get update
   sudo apt-get install gcc-avr binutils-avr gdb-avr avr-libc avrdude
   sudo apt-get install python-dev
   sudo pip install pycrypto
