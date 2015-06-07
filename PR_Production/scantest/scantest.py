@@ -81,6 +81,10 @@ while True:
     
   print 'SUCCESS: shipping number valid and exists in database', PIC
 
+  # Get country presets
+  presets = country_code_presets.get_preset(COUNTRYs[INDEX])
+  print 'STATUS: got presets'
+    
   # Get serial number
   SERIAL = raw_input('Please scan serial number: ')
   if len(SERIAL) != 3 and len(SERIAL) != 4:
@@ -99,9 +103,6 @@ while True:
   TMP_FILE_PATH = tempfile.mkstemp()[1]
   TMP_FILE = open(TMP_FILE_PATH, 'w')
 
-  # Get country presets
-  presets = country_code_presets.get_preset(COUNTRYs[INDEX])
-  print 'STATUS: got presets'
 
   # Get hex file to write to radio
   print 'STATUS: writing hex file'
