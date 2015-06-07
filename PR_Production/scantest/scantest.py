@@ -5,52 +5,50 @@ import google
 import urllib2
 import ujson
 import tempfile
+from getopt import getopt, GetoptError
 import country_code_presets
 
 from subprocess import call
 from subprocess import Popen
 import etest2
 
-TEST = False
-# if len(sys.argv) > 1:
-#   TEST = True
+def usage():
+  print r'''Usage: python scantest.py -n <num radios> -p <programmer>'''
+  sys.exit(1)
 
-if len(sys.argv) > 1:
-  PROGRAM = sys.argv[1]
-else:
-  PROGRAM = 'usbtiny'
+try:
+  opts, args = getopt(sys.argv[1:], option_list)
+except GetoptError as err:
+  print str(err)
+  usage()
+
+# Defaults
+PROGRAM = 'usbtiny'
+NUM_RADIOS = 1
+
+# User-defined
+for opt, val in opts:
+  if opt == '-p':
+    PROGRAM = val
+  elif opt == '-n':
+    NUM_RADIOS = int(val)
 
 PICs = []
 SERIALs = []
 FREQs = []
 COUNTRYs = []
 
-if not TEST:
-  # data = google.sheet.get_all_values()
+PICs = ['Tracking Number', '42011222','42011216', '1Z0363374446316122', None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, '9405510200829591004800', None, None, None, None, None, '9405510200828591075179', None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, '9405510200829591004770', None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, '9405510200881590971187', None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, '9405510200882591104192']
+SERIALs = ['Serial Number']
+FREQs = ['Frequencies', '98.0', '93.9']
+COUNTRYs = ['Country Code', 'BE', 'AF']
 
-  url = 'https://spreadsheets.google.com/feeds/list/' + constants.SPREADSHEET_KEY + '/od6/public/values?alt=json'
-  raw = urllib2.urlopen(url).read()
-  print 'STATUS: done downloading!'
-  data = ujson.loads(raw)['feed']['entry']
-
-  for row in data:
-    PICs.append(row['gsx$pic']['$t'])
-    SERIALs.append(row['gsx$serial']['$t'])
-    FREQs.append(row['gsx$freq']['$t'])
-    COUNTRYs.append(row['gsx$shippingcountrycode']['$t'])
-
-else:
-  PICs = ['Tracking Number', '42011222','42011216', '1Z0363374446316122', None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, '9405510200829591004800', None, None, None, None, None, '9405510200828591075179', None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, '9405510200829591004770', None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, '9405510200881590971187', None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, '9405510200882591104192']
-  SERIALs = ['Serial Number']
-  FREQs = ['Frequencies', '98.0', '93.9']
-  COUNTRYs = ['Country Code', 'BE', 'AF']
-
-  # Make sure all SERIALs and FREQs have the same length as PICs (gspread returns
-  # columns as arrays of data only and ignores rows that are blank, even if there
-  # are values in the same row, but in other colums).
-  SERIALs.extend([None] * (len(PICs) - len(SERIALs)))
-  FREQs.extend([None] * (len(PICs) - len(FREQs)))
-  COUNTRYs.extend([None] * (len(PICs) - len(COUNTRYs)))
+# Make sure all SERIALs and FREQs have the same length as PICs (gspread returns
+# columns as arrays of data only and ignores rows that are blank, even if there
+# are values in the same row, but in other colums).
+SERIALs.extend([None] * (len(PICs) - len(SERIALs)))
+FREQs.extend([None] * (len(PICs) - len(FREQs)))
+COUNTRYs.extend([None] * (len(PICs) - len(COUNTRYs)))
 
 print 'STATUS: data cached!'
 
@@ -86,7 +84,7 @@ while True:
   if presets == -1:
     print "ERROR: country not found. Please set aside!!!"
     continue
-    
+
   print 'STATUS: got presets'
     
   # Get serial number
