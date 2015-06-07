@@ -12,11 +12,11 @@ from subprocess import Popen
 import etest2
 
 TEST = False
-if len(sys.argv) > 1:
-  TEST = True
+# if len(sys.argv) > 1:
+#   TEST = True
 
-if len(sys.argv) > 2:
-  PROGRAM = sys.argv[2]
+if len(sys.argv) > 1:
+  PROGRAM = sys.argv[1]
 else:
   PROGRAM = 'usbtiny'
 
@@ -125,7 +125,7 @@ while True:
   print 'SUCCESS: passed electrical test'
 
   # Start wav file
-  Popen(['sudo', './pifm', '1ktest.wav', FREQ, '48000'])
+  Popen(['sudo', './pifm', '1ktest.wav', FREQ, '44100'])
 
   # Program radio
   print 'STATUS: programming radio with frequency', FREQ
