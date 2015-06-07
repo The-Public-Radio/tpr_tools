@@ -83,6 +83,10 @@ while True:
 
   # Get country presets
   presets = country_code_presets.get_preset(COUNTRYs[INDEX])
+  if presets == -1:
+    print "ERROR: country not found. Please set aside!!!"
+    continue
+    
   print 'STATUS: got presets'
     
   # Get serial number
