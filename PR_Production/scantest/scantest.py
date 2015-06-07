@@ -87,7 +87,7 @@ while True:
     print '-----> RADIO', str(r_index + 1), 'OF', str(NUM_RADIOs[INDEX])
 
     # Check if there's already a serial number for this shipping number
-    if len(SERIALs[INDEX].strip().split('|')) >= NUM_RADIOs[INDEX]:
+    if len(SERIALs[INDEX].strip().split('|')) >= NUM_RADIOs[INDEX] and not SERIALs[INDEX].strip() == '':
       print 'ERROR: shipping number already has ' + str(NUM_RADIOs[INDEX]) + ' radios associated with serial(s) ' + SERIALs[INDEX].strip()
       continue
       
@@ -150,7 +150,7 @@ while True:
     print 'STATUS: updating database'
     SERIALs[INDEX] = SERIAL if r_index == 0 else SERIALs[INDEX] + '|' + SERIAL
     google.sheet.update_cell(INDEX + 2, constants.COL['SERIAL'], SERIALs[INDEX])
-    google.sheet.update_cell(INDEX + 2, constants.COL['STATUS'], constants.STATUS['serial_number_' + str(r_index + 1) + '_of_' + str(NUM_RADIOs[INDEX]) + '_assigned'])
+    google.sheet.update_cell(INDEX + 2, constants.COL['STATUS'], constants.STATUS['serial_number_assigned'])
 
     print 'STATUS: success! now do the next one...'
 
