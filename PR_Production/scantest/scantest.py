@@ -107,10 +107,9 @@ while True:
       print 'ERROR: serial number not 3 or 4 characters'
       continue
 
-    for LIST in SERIALs:
-      if SERIAL in LIST.split('|'):
-        print 'ERROR: serial number already used'
-        continue
+    if any([SERIAL in LIST for LIST in [ROW.split('|') for ROW in SERIALs]]):
+      print 'ERROR: serial number already used'
+      continue
     print 'SUCCESS: serial number valid', SERIAL
 
     # Get frequency
