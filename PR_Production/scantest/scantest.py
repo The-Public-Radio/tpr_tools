@@ -51,7 +51,7 @@ for row in data:
   SERIALs.append(row['gsx$serial']['$t'])
   FREQs.append(row['gsx$freq']['$t'])
   COUNTRYs.append(row['gsx$shippingcountrycode']['$t'])
-  NUM_RADIOs.append(row['gsx$numradios']['$t'])
+  NUM_RADIOs.append(int(row['gsx$numradios']['$t']))
 
 print 'STATUS: data cached!'
 
@@ -80,7 +80,7 @@ while True:
 
     # Check if there's already a serial number for this shipping number
     if len(SERIALs[INDEX].strip().split('|')) >= NUM_RADIOs[INDEX]:
-      print 'ERROR: shipping number already has ' + NUM_RADIOs[INDEX] + ' radios associated with serial(s) ' + SERIALs[INDEX].strip()
+      print 'ERROR: shipping number already has ' + str(NUM_RADIOs[INDEX]) + ' radios associated with serial(s) ' + SERIALs[INDEX].strip()
       continue
       
     print 'SUCCESS: shipping number valid and exists in database', PIC
@@ -100,7 +100,7 @@ while True:
       continue
 
     for LIST in SERIALs:
-      if SERIAL in LIST.split('|')
+      if SERIAL in LIST.split('|'):
         print 'ERROR: serial number already used'
         continue
     print 'SUCCESS: serial number valid', SERIAL
@@ -150,7 +150,7 @@ while True:
     print 'STATUS: updating database'
     SERIALs[INDEX] = SERIAL if r_index == 0 else SERIALs[INDEX] + '|' + SERIAL
     google.sheet.update_cell(INDEX + 2, constants.COL['SERIAL'], SERIALs[INDEX])
-    google.sheet.update_cell(INDEX + 2, constants.COL['STATUS'], constants.STATUS['serial_number_' + str(r_index + 1) '_of_' + str(NUM_RADIOs[INDEX]) + '_assigned'])
+    google.sheet.update_cell(INDEX + 2, constants.COL['STATUS'], constants.STATUS['serial_number_' + str(r_index + 1) + '_of_' + str(NUM_RADIOs[INDEX]) + '_assigned'])
 
     print 'STATUS: success! now do the next one...'
 
