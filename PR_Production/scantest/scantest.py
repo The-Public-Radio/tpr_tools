@@ -58,6 +58,10 @@ print 'STATUS: data cached!'
 # The infinite loop
 while True:
 
+  print '---------------------------------------'
+  print 'STARTING NEW SHIPPING NUMBER'
+  print '---------------------------------------'
+
   # Get shipping number
   PIC = raw_input('Please scan shipping number: ')
   PIC = PIC if PIC[0] == 'L' else PIC[9:]
@@ -72,6 +76,7 @@ while True:
 
   # Loop through number of radios / shipping label
   for r_index in range(NUM_RADIOs[INDEX]):
+    print '-----> RADIO', str(r_index + 1), 'OF', str(NUM_RADIOs[INDEX])
 
     # Check if there's already a serial number for this shipping number
     if len(SERIALs[INDEX].strip().split('|')) >= NUM_RADIOs[INDEX]:
