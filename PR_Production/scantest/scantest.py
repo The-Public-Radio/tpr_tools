@@ -125,7 +125,7 @@ while True:
   print 'SUCCESS: passed electrical test'
 
   # Start wav file
-  Popen(['sudo', './pifm', 'test.wav', FREQ, '48000'])
+  Popen(['sudo', './pifm', '1ktest.wav', FREQ, '48000'])
 
   # Program radio
   print 'STATUS: programming radio with frequency', FREQ
