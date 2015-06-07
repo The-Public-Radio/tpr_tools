@@ -39,6 +39,7 @@ PICs = []
 SERIALs = []
 FREQs = []
 COUNTRYs = []
+NUM_RADIOs = []
 
 url = 'https://spreadsheets.google.com/feeds/list/' + constants.SPREADSHEET_KEY + '/od6/public/values?alt=json'
 raw = urllib2.urlopen(url).read()
@@ -50,13 +51,7 @@ for row in data:
   SERIALs.append(row['gsx$serial']['$t'])
   FREQs.append(row['gsx$freq']['$t'])
   COUNTRYs.append(row['gsx$shippingcountrycode']['$t'])
-
-# Make sure all SERIALs and FREQs have the same length as PICs (gspread returns
-# columns as arrays of data only and ignores rows that are blank, even if there
-# are values in the same row, but in other colums).
-SERIALs.extend([None] * (len(PICs) - len(SERIALs)))
-FREQs.extend([None] * (len(PICs) - len(FREQs)))
-COUNTRYs.extend([None] * (len(PICs) - len(COUNTRYs)))
+  NUM_RADIOs.append(row['gsx$numradios']['$t'])
 
 print 'STATUS: data cached!'
 
@@ -68,11 +63,6 @@ while True:
   PIC = PIC if PIC[0] == 'L' else PIC[9:]
   print 'STATUS: PIC received ' + PIC
 
-  # Check length of shipping number
-  # if len(PIC) != 22:
-  #   print 'ERROR: shipping number not 22 characters'
-  #   continue
-
   if PIC not in PICs:
     print 'ERROR: shipping number not found'
     continue
@@ -80,79 +70,83 @@ while True:
   # Get row # of shipping label
   INDEX = PICs.index(PIC)
 
-  # Check if there's already a serial number for this shipping number
-  if SERIALs[INDEX].strip() != '':
-    print 'ERROR: shipping number already has an associated serial number ' + SERIALs[INDEX].strip()
-    continue
-    
-  print 'SUCCESS: shipping number valid and exists in database', PIC
+  # Loop through number of radios / shipping label
+  for r_index in range(NUM_RADIOs[INDEX]):
 
-  # Get country presets
-  presets = country_code_presets.get_preset(COUNTRYs[INDEX])
-  if presets == -1:
-    print "ERROR: country not found. Please set aside!!!"
-    continue
+    # Check if there's already a serial number for this shipping number
+    if len(SERIALs[INDEX].strip().split('|')) >= NUM_RADIOs[INDEX]:
+      print 'ERROR: shipping number already has ' + NUM_RADIOs[INDEX] + ' radios associated with serial(s) ' + SERIALs[INDEX].strip()
+      continue
+      
+    print 'SUCCESS: shipping number valid and exists in database', PIC
 
-  print 'STATUS: got presets'
-    
-  # Get serial number
-  SERIAL = raw_input('Please scan serial number: ')
-  if len(SERIAL) != 3 and len(SERIAL) != 4:
-    print 'ERROR: serial number not 3 or 4 characters'
-    continue
-  if SERIAL in SERIALs:
-    print 'ERROR: serial number already used'
-    continue
-  print 'SUCCESS: serial number valid', SERIAL
+    # Get country presets
+    presets = country_code_presets.get_preset(COUNTRYs[INDEX])
+    if presets == -1:
+      print "ERROR: country not found. Please set aside!!!"
+      continue
 
-  # Get frequency
-  FREQ = FREQs[INDEX]
-  print 'STATUS: using frequency', FREQ
+    print 'STATUS: got presets'
+      
+    # Get serial number
+    SERIAL = raw_input('Please scan serial number: ')
+    if len(SERIAL) != 3 and len(SERIAL) != 4:
+      print 'ERROR: serial number not 3 or 4 characters'
+      continue
 
-  # Create temporary file
-  TMP_FILE_PATH = tempfile.mkstemp()[1]
-  TMP_FILE = open(TMP_FILE_PATH, 'w')
+    for LIST in SERIALs:
+      if SERIAL in LIST.split('|')
+        print 'ERROR: serial number already used'
+        continue
+    print 'SUCCESS: serial number valid', SERIAL
 
+    # Get frequency
+    FREQ = FREQs[INDEX]
+    print 'STATUS: using frequency', FREQ
 
-  # Get hex file to write to radio
-  print 'STATUS: writing hex file'
-  exit = call(['python', 'eeprom.py', '-f', FREQ, '-b', presets['band'], '-d', presets['deemphasis'], '-s', presets['channel_spacing']], stdout=TMP_FILE)
-  if exit != 0:
-    print 'ERROR: failed to write hex file. Log below'
+    # Create temporary file
+    TMP_FILE_PATH = tempfile.mkstemp()[1]
+    TMP_FILE = open(TMP_FILE_PATH, 'w')
+
+    # Get hex file to write to radio
+    print 'STATUS: writing hex file'
+    exit = call(['python', 'eeprom.py', '-f', FREQ, '-b', presets['band'], '-d', presets['deemphasis'], '-s', presets['channel_spacing']], stdout=TMP_FILE)
+    if exit != 0:
+      print 'ERROR: failed to write hex file. Log below'
+      call(['cat', TMP_FILE_PATH])
+      continue
+    print 'SUCCESS: hex file written with contents below'
     call(['cat', TMP_FILE_PATH])
-    continue
-  print 'SUCCESS: hex file written with contents below'
-  call(['cat', TMP_FILE_PATH])
-	
-  # Make sure radio is on jig
-  raw_input('Press enter when radio is on jig')
+  	
+    # Make sure radio is on jig
+    raw_input('Press enter when radio is on jig')
 
-  # Run electrical test
-  print 'STATUS: running electrical test'
-  if etest2.etest() != 0:
-    print 'ERROR: failed electrical test'
-    continue
-  print 'SUCCESS: passed electrical test'
+    # Run electrical test
+    print 'STATUS: running electrical test'
+    if etest2.etest() != 0:
+      print 'ERROR: failed electrical test'
+      continue
+    print 'SUCCESS: passed electrical test'
 
-  # Start wav file
-  Popen(['sudo', './pifm', '1ktest.wav', FREQ, '44100'])
+    # Start wav file
+    Popen(['sudo', './pifm', '1ktest.wav', FREQ, '44100'])
 
-  # Program radio
-  print 'STATUS: programming radio with frequency', FREQ
-  print 'STATUS: using program', PROGRAM
-  print TMP_FILE_PATH
-  exit = os.system('sudo avrdude -P usb -c ' + PROGRAM +' -p attiny45 -e -U flash:w:pr.hex -U eeprom:w:' + TMP_FILE_PATH)
-  if exit != 0:
-    print 'ERROR: failed to program radio'
-    continue
-  print 'SUCCESS: programmed radio'
+    # Program radio
+    print 'STATUS: programming radio with frequency', FREQ
+    print 'STATUS: using program', PROGRAM
+    print TMP_FILE_PATH
+    exit = os.system('sudo avrdude -P usb -c ' + PROGRAM +' -p attiny45 -e -U flash:w:pr.hex -U eeprom:w:' + TMP_FILE_PATH)
+    if exit != 0:
+      print 'ERROR: failed to program radio'
+      continue
+    print 'SUCCESS: programmed radio'
 
-  # Updating main database and local cache
-  print 'STATUS: updating database'
-  google.sheet.update_cell(INDEX + 2, constants.COL['SERIAL'], SERIAL)
-  google.sheet.update_cell(INDEX + 2, constants.COL['STATUS'], constants.STATUS['serial_number_assigned'])
-  SERIALs[INDEX] = SERIAL
+    # Updating main database and local cache
+    print 'STATUS: updating database'
+    SERIALs[INDEX] = SERIAL if r_index == 0 else SERIALs[INDEX] + '|' + SERIAL
+    google.sheet.update_cell(INDEX + 2, constants.COL['SERIAL'], SERIALs[INDEX])
+    google.sheet.update_cell(INDEX + 2, constants.COL['STATUS'], constants.STATUS['serial_number_' + str(r_index + 1) '_of_' + str(NUM_RADIOs[INDEX]) + '_assigned'])
 
-  print 'STATUS: success! now do the next one...'
+    print 'STATUS: success! now do the next one...'
 
 
