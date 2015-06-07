@@ -106,7 +106,7 @@ while True:
     print 'SUCCESS: serial number valid', SERIAL
 
     # Get frequency
-    FREQ = FREQs[INDEX]
+    FREQ = FREQs[INDEX].split('|')[r_index]
     print 'STATUS: using frequency', FREQ
 
     # Create temporary file
