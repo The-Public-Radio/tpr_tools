@@ -47,11 +47,18 @@ def get_preset(country):
 		channel_spacing = 1
 		region = 'Japan'
 
-	else:
+	elif country in Americas:
 		band = 0
 		deemphasis = 0
 		channel_spacing = 0
 		region = 'Americas'
+
+	else:
+		band = 0
+		deemphasis = 0
+		channel_spacing = 0
+		region = 'NOT FOUND'
+		print "ERROR: country not found. Please set aside!!!"
 	
 	print "STATUS: Shipping to %s in region %s" % (country, region)
 	print "        Band: %d" % band
