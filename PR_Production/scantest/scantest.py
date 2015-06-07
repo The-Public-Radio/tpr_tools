@@ -74,6 +74,14 @@ while True:
   # Get row # of shipping label
   INDEX = PICs.index(PIC)
 
+  # Get country presets
+  presets = country_code_presets.get_preset(COUNTRYs[INDEX])
+  if presets == -1:
+    print "ERROR: country not found. Please set aside!!!"
+    continue
+
+  print 'STATUS: got presets'
+    
   # Loop through number of radios / shipping label
   for r_index in range(NUM_RADIOs[INDEX]):
     print '-----> RADIO', str(r_index + 1), 'OF', str(NUM_RADIOs[INDEX])
@@ -85,14 +93,6 @@ while True:
       
     print 'SUCCESS: shipping number valid and exists in database', PIC
 
-    # Get country presets
-    presets = country_code_presets.get_preset(COUNTRYs[INDEX])
-    if presets == -1:
-      print "ERROR: country not found. Please set aside!!!"
-      continue
-
-    print 'STATUS: got presets'
-      
     # Get serial number
     SERIAL = raw_input('Please scan serial number: ')
     if len(SERIAL) != 3 and len(SERIAL) != 4:
