@@ -53,6 +53,12 @@ def get_preset(country):
 		channel_spacing = 0
 		region = 'Americas'
 	
-	print "STATUS: Shipping to the Americas, the band is %d, the deemphasis is %d, the channel_spacing is %d, the country is %s, the region is %s" % (band, deemphasis, channel_spacing, country, region)
+	print "STATUS: Shipping to %s in region %s" % (country, region)
+	print "        Band: %d" % band
+	print "        Deemphasis: %d" % deemphasis
+	print "        Ch. Spacing: %d" % channel_spacing
 
 	return { 'band': str(band), 'deemphasis': str(deemphasis), 'channel_spacing': str(channel_spacing) }
+
+
+get_preset('BE')

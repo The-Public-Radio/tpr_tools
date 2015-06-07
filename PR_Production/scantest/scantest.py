@@ -102,7 +102,6 @@ while True:
   # Get country presets
   presets = country_code_presets.get_preset(COUNTRYs[INDEX])
   print 'STATUS: got presets'
-  print presets
 
   # Get hex file to write to radio
   print 'STATUS: writing hex file'
