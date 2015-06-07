@@ -6,7 +6,7 @@
 # Hong Kong, New Zeland, Israel, Faroe Islands 
 
 EU = ['BE', 'BG', 'CZ', 'DE', 'EE', 'IE', 'EL', 'ES', 'FR', 'HR',
- 'IT', 'CY', 'LV', 'LT', 'LU', 'HU', 'MT', 'NL', 'AT', 'PL', 
+ 'IT', 'CY', 'LV', 'LT', 'LU', 'HU', 'MT', 'NL', 'NZ', 'AT', 'PL', 
  'PT', 'RO', 'SI', 'SK', 'FI', 'SE', 'UK', 'GB', 'DK', 'CH']
 
 # Need to add South America
