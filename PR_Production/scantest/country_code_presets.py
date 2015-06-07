@@ -59,6 +59,3 @@ def get_preset(country):
 	print "        Ch. Spacing: %d" % channel_spacing
 
 	return { 'band': str(band), 'deemphasis': str(deemphasis), 'channel_spacing': str(channel_spacing) }
-
-
-get_preset('BE')
