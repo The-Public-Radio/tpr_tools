@@ -98,18 +98,17 @@ while True:
     # Check if there's already a serial number for this shipping number
     if num_radios_complete >= NUM_RADIOs[INDEX]:
       print 'ERROR: shipping number already has ' + str(NUM_RADIOs[INDEX]) + ' radios associated with serial(s) ' + SERIALs[INDEX].strip()
-      continue
-      
+      break
 
     # Get serial number
     SERIAL = raw_input('Please scan serial number: ')
     if len(SERIAL) != 3 and len(SERIAL) != 4:
       print 'ERROR: serial number not 3 or 4 characters'
-      continue
+      break
 
     if any([SERIAL in LIST for LIST in [ROW.split('|') for ROW in SERIALs]]):
       print 'ERROR: serial number already used'
-      continue
+      break
     print 'SUCCESS: serial number valid', SERIAL
 
     # Get frequency
@@ -126,7 +125,7 @@ while True:
     if exit != 0:
       print 'ERROR: failed to write hex file. Log below'
       call(['cat', TMP_FILE_PATH])
-      continue
+      break
     print 'SUCCESS: hex file written with contents below'
     call(['cat', TMP_FILE_PATH])
   	
@@ -137,7 +136,7 @@ while True:
     print 'STATUS: running electrical test'
     if etest2.etest() != 0:
       print 'ERROR: failed electrical test'
-      continue
+      break
     print 'SUCCESS: passed electrical test'
 
     # Start wav file
@@ -150,7 +149,7 @@ while True:
     exit = os.system('sudo avrdude -P usb -c ' + PROGRAM +' -p attiny45 -e -U flash:w:pr.hex -U eeprom:w:' + TMP_FILE_PATH)
     if exit != 0:
       print 'ERROR: failed to program radio'
-      continue
+      break
     print 'SUCCESS: programmed radio'
 
     # Updating main database and local cache
