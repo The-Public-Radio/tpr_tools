@@ -71,6 +71,8 @@ while True:
     print 'ERROR: shipping number not found'
     continue
 
+  print 'SUCCESS: shipping number valid and exists in database', PIC
+
   # Get row # of shipping label
   INDEX = PICs.index(PIC)
 
@@ -84,14 +86,20 @@ while True:
     
   # Loop through number of radios / shipping label
   for r_index in range(NUM_RADIOs[INDEX]):
+    num_radios_complete = 0 if SERIALs[INDEX].strip() == '' else len(SERIALs[INDEX].strip().split('|'))
+
+    # If we already have radios completed from an earlier run, skip ahead
+    if num_radios_complete > r_index:
+      continue
+    
     print '-----> RADIO', str(r_index + 1), 'OF', str(NUM_RADIOs[INDEX])
+    print '       Shipping label:', PIC
 
     # Check if there's already a serial number for this shipping number
-    if len(SERIALs[INDEX].strip().split('|')) >= NUM_RADIOs[INDEX] and not SERIALs[INDEX].strip() == '':
+    if num_radios_complete >= NUM_RADIOs[INDEX]:
       print 'ERROR: shipping number already has ' + str(NUM_RADIOs[INDEX]) + ' radios associated with serial(s) ' + SERIALs[INDEX].strip()
       continue
       
-    print 'SUCCESS: shipping number valid and exists in database', PIC
 
     # Get serial number
     SERIAL = raw_input('Please scan serial number: ')
