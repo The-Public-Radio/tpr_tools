@@ -5,9 +5,9 @@
 # in the form of: eeprom.py -f $frequency -b $band -d $deemphasis -s $channel_spacing
 # Hong Kong, New Zeland, Israel, Faroe Islands 
 
-EU = ['BE', 'BG', 'CZ', 'DE', 'EE', 'IE', 'EL', 'ES', 'FR', 'HR',
+EU = ['AE', 'BE', 'BG', 'CZ', 'DE', 'EE', 'IE', 'EL', 'ES', 'FR', 'FO', 'HR',
  'IT', 'CY', 'LV', 'LT', 'LU', 'HU', 'MT', 'NL', 'NZ', 'AT', 'PL', 
- 'PT', 'RO', 'SI', 'SK', 'FI', 'SE', 'UK', 'GB', 'DK', 'CH']
+ 'PT', 'RO', 'SI', 'SK', 'FI', 'SE', 'UK', 'GB', 'DK', 'CH', 'ZA']
 
 # Need to add South America
 Americas = ['US', 'CA','AI','AG','AW','BS','BB','BZ','BM',

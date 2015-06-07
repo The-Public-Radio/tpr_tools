@@ -16,6 +16,8 @@ def usage():
   print r'''Usage: python scantest.py -n <num radios> -p <programmer>'''
   sys.exit(1)
 
+option_list = 'n:p:'
+
 try:
   opts, args = getopt(sys.argv[1:], option_list)
 except GetoptError as err:
