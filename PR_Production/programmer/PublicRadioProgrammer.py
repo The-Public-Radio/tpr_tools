@@ -7,10 +7,10 @@ from subprocess import call
 import country_code_presets
 from getopt import getopt, GetoptError
 
-## ENTER PROGRAMMER HERE ##
+## ENTER ISP PROGRAMMER HERE ##
 PROGRAM = 'usbtiny'
 
-
+## In case we want to pass in frequency and country code from the beginning...
 # def usage():
 #   print r'''Usage: python PublicRadioProgrammer -f <frequency> -c <country_code>'''
 #   sys.exit(1)
@@ -46,7 +46,7 @@ while True:
     print "Error: country not found"
     continue  
 
-  # Pass in tuning frequency.   
+  # Pass in tuning frequency   
   FREQ = raw_input('Enter the FM Frequency: ') 
   print 'STATUS: using frequency', FREQ
 
