@@ -69,27 +69,27 @@ call(['cat', TMP_FILE_PATH])
 
 # #####################END##############################
 
-# Make sure radio is on jig
-# Using raw input here, this could be triggered by Tulip via the footpedal if we want 
-raw_input('Press enter when radio is on jig')
+# # Make sure radio is on jig
+# # Using raw input here, this could be triggered by Tulip via the footpedal if we want 
+# raw_input('Press enter when radio is on jig')
 
-# Run electrical test
-# TO DO: ADD ETEST CODE HERE! 
+# # Run electrical test
+# # TO DO: ADD ETEST CODE HERE! 
 
-# Program radio
-print 'STATUS: programming radio with frequency', FREQ
-print 'STATUS: using program', PROGRAM
-print TMP_FILE_PATH 
-#-B 5 -b 9600 
-exit = os.system('sudo avrdude -P usb -c ' + PROGRAM +' -p attiny25 -e -U flash:w:TPR_firmwareATTINY25.hex -U eeprom:w:' + TMP_FILE_PATH)
-if exit != 0:
-  print 'ERROR: failed to program radio'
-# TO DO: Add code here to update the database via Tulip for failed radios   
-  # continue
-print 'SUCCESS: programmed radio'
+# # Program radio
+# print 'STATUS: programming radio with frequency', FREQ
+# print 'STATUS: using program', PROGRAM
+# print TMP_FILE_PATH 
 
-# Transmit 1K test tone to programmed radio at desired frequency 
-Popen(['sudo','./pifm', '1KTest.wav', FREQ, '44100'])
+# exit = os.system('sudo avrdude -P usb -c ' + PROGRAM +' -p attiny45 -B 5 -b 9600 -e -U flash:w:TPR_firmware.hex -U eeprom:w:' + TMP_FILE_PATH)
+# if exit != 0:
+#   print 'ERROR: failed to program radio'
+# # TO DO: Add code here to update the database via Tulip for failed radios   
+#   # continue
+# print 'SUCCESS: programmed radio'
+
+# # Transmit 1K test tone to programmed radio at desired frequency 
+# Popen(['sudo','./pifm', '1KTest.wav', FREQ, '44100'])
 
 #   # TO DO: Add code here to update the database via Tulip for successful radios 
 
