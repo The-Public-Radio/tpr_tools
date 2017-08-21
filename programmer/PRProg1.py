@@ -52,19 +52,21 @@ if presets == -1:
 print 'STATUS: using frequency', FREQ
 
 # Create temporary file
-TMP_FILE_PATH = 'tempEEprom' #= tempfile.mkdtemp(suffix = 'eemprom', dir = /tmp)[1]
+TMP_FILE_PATH = '/home/pi/TPR_ops/temp/eeprom' #= tempfile.mkdtemp(suffix = 'eemprom', dir = /tmp)[1]
 print TMP_FILE_PATH
 TMP_FILE = open(TMP_FILE_PATH, 'w')
 print TMP_FILE
 
 # Get hex file to write to radio
 print 'STATUS: writing hex file'
-exit = call(['python', 'eeprom.py', '-f', FREQ, '-b', presets['band'],'-d', presets['deemphasis'], '-s', presets['channel_spacing']], stdout=TMP_FILE)
+exit = call(['sudo', 'python', '/home/pi/TPR_ops/tools/programmer/eeprom.py', '-f', FREQ, '-b', presets['band'],'-d', presets['deemphasis'], '-s', presets['channel_spacing']] > TMP_FILE)
 if exit != 0:
+  sys.exit(1)
   print 'ERROR: failed to write hex file. Log below'
   call(['cat', TMP_FILE_PATH])
   # continue
 print 'SUCCESS: hex file written with contents below'
+
 call(['cat', TMP_FILE_PATH])
 
 # #####################END##############################
