@@ -55,9 +55,9 @@ def get_preset(country):
 	else:
 		return -1
 	
-	print "STATUS: Shipping to %s in region %s" % (country, region)
-	print "        Band: %d" % band
-	print "        Deemphasis: %d" % deemphasis
-	print "        Ch. Spacing: %d" % channel_spacing
+#	print "STATUS: Shipping to %s in region %s" % (country, region)
+#	print "        Band: %d" % band
+#	print "        Deemphasis: %d" % deemphasis
+#	print "        Ch. Spacing: %d" % channel_spacing
 
 	return { 'band': str(band), 'deemphasis': str(deemphasis), 'channel_spacing': str(channel_spacing) }
