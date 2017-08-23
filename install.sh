@@ -40,7 +40,8 @@ pip install crcmod
 pip install RPi.GPIO
 
 # Clone ops_tools
-git clone git@github.com:The-Public-Radio/ops_tools.git /home/pi/
+git clone git@github.com:The-Public-Radio/ops_tools.git /home/pi/ops_tools
+mkdir /home/pi/ops_tools/temp
 
 # Clone fm_transmitter
-git clone git@github.com:markondej/fm_transmitter.git /home/pi/
+git clone git@github.com:markondej/fm_transmitter.git /home/pi/fm_transmitter
