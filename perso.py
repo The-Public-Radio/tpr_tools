@@ -27,7 +27,7 @@ if (len(sys.argv) != 4):
 	sys.exit(1)
 
 # set output filename
-eeprom_filename = '/home/pi/tools/temp/eeprom'
+eeprom_filename = '/home/pi/ops_tools/temp/eeprom'
 
 # set regions
 EU = ['AE','BE','BG','CZ','DE','EE','IE','EL','ES','FR','FO','HR','IT','CY','LV','LT','LU','HU','MT','NL','NZ','AT','PL','PT','RO','SI','SK','FI','SE','UK','GB','DK','CH','ZA']
@@ -97,7 +97,7 @@ f = open(eeprom_filename, 'w')
 
 # open a subprocess and pipe stdout to the eeprom file
 print 'Writing to eeprom_filename via eeprom.py...'
-exit = subprocess.call(['/home/pi/tools/eeprom.py', '-f', freq, '-b', band, '-d', deemphasis, '-s', spacing, '-S', serial], stdout=f)
+exit = subprocess.call(['/home/pi/ops_tools/eeprom.py', '-f', freq, '-b', band, '-d', deemphasis, '-s', spacing, '-S', serial], stdout=f)
 f.close()
 print 'eeprom_filename closed'
 print exit
