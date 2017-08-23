@@ -8,11 +8,11 @@ import country_code_presets
 from getopt import getopt, GetoptError
 
 ## ENTER PROGRAMMER HERE ##
-PROGRAM = 'usbtiny'
+# PROGRAM = 'usbtiny'
 
 
 def usage():
-  print r'''Usage: python PublicRadioProgrammer -f <frequency> -c <country_code>'''
+  print r'''Usage: python PRProg1.py -f <frequency> -c <country_code>'''
   sys.exit(1)
 
 option_list = 'f:c:'
