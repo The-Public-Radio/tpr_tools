@@ -14,12 +14,11 @@
 # Usage: `$ perso.py <serial number> <frequency> <country code>`
 # 
 
-import country_code_presets
+#import country_code_presets
 from getopt import getopt, GetoptError
 import sys, os
 import time
-
-# print 'length of sys.argv is ', len(sys.argv)
+import subprocess
 
 # Check to see that we have the right number of arguments 
 if (len(sys.argv) != 4):
@@ -28,35 +27,95 @@ if (len(sys.argv) != 4):
 	sys.exit(1)
 
 # set output filename
-eeprom_filename = '/Users/snwright/TPR_ops/temp/eeprom'
+eeprom_filename = '/home/pi/tools/temp/eeprom'
+
+# set regions
+EU = ['AE','BE','BG','CZ','DE','EE','IE','EL','ES','FR','FO','HR','IT','CY','LV','LT','LU','HU','MT','NL','NZ','AT','PL','PT','RO','SI','SK','FI','SE','UK','GB','DK','CH','ZA']
+Americas = ['US','CA','AI','AG','AW','BS','BB','BZ','BM','VG','CA','KY','CR','CU','CW','DM','DO','SV','GL','GD','GP','GT','HT','HN','JM','MQ','MX','PM','MS','CW','KN','NI','PA','PR','KN','LC','PM','VC','TT','TC','VI','SX','BQ','SA','SE','AR','BO','BR','CL','CO','EC','FK','GF','GY','PY','PE','SR','UY','VE']
+Asia = ['AF','AM','AZ','BH','BD','BT','BN','KH','CN','CX','CC','IO','GE','HK','IN','ID','IR','IQ','IL','JO','KZ','KP','KR','KW','KG','LA','LB','MO','MY','MV','MN','MM','NP','OM','PK','PH','QA','SA','SG','LK','SY','TW','TJ','TH','TR','TM','AE','UZ','VN','YE','PS']
+
+# set up get_preset function
+#def get_preset(country):
+#        if country in EU:
+#                band = 0
+#                deemphasis = 1
+#                spacing = 1
+#        elif country in Asia:
+#                band = 0
+#		print 'band is', band
+#                deemphasis = 1
+#                spacing = 1
+#        elif country in Americas:
+#                band = str(0)
+#                deemphasis = 0
+#                spacing = 0
+#		print 'country is in americas'
+#        elif country == 'AU':
+#                band = 0
+#                deemphasis = 1
+#                spacing = 0
+#        elif country == 'JP':
+#                band = 1
+#                deemphasis = 1
+#                spacing = 1
+#	else:
+#		print 'Error: country not found'
+#		sys.exit(1)
 
 # set input variables
-serialNumber = sys.argv[1]
-frequency = sys.argv[2]
-countryCode = sys.argv[3]
-# print 'serialNumber is', serialNumber
-# print 'frequency is', frequency
-# print 'countryCode is', countryCode
+serial = sys.argv[1]
+freq = sys.argv[2]
+country = sys.argv[3]
 
 # check the country code and define band, channel spacing, deemphasis, region
-presets = country_code_presets.get_preset(countryCode)
-print presets
-if (presets == -1):
-	print 'Error: country not found'
+if country in EU:
+	band = str(0)
+        deemphasis = str(1)
+        spacing = str(1)
+elif country in Asia:
+        band = str(0)
+        deemphasis = str(1)
+        spacing = str(1)
+elif country in Americas:
+        band = str(0)
+        deemphasis = str(0)
+        spacing = str(0)
+elif country == 'AU':
+        band = str(0)
+        deemphasis = str(1)
+        spacing = str(0)
+elif country == 'JP':
+        band = str(2)
+        deemphasis = str(1)
+        spacing = str(1)
+else:
+        print 'Error: country not found'
+        sys.exit(1)
+
+# open up the eeprom file
+f = open(eeprom_filename, 'w')
+
+# open a subprocess and pipe stdout to the eeprom file
+print 'Writing to eeprom_filename via eeprom.py...'
+exit = subprocess.call(['/home/pi/tools/eeprom.py', '-f', freq, '-b', band, '-d', deemphasis, '-s', spacing, '-S', serial], stdout=f)
+f.close()
+print 'eeprom_filename closed'
+print exit
+
+if (exit != 0):
+	print 'ERROR: failed at eeprom/py. Log below.'
+	subprocess.call(['cat', eeprom_filename])
 	sys.exit(1)
-# else: print 'countryCode is', countryCode
+else:
+	print 'SUCCESS! Contents of', eeprom_filename, 'below.'
+	subprocess.call(['cat', eeprom_filename])
 
-# run eeprom.py
-hexfile = os.system("./eeprom.py -f %s -b %s -d %s -s %s -S %s" % frequency, presets['band'], presets['deemphasis'], presets['channel_spacing'], serialNumber)
+# close the eeprom file
+#f.close()
 
-
-# Open the eeprom file
-eeprom_file = open(eeprom_filename, 'w')
-eeprom_file.write(hexfile)
-
-# Close the eeprom file
-eeprom_file.close()
-
+# display the results
+#print 'the contents of', eeprom_filename, 'are below'
+#subprocess.call(['cat', eeprom_filename])
 
 
 
