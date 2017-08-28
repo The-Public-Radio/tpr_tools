@@ -11,6 +11,12 @@
 # Authenticate the SSH key you created into GitHub
 # For this, go to https://github.com/The-Public-Radio/ops_tools/settings/keys and paste the contents of ~/.ssh/id_rsa.pub
 
+
+
+# Once you've done everything above, run:
+#	$ sudo ./install.sh
+# and everything should set itself up!
+
 # start ssh-agent, add your ssh key to it
 eval "$(ssh-agent -s)"
 ssh-add /home/pi/.ssh/id_rsa
