@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# This script creates a label that's used for the outside of TPR's 
+# shipping box.
+#
+# Usage: $ boxlabel.sh <frequency> <serial number>
+
 # create text image
 convert -density 300 -pointsize 12 -font \
 /usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold.ttf \
