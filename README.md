@@ -1,16 +1,6 @@
 # tools
 Tools, scripts, etc
 Created 2015.01.21 by Spencer Wright
-Updated by Spencer Wright 2015.05.15
-
-## CREDITS
-This project was begun by Zach Dunham and Spencer Wright, but would not have been possible without the generous help of Andy Warner, Daniel Suo, Suz Hinton, Todd Bailey, and others. Big ups.
-In addition, early versions of the hardware and firmware was adapted directly from Nathan Seidle et al (Sparkfun).
-
-
-## LICENSE
-In the interest of collaboration and good will, the files herein are offered for public use. Just don't be a jerk about it, etc., and do let us know if we've screwed something really big up:).
-Officially, the Public Radio is licensed under a Creative Commons Attribution 4.0 License. For more info, visit https://creativecommons.org/licenses/by/4.0/
 
 
 ## PROJECT DESCRIPTION
@@ -19,11 +9,14 @@ As a piece of hardware, it was intended to be as simple as possible. One midrang
 
 
 ## CONTAINED HEREIN
-A whole bunch of tools. Eventually this repo should contain:
-* All of the fixtures and jigs required to mechanically assemble a Public Radio.
-* All of the embedded systems tools for programming a Public Radio.
-* Software for tuning The Public Radio.
-* The fulfillment software & tools used to efficiently process Public Radio orders.
+A whole bunch of tools for assembling, programming, and debugging The Public Radio. 
+* perso.py, a script for taking in personalization data and managing the eeprom image creation
+* eeprom.py, a script for creating an eeprom image
+* boxlabel.sh, a script for generating and printing a label that goes on the outside of The Public Radio's box
+* install.sh, a shell script used to set up a Raspberry Pi for use as a Public Radio manufacturing station
+* Compiled versions of The Public Radio's current firmware. Note, these are generated from source which is contained in https://github.com/The-Public-Radio/Firmware
+* pc_setup.md, instructions for setting up a Windows PC to be used as a Public Radio manufacturing station
 
-## ELSE
-We're new to this game. Holler at me if I'm missing something.
+## CREDITS
+This project was begun by Zach Dunham and Spencer Wright, but would not have been possible without the generous help of Andy Warner, Daniel Suo, Suz Hinton, Todd Bailey, Josh Levine, Jordan Husney, Gabe Ochoa, and others. Big ups.
+In addition, early versions of the hardware and firmware was adapted directly from Nathan Seidle et al (Sparkfun).
