@@ -56,8 +56,7 @@ git clone git@github.com:markondej/fm_transmitter.git /home/pi/fm_transmitter
 # make user 'pi' a CUPS admin
 usermod -a -G lpadmin pi
 # make sure remote users can make changes to CUPS
-FILE=/etc/cups/cupsd.conf 
-cat $FILE <<- EOM
+cat > /etc/cups/cupsd.conf <<- EOM
 # foo
 #
 # Sample configuration file for the CUPS scheduler.  See "man cupsd.conf" for a
