@@ -30,7 +30,7 @@ convert -resize 300% /home/pi/ops_tools/temp/sn.png /home/pi/ops_tools/temp/sn.p
 convert /home/pi/ops_tools/temp/text.png /home/pi/ops_tools/temp/sn.png -gravity center -geometry +0+300 -composite /home/pi/ops_tools/temp/label.png
 
 # print the result
-lpr /home/pi/ops_tools/temp/label.png
+lpr -P DYMO_LabelWriter_450_Turbo /home/pi/ops_tools/temp/label.png
 
 # delete all the temp files
 rm /home/pi/ops_tools/temp/*
