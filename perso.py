@@ -34,33 +34,6 @@ EU = ['AE','BE','BG','CZ','DE','EE','IE','EL','ES','FR','FO','HR','IT','CY','LV'
 Americas = ['US','CA','AI','AG','AW','BS','BB','BZ','BM','VG','CA','KY','CR','CU','CW','DM','DO','SV','GL','GD','GP','GT','HT','HN','JM','MQ','MX','PM','MS','CW','KN','NI','PA','PR','KN','LC','PM','VC','TT','TC','VI','SX','BQ','SA','SE','AR','BO','BR','CL','CO','EC','FK','GF','GY','PY','PE','SR','UY','VE']
 Asia = ['AF','AM','AZ','BH','BD','BT','BN','KH','CN','CX','CC','IO','GE','HK','IN','ID','IR','IQ','IL','JO','KZ','KP','KR','KW','KG','LA','LB','MO','MY','MV','MN','MM','NP','OM','PK','PH','QA','SA','SG','LK','SY','TW','TJ','TH','TR','TM','AE','UZ','VN','YE','PS']
 
-# set up get_preset function
-#def get_preset(country):
-#        if country in EU:
-#                band = 0
-#                deemphasis = 1
-#                spacing = 1
-#        elif country in Asia:
-#                band = 0
-#		print 'band is', band
-#                deemphasis = 1
-#                spacing = 1
-#        elif country in Americas:
-#                band = str(0)
-#                deemphasis = 0
-#                spacing = 0
-#		print 'country is in americas'
-#        elif country == 'AU':
-#                band = 0
-#                deemphasis = 1
-#                spacing = 0
-#        elif country == 'JP':
-#                band = 1
-#                deemphasis = 1
-#                spacing = 1
-#	else:
-#		print 'Error: country not found'
-#		sys.exit(1)
 
 # set input variables
 serial = sys.argv[1]
@@ -110,12 +83,6 @@ else:
 	print 'SUCCESS! Contents of', eeprom_filename, 'below.'
 	subprocess.call(['cat', eeprom_filename])
 
-# close the eeprom file
-#f.close()
-
-# display the results
-#print 'the contents of', eeprom_filename, 'are below'
-#subprocess.call(['cat', eeprom_filename])
 
 
 
