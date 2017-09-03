@@ -1,10 +1,12 @@
 # tools
 Tools, scripts, etc
+
 Created 2015.01.21 by Spencer Wright
 
 
 ## PROJECT DESCRIPTION
 The Public Radio is a single channel, single speaker FM receiver. 
+
 As a piece of hardware, it was intended to be as simple as possible. One midrange speaker mounted inside a simple enclosure, with a single switched knob which controls power and adjusts volume.
 
 
