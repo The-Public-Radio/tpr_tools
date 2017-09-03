@@ -5,6 +5,14 @@
 #
 # Usage: $ boxlabel.sh <frequency> <serial number>
 
+# check number of arguments and give feedback if it's not 3
+if [ "$#" -ne 1 ]; then
+  echo "Wrong number of arguments!"
+  echo "Usage: $ boxlabel.sh <frequency> <serial number>" >&2
+  exit 1
+fi
+
+
 # create text image
 convert -density 300 -pointsize 12 -font \
 /usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold.ttf \
