@@ -5,8 +5,8 @@
 #
 # Usage: $ boxlabel.sh <frequency> <serial number>
 
-# check number of arguments and give feedback if it's not 3
-if [ "$#" -ne 1 ]; then
+# check number of arguments and give feedback if it's not 2
+if [ "$#" -ne 2 ]; then
   echo "Wrong number of arguments!"
   echo "Usage: $ boxlabel.sh <frequency> <serial number>" >&2
   exit 1
@@ -33,4 +33,4 @@ convert /home/pi/ops_tools/temp/text.png /home/pi/ops_tools/temp/sn.png -gravity
 lpr -P DYMO_LabelWriter_450_Turbo /home/pi/ops_tools/temp/label.png
 
 # delete all the temp files
-rm /home/pi/ops_tools/temp/*
+rm -rf /home/pi/ops_tools/temp/*
