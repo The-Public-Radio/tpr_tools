@@ -39,6 +39,7 @@ apt-get -y install binutils-avr
 apt-get -y install gdb-avr
 apt-get -y install avr-libc
 apt-get -y install avrdude
+apt-get -y install jq
 
 # install pip packages
 pip install intelhex
