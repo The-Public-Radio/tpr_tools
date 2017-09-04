@@ -83,9 +83,11 @@ while [ $(ls $dir | wc -l) -gt 0 ]; do
 		else
 			echo "$file no longer in print queue."
 			# if not in queue, assume it printed and update coordinator
-			shipment_id=$(echo $file | cut -d'.' -f1)
+			shipment_id=$(echo $file | cut -d'/' -f1 | cut -d'.' -f1)
 			echo "Updating shipment_id $shipment_id"
 			echo 'curl -X PUT api-staging.thepublicrad.io/shipments/$shipment_id -d '{"shipment": {"shipment_status": "label_printed"}}''
+			# delete file
+			rm $file
 		fi
 	done
 	echo 'Sleeping before checking queue again'
