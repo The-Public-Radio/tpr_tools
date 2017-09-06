@@ -27,8 +27,7 @@ backer_list.each do |backer|
 	end
 
 	order_params = {
-	  first_name: name.split(' ')[0],
-	  last_name: name.split(' ')[1],
+	  name: name,
 	  order_source: "kickstarter",
 	  email: backer['Email'],
 	  street_address_1: backer['Shipping Address 1'],
@@ -54,5 +53,9 @@ backer_list.each do |backer|
   
   response = HTTParty.post(url, headers: headers, body: order_params.to_json)
 
-  puts response.code
+  if (200..299).include?(response.code)
+  	puts 'Success!'
+  else
+  	puts "An error occured uplading order #{order_params}: #{response.body}"
+  end
 end;nil
