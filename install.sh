@@ -52,6 +52,9 @@ mkdir /home/pi/ops_tools/temp
 
 # Clone fm_transmitter
 git clone git@github.com:markondej/fm_transmitter.git /home/pi/fm_transmitter
+# make fm_transmitter
+cd /home/pi/fm_transmitter
+make
 
 # Set up CUPS for your Dymo 4XL and 450 Turbo
 # make user 'pi' a CUPS admin
