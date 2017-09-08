@@ -55,7 +55,7 @@ mkdir ./tmp
 
 # Pull down all label_created shipments
 curl -s $url/shipments?shipment_status=label_created | jq -c '[.data[] | {id: .id, label_data: .label_data}][]' | while read i; do
-	label_data=$(echo -n $i | jq -ja '.label_data')
+	label_data=$(echo -n $i | jq -j '.label_data')
 	id=$(echo -n $i | jq '.id')
 
 	echo -n $label_data | base64 -d > ./tmp/$id.pdf
