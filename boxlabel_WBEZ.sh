@@ -6,11 +6,11 @@
 # Usage: $ boxlabel.sh <frequency> <serial number>
 
 # check number of arguments and give feedback if it's not 2
-#if [ "$#" -ne 2 ]; then
-#  echo "Wrong number of arguments!"
-#  echo "Usage: $ boxlabel.sh <frequency> <serial number>" >&2
-#  exit 1
-#fi
+if [ "$#" -ne 1 ]; then
+  echo "Wrong number of arguments!"
+  echo "Usage: $ boxlabel_WBEZ.sh <serial number>" >&2
+  exit 1
+fi
 
 
 # create text image
@@ -21,7 +21,7 @@ label:'\n\nYour Public Radio\nis tuned to\nWBEZ 91.5 Chicago\n\n\nEnjoy :)\n\n\n
 /home/pi/ops_tools/temp/text.png
 
 # create QR code for serial number
-qrencode -o /home/pi/ops_tools/temp/sn.png "sample"
+qrencode -o /home/pi/ops_tools/temp/sn.png "$1"
 
 # resize QR code
 convert -resize 300% /home/pi/ops_tools/temp/sn.png /home/pi/ops_tools/temp/sn.png
