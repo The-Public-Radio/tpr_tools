@@ -48,7 +48,7 @@ backer_list.each do |backer|
 	order_params['frequencies'] = { backer['Shipping Country Code']  => frequencies.compact }
 
 	# Post to TPR Coordinator
-	url = 'http://api-staging.thepublicrad.io/orders'
+	url = 'https://api.thepublicrad.io/orders'
 	headers = {'Content-Type' => 'application/json'}
   
   response = HTTParty.post(url, headers: headers, body: order_params.to_json)
