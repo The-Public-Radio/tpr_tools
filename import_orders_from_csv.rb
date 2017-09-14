@@ -4,6 +4,7 @@
 # Usage: python import_orders_from_csv.py <path_to_csv>
 require 'CSV'
 require 'httparty'
+require "pry"
  
 # Import CSV
 backers_csv = CSV.read(ARGV[0])

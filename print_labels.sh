@@ -2,9 +2,8 @@
 # 
 # Print labels for shipments
 # Usage:
-# ./print_labels.sh <tmp_dir>
+# ./print_labels.sh <env> 
 # 
-# <tmp_dir>       tmp directory for label pdfs, defaults: ./
 # <env>				environment to download labels for [staging, production]
 
 
@@ -12,11 +11,10 @@
 script_help() {
 	cat <<- EOM
 Usage:
-./print_labels.sh <env> <tmp_dir> 
+./print_labels.sh <env>
 
 Options:
 ----------------
-<tmp_dir>   temp directory for label pdfs, defaults: ./
 <env>       environment to download labels for [staging, production]
 ----------------
 EOM
@@ -91,14 +89,14 @@ while [ $(ls $tmp_dir | wc -l) -gt 0 ]; do
 	for file in $tmp_dir/*.pdf; do
 		echo '----------------'
 		file_name=$(echo $file | sed 's/.*\///')
-		echo "Checking print queue for $file_name"
-		# check to see if the file is in the queue
-		in_queue=$(lpq -P DYMO_LabelWriter_4XL | grep $file_name | wc -l)
-		if [[ in_queue -gt 0 ]]; then
-			echo "$file_name is still in print queue. Moving on."
-		else
-			echo "$file_name no longer in print queue."
-			# if not in queue, assume it printed and update coordinator
+		# echo "Checking print queue for $file_name"
+		# # check to see if the file is in the queue
+		# in_queue=$(lpq -P DYMO_LabelWriter_4XL | grep $file_name | wc -l)
+		# if [[ in_queue -gt 0 ]]; then
+		# 	echo "$file_name is still in print queue. Moving on."
+		# else
+		# 	echo "$file_name no longer in print queue."
+		# 	# if not in queue, assume it printed and update coordinator
 			shipment_id=$(echo $file_name | cut -d. -f1)
 			echo "Updating shipment_id $shipment_id"
 			curl -X PUT $url/shipments/$shipment_id -H 'Content-Type: application/json' -d '{"shipment": {"shipment_status": "label_printed"}}' > /dev/null 2>&1
@@ -107,7 +105,7 @@ while [ $(ls $tmp_dir | wc -l) -gt 0 ]; do
 			fi
 			# delete file
 			rm $file
-		fi
+		# fi
 	done
 	echo 'Sleeping before checking queue again'
 	sleep 5
