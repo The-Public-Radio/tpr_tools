@@ -91,14 +91,14 @@ while [ $(ls $tmp_dir | wc -l) -gt 0 ]; do
 	for file in $tmp_dir/*.pdf; do
 		echo '----------------'
 		file_name=$(echo $file | sed 's/.*\///')
-		echo "Checking print queue for $file_name"
-		# check to see if the file is in the queue
-		in_queue=$(lpq -P DYMO_LabelWriter_4XL | grep $file_name | wc -l)
-		if [[ in_queue -gt 0 ]]; then
-			echo "$file_name is still in print queue. Moving on."
-		else
-			echo "$file_name no longer in print queue."
-			# if not in queue, assume it printed and update coordinator
+		# echo "Checking print queue for $file_name"
+		# # check to see if the file is in the queue
+		# in_queue=$(lpq -P DYMO_LabelWriter_4XL | grep $file_name | wc -l)
+		# if [[ in_queue -gt 0 ]]; then
+		# 	echo "$file_name is still in print queue. Moving on."
+		# else
+		# 	echo "$file_name no longer in print queue."
+		# 	# if not in queue, assume it printed and update coordinator
 			shipment_id=$(echo $file_name | cut -d. -f1)
 			echo "Updating shipment_id $shipment_id"
 			curl -X PUT $url/shipments/$shipment_id -H 'Content-Type: application/json' -d '{"shipment": {"shipment_status": "label_printed"}}' > /dev/null 2>&1
