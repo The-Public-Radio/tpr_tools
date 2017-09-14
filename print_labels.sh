@@ -2,9 +2,8 @@
 # 
 # Print labels for shipments
 # Usage:
-# ./print_labels.sh <tmp_dir>
+# ./print_labels.sh <env> 
 # 
-# <tmp_dir>       tmp directory for label pdfs, defaults: ./
 # <env>				environment to download labels for [staging, production]
 
 
@@ -12,11 +11,10 @@
 script_help() {
 	cat <<- EOM
 Usage:
-./print_labels.sh <env> <tmp_dir> 
+./print_labels.sh <env>
 
 Options:
 ----------------
-<tmp_dir>   temp directory for label pdfs, defaults: ./
 <env>       environment to download labels for [staging, production]
 ----------------
 EOM
@@ -107,7 +105,7 @@ while [ $(ls $tmp_dir | wc -l) -gt 0 ]; do
 			fi
 			# delete file
 			rm $file
-		fi
+		# fi
 	done
 	echo 'Sleeping before checking queue again'
 	sleep 5
