@@ -1,9 +1,9 @@
 #!/bin/bash
-# 
+#
 # Print labels for shipments
 # Usage:
-# ./print_labels.sh <tmp_dir>
-# 
+# ./print_labels.sh <env>
+#
 # <tmp_dir>       tmp directory for label pdfs, defaults: ./
 # <env>				environment to download labels for [staging, production]
 
@@ -12,11 +12,10 @@
 script_help() {
 	cat <<- EOM
 Usage:
-./print_labels.sh <env> <tmp_dir> 
+./print_labels.sh <env>
 
 Options:
 ----------------
-<tmp_dir>   temp directory for label pdfs, defaults: ./
 <env>       environment to download labels for [staging, production]
 ----------------
 EOM
@@ -35,14 +34,14 @@ if [[ $1 == "--help" || "$#" -lt 1 ]];
 fi
 
 # Check tmp_dir
-if [[ -z $2 ]]; then 
+if [[ -z $2 ]]; then
 	tmp_dir='./tmp';
 else
 	tmp_dir=$2
 fi
 
 # Check env
-if [[ $1 == 'production' ]]; then 
+if [[ $1 == 'production' ]]; then
 	url='api.thepublicrad.io';
 elif [[ $1 == 'staging' ]]; then
 	url='api-staging.thepublicrad.io';
@@ -76,13 +75,13 @@ for file in $tmp_dir/*.pdf; do
 		echo "ERROR: $file could not be put in print queue. Removing file. Fix errors and re-run script."
 		rm $file
 	fi
-done 
+done
 
 # Sleep before starting print loop check
 echo 'Sleeping before updating status'
 sleep 1
 
-# Check print queue in loop, deleting images that are not present in queue 
+# Check print queue in loop, deleting images that are not present in queue
 # (already printed) and updating coordinator with status label_printed
 
 # While there are files in the directory....
