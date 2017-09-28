@@ -48,7 +48,9 @@ else
 fi
 
 # Make temp tmp_dir
-mkdir ./tmp
+clean_up
+tmp_dir='./tmp'
+mkdir $tmp_dir
 
 # Pull down all label_printed, but not yet boxed shipments
 curl -s -H "$headers" $url/shipments?shipment_status=label_printed | jq -c '[.data[] | {id: .id, label_data: .label_data}][]' | while read i; do
