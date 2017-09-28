@@ -99,7 +99,7 @@ while [ $(ls $tmp_dir | wc -l) -gt 0 ]; do
       # if not in queue, assume it printed and update coordinator
       shipment_id=$(echo $file_name | cut -d. -f1)
       echo "Updating shipment_id $shipment_id"
-      curl -X PUT $url/shipments/$shipment_id -H 'Content-Type: application/json' -d '{"shipment": {"shipment_status": "label_printed"}}' > /dev/null 2>&1
+      curl  -X PUT $url/shipments/$shipment_id -H "$headers" -H 'Content-Type: application/json' -d '{"shipment": {"shipment_status": "label_printed"}}' > /dev/null 2>&1
       if [[ $? -ne 0 ]]; then
         echo "Error updating shipment $shipment_id status!"
       fi
