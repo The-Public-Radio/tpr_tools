@@ -2,10 +2,11 @@
 #
 # Print labels for shipments
 # Usage:
-# ./reprint_labels.sh <env>
+# ./reprint_labels.sh <env> <auth_token>
 #
 # <tmp_dir>       tmp directory for label pdfs, defaults: ./
 # <env>       environment to download labels for [staging, production]
+# <auth_token>     tpr-coordinator auth token
 
 
 # Helper functions
@@ -33,18 +34,15 @@ if [[ $1 == "--help" || "$#" -lt 1 ]];
   then script_help;
 fi
 
-# Check tmp_dir
-if [[ -z $2 ]]; then
-  tmp_dir='./tmp';
-else
-  tmp_dir=$2
-fi
+auth_token=$2;
 
 # Check env
 if [[ $1 == 'production' ]]; then
   url='api.thepublicrad.io';
+  headers="Authorization: Bearer $auth_token";
 elif [[ $1 == 'staging' ]]; then
   url='api-staging.thepublicrad.io';
+  headers="Authorization: Bearer $auth_token";
 else
   script_help
 fi
@@ -53,7 +51,7 @@ fi
 mkdir ./tmp
 
 # Pull down all label_printed, but not yet boxed shipments
-curl -s $url/shipments?shipment_status=label_printed | jq -c '[.data[] | {id: .id, label_data: .label_data}][]' | while read i; do
+curl -s -H "$headers" $url/shipments?shipment_status=label_printed | jq -c '[.data[] | {id: .id, label_data: .label_data}][]' | while read i; do
   label_data=$(echo -n $i | jq -r '.label_data' | tr -d '\n')
   id=$(echo -n $i | jq '.id')
 

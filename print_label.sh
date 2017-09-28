@@ -2,21 +2,23 @@
 #
 # Print labels for shipments
 # Usage:
-# ./print_labels.sh <env>
+# ./print_labels.sh <env> <auth_token>
 #
 # <tmp_dir>       tmp directory for label pdfs, defaults: ./
 # <env>				environment to download labels for [staging, production]
+# <auth_token>     tpr-coordinator auth token
 
 
 # Helper functions
 script_help() {
 	cat <<- EOM
 Usage:
-./print_labels.sh <env>
+./print_labels.sh <env> <auth_token>
 
 Options:
 ----------------
-<env>       environment to download labels for [staging, production]
+<env>            environment to download labels for [staging, production]
+<auth_token>     tpr-coordinator auth token
 ----------------
 EOM
 exit
@@ -33,18 +35,15 @@ if [[ $1 == "--help" || "$#" -lt 1 ]];
   then script_help;
 fi
 
-# Check tmp_dir
-if [[ -z $2 ]]; then
-	tmp_dir='./tmp';
-else
-	tmp_dir=$2
-fi
+auth_token="$2";
 
 # Check env
 if [[ $1 == 'production' ]]; then
 	url='api.thepublicrad.io';
+	headers="Authorization: Bearer $auth_token";
 elif [[ $1 == 'staging' ]]; then
 	url='api-staging.thepublicrad.io';
+	headers="Authorization: Bearer $auth_token";
 else
 	script_help
 fi
@@ -52,8 +51,8 @@ fi
 # Make temp tmp_dir
 mkdir ./tmp
 
-# Pull down all label_created shipments
-curl -s $url/shipments?shipment_status=label_created | jq -c '[.data[] | {id: .id, label_data: .label_data}][]' | while read i; do
+# Pull down the next label_created shipment
+curl -s -H "$headers" $url/next_shipment_to_print | jq -c '[.data | {id: .id, label_data: .label_data}][]' | while read i; do
 	label_data=$(echo -n $i | jq -r '.label_data' | tr -d '\n')
 	id=$(echo -n $i | jq '.id')
 

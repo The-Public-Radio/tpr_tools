@@ -37,7 +37,7 @@ backer_list.each do |backer|
 	  postal_code: backer['Shipping Postal Code'],
 	  country: backer['Shipping Country Code'],
 	  phone: backer['Shipping Phone Number']
-	}
+	}	
 
 	frequencies = []
 
