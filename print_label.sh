@@ -24,7 +24,7 @@ exit
 }
 
 clean_up() {
-	rmdir $tmp_dir
+	rm -rf $tmp_dir
 }
 
 # Set some base variables
@@ -54,9 +54,6 @@ tmp_dir="$basename/temp"
 # make the temp directory. -p forces no error if temp directory already exists.
 mkdir -p $tmp_dir
 
-# clear out the temp directory in case it already existed.
-rm -f $tmp_dir/*
-
 # move to the temp directory
 cd $tmp_dir
 
@@ -67,6 +64,7 @@ curl -s -H "$headers" $url/next_shipment_to_print | jq -c '[.data | {id: .id, la
 	label_data=$(echo -n $i | jq -r '.label_data' | tr -d '\n')
 	id=$(echo -n $i | jq '.id')
 	if [ $id != null ]
+		echo "Downloaded shipment $id!"
 		then echo -n $label_data | base64 --decode > $id.pdf
 	else 
 		echo "No labels in the database!"
