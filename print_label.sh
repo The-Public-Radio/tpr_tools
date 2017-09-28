@@ -2,9 +2,8 @@
 #
 # Print labels for shipments
 # Usage:
-# ./print_labels.sh <env> <auth_token>
+# ./print_label.sh <env> <auth_token>
 #
-# <tmp_dir>       tmp directory for label pdfs, defaults: ./
 # <env>				environment to download labels for [staging, production]
 # <auth_token>     tpr-coordinator auth token
 
@@ -48,34 +47,43 @@ else
 	script_help
 fi
 
-# Make temp tmp_dir
-tmp_dir='./tmp'
-mkdir $tmp_dir
+# set temp directory variable. temp directory should be inside the directory that the script is located in.
+basename="$(dirname $0)"
+tmp_dir="$basename/temp"
+
+# make the temp directory. -p forces no error if temp directory already exists.
+mkdir -p $tmp_dir
+
+# clear out the temp directory in case it already existed.
+rm -f $tmp_dir/*
+
+# move to the temp directory
+cd $tmp_dir
 
 # Pull down the next label_created shipment
+# if the result you get isn't "null," then save the id and label_data parameters and dump the label data into a pdf.
+# otherwise, there are no orders to print! so clean up and exit.
 curl -s -H "$headers" $url/next_shipment_to_print | jq -c '[.data | {id: .id, label_data: .label_data}][]' | while read i; do
 	label_data=$(echo -n $i | jq -r '.label_data' | tr -d '\n')
 	id=$(echo -n $i | jq '.id')
-
-	echo -n $label_data | base64 -d > ./tmp/$id.pdf
+	if [ $id != null ]
+		then echo -n $label_data | base64 --decode > $id.pdf
+	else 
+		echo "No labels in the database!"
+		clean_up
+		exit
+	fi
 done
 
-if [[ $(ls $tmp_dir/ | wc -l) == 0  ]]; then
-	echo "No labels to print!"
+# add the label to the print queue. if lpr exit code != 0, clean up and exit.
+echo '----------------'
+echo "Printing $id.pdf"
+lpr -P DYMO_LabelWriter_4XL $id.pdf
+if [[ $? -ne 0 ]]; then
+	echo "ERROR: $file could not be put in print queue. Removing file. Fix errors and re-run script."
 	clean_up
 	exit
 fi
-
-# Print each label
-for file in $tmp_dir/*.pdf; do
-	echo '----------------'
-	echo "Printing $file"
-	lpr -P DYMO_LabelWriter_4XL $file
-	if [[ $? -ne 0 ]]; then
-		echo "ERROR: $file could not be put in print queue. Removing file. Fix errors and re-run script."
-		rm $file
-	fi
-done
 
 # Sleep before starting print loop check
 echo 'Sleeping before updating status'
@@ -84,30 +92,21 @@ sleep 1
 # Check print queue in loop, deleting images that are not present in queue
 # (already printed) and updating coordinator with status label_printed
 
-# While there are files in the directory....
-while [ $(ls $tmp_dir | wc -l) -gt 0 ]; do
-	echo "Starting check for files in $tmp_dir"
-	for file in $tmp_dir/*.pdf; do
-		echo '----------------'
-		file_name=$(echo $file | sed 's/.*\///')
-		echo "Checking print queue for $file_name"
-		# check to see if the file is in the queue
-		in_queue=$(lpq -P DYMO_LabelWriter_4XL | grep $file_name | wc -l)
-		if [[ in_queue -gt 0 ]]; then
-			echo "$file_name is still in print queue. Moving on."
-		else
-			echo "$file_name no longer in print queue."
-			# if not in queue, assume it printed and update coordinator
-			shipment_id=$(echo $file_name | cut -d. -f1)
-			echo "Updating shipment_id $shipment_id"
-			curl -X PUT $url/shipments/$shipment_id -H "$headers" -H 'Content-Type: application/json' -d '{"shipment": {"shipment_status": "label_printed"}}' > /dev/null 2>&1
-			if [[ $? -ne 0 ]]; then
-				echo "Error updating shipment $shipment_id status!"
-			fi
-			# delete file
-			rm $file
+# While the label's pdf still exists....
+while [ -e id.pdf ]; do
+	echo "Checking print queue for $id.pdf"
+	in_queue=$(lpq -P DYMO_LabelWriter_4XL | grep $id.pdf | wc -l)
+	if [[ in_queue -gt 0 ]]; then
+		echo "$id.pdf is still in print queue."
+	else
+		echo "$id.pdf no longer in print queue."
+		# if not in queue, assume it printed and update coordinator
+		echo "Updating shipment_id $id in the order database"
+		curl -X PUT $url/shipments/$shipment_id -H "$headers" -H 'Content-Type: application/json' -d '{"shipment": {"shipment_status": "label_printed"}}' > /dev/null 2>&1
+		if [[ $? -ne 0 ]]; then
+			echo "Error updating shipment_id $id status!"
 		fi
-	done
+	fi
 	echo 'Sleeping before checking queue again'
 	sleep 5
 done
