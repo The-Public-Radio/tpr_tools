@@ -48,7 +48,6 @@ else
 fi
 
 # Make temp tmp_dir
-clean_up
 tmp_dir='./tmp'
 mkdir $tmp_dir
 
