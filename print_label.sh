@@ -60,18 +60,18 @@ cd $tmp_dir
 # Pull down the next label_created shipment
 # if the result you get isn't "null," then save the id and label_data parameters and dump the label data into a pdf.
 # otherwise, there are no orders to print! so clean up and exit.
-curl -s -H "$headers" $url/next_shipment_to_print | jq -c '[.data | {id: .id, label_data: .label_data}][]' | while read i; do
-	label_data=$(echo -n $i | jq -r '.label_data' | tr -d '\n')
-	id=$(echo -n $i | jq '.id')
-	if [ $id != null ]
-		echo "Downloaded shipment $id!"
-		then echo -n $label_data | base64 --decode > $id.pdf
-	else 
-		echo "No labels in the database!"
-		clean_up
-		exit
-	fi
-done
+curl -s -H "$headers" $url/next_shipment_to_print | jq -c '[.data | {id: .id, label_data: .label_data}][]' >> next_shipment_to_print
+label_data=$(echo -n next_shipment_to_print | jq -r '.label_data' | tr -d '\n')
+id=$(echo -n next_shipment_to_print | jq '.id')
+if [ $id != null ]
+	echo "Downloaded shipment $id!"
+	then echo -n $label_data | base64 --decode > $id.pdf
+else 
+	echo "No labels in the database!"
+	clean_up
+	exit
+fi
+
 
 # add the label to the print queue. if lpr exit code != 0, clean up and exit.
 echo '----------------'
