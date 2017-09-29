@@ -72,7 +72,7 @@ id=$(echo -n $next_shipment_to_print | jq '.id')
 echo "this is id: "
 echo $id
 echo -e "\n"
-if [ "$id" != "null" ];	then 
+if [ -n "$id" ];	then 
 	echo "Downloaded shipment $id!";
 	echo -n $label_data | base64 --decode > ./$id.pdf;
 else 
