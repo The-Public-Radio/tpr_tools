@@ -42,7 +42,7 @@ if [[ $1 == 'production' ]]; then
 	headers="Authorization: Bearer $auth_token";
 elif [[ $1 == 'staging' ]]; then
 	url='api-staging.thepublicrad.io';
-	headers="Authorization: Bearer $auth_token";
+	headers="Authorization: Bearer 1bXdA4I8r10gmMEDT5S4n0yNwyR8BlzB";
 else
 	script_help
 fi
@@ -60,21 +60,21 @@ cd $tmp_dir
 # Pull down the next label_created shipment
 # if the result you get isn't "null," then save the id and label_data parameters and dump the label data into a pdf.
 # otherwise, there are no orders to print! so clean up and exit.
-curl -s -H "$headers" $url/next_shipment_to_print | jq -c '[.data | {id: .id, label_data: .label_data}][]' >> next_shipment_to_print
+next_shipment_to_print=$(curl -s -H "$headers" $url/next_shipment_to_print | jq -c '[.data | {id: .id, label_data: .label_data}][]')
 #echo "this is next_shipment_to_print"
 #head -c 100 next_shipment_to_print
 #echo -e "\n"
-label_data=$(cat next_shipment_to_print | jq -r '.label_data' | tr -d '\n')
+label_data=$(echo -n $next_shipment_to_print | jq -r '.label_data' | tr -d '\n')
 #echo "this is label_data"
 #echo $label_data | head -c 100
 #echo -e "\n"
-id=$(cat next_shipment_to_print | jq '.id')
+id=$(echo -n $next_shipment_to_print | jq '.id')
 echo "this is id: "
 echo $id
 echo -e "\n"
 if [ "$id" != "null" ];	then 
 	echo "Downloaded shipment $id!";
-	echo -n $label_data | base64 --decode > $id.pdf;
+	echo -n $label_data | base64 --decode > ./$id.pdf;
 else 
 	echo "No labels in the database!"
 	clean_up
@@ -85,7 +85,7 @@ fi
 # add the label to the print queue. if lpr exit code != 0, clean up and exit.
 echo '----------------'
 echo "Printing $id.pdf"
-lpr -P DYMO_LabelWriter_4XL $id.pdf
+lpr -P DYMO_LabelWriter_4XL ./$id.pdf
 if [[ $? -ne 0 ]]; then
 	echo "ERROR: $file could not be put in print queue. Removing file. Fix errors and re-run script."
 	clean_up
@@ -94,13 +94,13 @@ fi
 
 # Sleep before starting print loop check
 echo 'Sleeping before updating status'
-sleep 1
+sleep 5
 
 # Check print queue in loop, deleting images that are not present in queue
 # (already printed) and updating coordinator with status label_printed
 
 # While the label's pdf still exists....
-while [ -e id.pdf ]; do
+while [ -e ./$id.pdf ]; do
 	echo "Checking print queue for $id.pdf"
 	in_queue=$(lpq -P DYMO_LabelWriter_4XL | grep $id.pdf | wc -l)
 	if [[ in_queue -gt 0 ]]; then
@@ -109,7 +109,7 @@ while [ -e id.pdf ]; do
 		echo "$id.pdf no longer in print queue."
 		# if not in queue, assume it printed and update coordinator
 		echo "Updating shipment_id $id in the order database"
-		curl -X PUT $url/shipments/$shipment_id -H "$headers" -H 'Content-Type: application/json' -d '{"shipment": {"shipment_status": "label_printed"}}' > /dev/null 2>&1
+		curl -X PUT $url/shipments/$id -H "$headers" -H 'Content-Type: application/json' -d '{"shipment": {"shipment_status": "label_printed"}}' > /dev/null 2>&1
 		if [[ $? -ne 0 ]]; then
 			echo "Error updating shipment_id $id status!"
 		fi
