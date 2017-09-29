@@ -24,7 +24,7 @@ exit
 }
 
 clean_up() {
-	rm -rf $tmp_dir
+	rm -rf $tmp_dir/*
 }
 
 # Set some base variables
@@ -112,6 +112,8 @@ while [ -e ./$id.pdf ]; do
 		curl -X PUT $url/shipments/$id -H "$headers" -H 'Content-Type: application/json' -d '{"shipment": {"shipment_status": "label_printed"}}' > /dev/null 2>&1
 		if [[ $? -ne 0 ]]; then
 			echo "Error updating shipment_id $id status!"
+		else
+			rm ./$id.pdf
 		fi
 	fi
 	echo 'Sleeping before checking queue again'
