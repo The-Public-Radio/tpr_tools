@@ -61,15 +61,15 @@ cd $tmp_dir
 # if the result you get isn't "null," then save the id and label_data parameters and dump the label data into a pdf.
 # otherwise, there are no orders to print! so clean up and exit.
 curl -s -H "$headers" $url/next_shipment_to_print | jq -c '[.data | {id: .id, label_data: .label_data}][]' >> next_shipment_to_print
-echo "this is next_shipment_to_print"
-head -c 10 next_shipment_to_print
+echo -e "this is next_shipment_to_print\n"
+head -c 100 next_shipment_to_print
 label_data=$(cat next_shipment_to_print | jq -r '.label_data' | tr -d '\n')
-echo "this is label_data"
-echo $label_data | head -c 10
+echo -e "this is label_data\n"
+echo $label_data | head -c 100
 id=$(cat next_shipment_to_print | jq '.id')
-echo "this is id"
+echo -e "this is id\n"
 echo $id
-if [ $id != null ];	then 
+if [ $id -ne "null" ];	then 
 	echo "Downloaded shipment $id!";
 	echo -n $label_data | base64 --decode > $id.pdf;
 else 
