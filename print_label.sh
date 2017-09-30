@@ -61,20 +61,18 @@ cd $tmp_dir
 # if the result you get isn't "null," then save the id and label_data parameters and dump the label data into a pdf.
 # otherwise, there are no orders to print! so clean up and exit.
 next_shipment_to_print=$(curl -s -H "$headers" $url/next_shipment_to_print | jq -c '[.data | {id: .id, label_data: .label_data}][]')
-#echo "this is next_shipment_to_print"
-#head -c 100 next_shipment_to_print
-#echo -e "\n"
+
 label_data=$(echo -n $next_shipment_to_print | jq -r '.label_data' | tr -d '\n')
-#echo "this is label_data"
-#echo $label_data | head -c 100
-#echo -e "\n"
+
 id=$(echo -n $next_shipment_to_print | jq '.id')
-echo "this is id: "
-echo $id
-echo -e "\n"
+
+echo '----------------'
+
+# if $id isn't null, download it and then confirm.
 if [ -n "$id" ];	then 
-	echo "Downloaded shipment $id!";
 	echo -n $label_data | base64 --decode > ./$id.pdf;
+	echo "Downloaded shipment $id!";
+# else, that means that there aren't any orders to process. say so, then clean up and exit.
 else 
 	echo "No labels in the database!"
 	clean_up
@@ -92,15 +90,13 @@ if [[ $? -ne 0 ]]; then
 	exit
 fi
 
-# Sleep before starting print loop check
-echo 'Sleeping before updating status'
-sleep 5
-
 # Check print queue in loop, deleting images that are not present in queue
 # (already printed) and updating coordinator with status label_printed
 
 # While the label's pdf still exists....
 while [ -e ./$id.pdf ]; do
+	echo "Sleeping..."
+	sleep 5
 	echo "Checking print queue for $id.pdf"
 	in_queue=$(lpq -P DYMO_LabelWriter_4XL | grep $id.pdf | wc -l)
 	if [[ in_queue -gt 0 ]]; then
@@ -116,8 +112,6 @@ while [ -e ./$id.pdf ]; do
 			rm ./$id.pdf
 		fi
 	fi
-	echo 'Sleeping before checking queue again'
-	sleep 5
 done
 
 clean_up
