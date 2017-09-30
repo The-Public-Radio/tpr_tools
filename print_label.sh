@@ -87,32 +87,33 @@ lpr -P DYMO_LabelWriter_4XL ./$id.pdf
 if [[ $? -ne 0 ]]; then
 	echo "ERROR: $file could not be put in print queue. Removing file. Fix errors and re-run script."
 	clean_up
-	exit
+	exit 1
 fi
 
 # Check print queue in loop, deleting images that are not present in queue
 # (already printed) and updating coordinator with status label_printed
 
 # While the label's pdf still exists....
-while [ -e ./$id.pdf ]; do
-	echo "Sleeping..."
-	sleep 5
-	echo "Checking print queue for $id.pdf"
-	in_queue=$(lpq -P DYMO_LabelWriter_4XL | grep $id.pdf | wc -l)
-	if [[ in_queue -gt 0 ]]; then
-		echo "$id.pdf is still in print queue."
-	else
-		echo "$id.pdf no longer in print queue."
-		# if not in queue, assume it printed and update coordinator
-		echo "Updating shipment_id $id in the order database"
-		curl -X PUT $url/shipments/$id -H "$headers" -H 'Content-Type: application/json' -d '{"shipment": {"shipment_status": "label_printed"}}' > /dev/null 2>&1
-		if [[ $? -ne 0 ]]; then
-			echo "Error updating shipment_id $id status!"
-		else
-			rm ./$id.pdf
-		fi
-	fi
-done
+#while [ -e ./$id.pdf ]; do
+#	echo "Sleeping..."
+#	sleep 5
+#	echo "Checking print queue for $id.pdf"
+#	in_queue=$(lpq -P DYMO_LabelWriter_4XL | grep $id.pdf | wc -l)
+#	if [[ in_queue -gt 0 ]]; then
+#		echo "$id.pdf is still in print queue."
+#	else
+#		echo "$id.pdf no longer in print queue."
+#		# if not in queue, assume it printed and update coordinator
+#		echo "Updating shipment_id $id in the order database"
+#		curl -X PUT $url/shipments/$id -H "$headers" -H 'Content-Type: application/json' -d '{"shipment": {"shipment_status": "label_printed"}}' > /dev/null 2>&1
+#		if [[ $? -ne 0 ]]; then
+#			echo "Error updating shipment_id $id status!"
+#		else
+#			rm ./$id.pdf
+#		fi
+#	fi
+#done
 
 clean_up
 echo 'All new labels printed ✅'
+exit 0
