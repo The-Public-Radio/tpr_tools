@@ -115,5 +115,5 @@ fi
 #done
 
 clean_up
-echo 'All new labels printed ✅'
+echo 'All new labels sent to print ✅'
 exit 0

@@ -50,6 +50,9 @@ pip install RPi.GPIO
 git clone git@github.com:The-Public-Radio/ops_tools.git /home/pi/ops_tools
 mkdir /home/pi/ops_tools/temp
 
+# Clone Firmware
+git clone git@github.com:The-Public-Radio/Firmware.git /home/pi/Firmware
+
 # Clone fm_transmitter
 git clone git@github.com:markondej/fm_transmitter.git /home/pi/fm_transmitter
 # make fm_transmitter
