@@ -104,8 +104,8 @@ fi
 #	else
 #		echo "$id.pdf no longer in print queue."
 #		# if not in queue, assume it printed and update coordinator
-#		echo "Updating shipment_id $id in the order database"
-#		curl -X PUT $url/shipments/$id -H "$headers" -H 'Content-Type: application/json' -d '{"shipment": {"shipment_status": "label_printed"}}' > /dev/null 2>&1
+echo "Updating shipment_id $id in the order database"
+curl -X PUT $url/shipments/$id -H "$headers" -H 'Content-Type: application/json' -d '{"shipment": {"shipment_status": "label_printed"}}' > /dev/null 2>&1
 #		if [[ $? -ne 0 ]]; then
 #			echo "Error updating shipment_id $id status!"
 #		else
