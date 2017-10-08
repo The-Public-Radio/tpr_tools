@@ -27,7 +27,7 @@ request = requests.post(request_url, auth=('api', key), data={
     'to': recipient,
     'subject': "Your radio is on its way",
     'text': "Hi there, \n\n" +
-    "We're delighted to let you know that your radio is on it's way!" + 
+    "We're delighted to let you know that your radio is on its way!" + 
     " You can follow along with your USPS tracking number here: \n\n" + 
     "https://tools.usps.com/go/TrackConfirmAction.action?tLabels="+tracking+ 
     "\n\nCheers, \nZach & Spencer"
