@@ -25,12 +25,13 @@ request_url = 'https://api.mailgun.net/v2/{0}/messages'.format(subdomain)
 request = requests.post(request_url, auth=('api', key), data={
     'from': 'PublicRadioShipments@thepublicrad.io',
     'to': recipient,
-    'subject': "Your radio is on its way",
+    'subject': "Your Public Radio is on its way!",
     'text': "Hi there, \n\n" +
-    "We're delighted to let you know that your radio is on its way!" + 
-    " You can follow along with your USPS tracking number here: \n\n" + 
+    "We're delighted to let you know that your Public Radio has shipped! " + 
+    "You can follow along with your USPS tracking number here: \n\n" + 
     "https://tools.usps.com/go/TrackConfirmAction.action?tLabels="+tracking+ 
-    "\n\nCheers, \nZach & Spencer"
+    "\n\nCheers, \nZach & Spencer\n" +
+    "The Public Radio"
 })
 
 
