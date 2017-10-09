@@ -4,14 +4,21 @@
 # NOTE: MUST BE RUN AS ROOT
 #
 
-# Start by generating a SSH key pair by:
+# Start in the GUI - you'll need a mouse and keyboard
+# change hostname in `Raspberry Pi Configuration - System`
+# enable SSH in `Raspberry Pi Configuration - Interfaces`
+# reboot
+
+# Now you can SSH in from another computer, which is usually easier
+
+# Generate a SSH key pair by:
 # $ ssh-keygen
 # (use the default location, no passphrase)
 
 # Authenticate the SSH key you created into GitHub
 # For this, go to https://github.com/The-Public-Radio/ops_tools/settings/keys and paste the contents of ~/.ssh/id_rsa.pub
 
-
+# Now copy this file (install.sh) over to the Pi via `scp`
 
 # Once you've done everything above, run:
 #	$ sudo ./install.sh
