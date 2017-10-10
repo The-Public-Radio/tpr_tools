@@ -1,7 +1,7 @@
 #!/usr/bin/ruby
 # Upload kickstarter orders from a CSV to the TPR-Coordinator
 # 
-# Usage: python import_orders_from_csv.py <path_to_csv>
+# Usage: ruby import_orders_from_csv.rb <path_to_csv>
 require 'CSV'
 require 'httparty'
  
@@ -48,8 +48,8 @@ backer_list.each do |backer|
 	order_params['frequencies'] = { backer['Shipping Country Code']  => frequencies.compact }
 
 	# Post to TPR Coordinator
-	url = 'https://api-staging.thepublicrad.io/orders'
-	headers = {'Authorization' => 'Bearer 1bXdA4I8r10gmMEDT5S4n0yNwyR8BlzB', 'Content-Type' => 'application/json'}
+	url = 'https://api.thepublicrad.io/orders'
+	headers = {'Authorization' => 'Bearer XXXXXXXXXXXXXXXXXXXXXXXXXX', 'Content-Type' => 'application/json'}
   
   response = HTTParty.post(url, headers: headers, body: order_params.to_json)
 
