@@ -9,19 +9,20 @@
 # enable SSH in `Raspberry Pi Configuration - Interfaces`
 # reboot
 
-# Now you can SSH in from another computer, which is usually easier
+# Now you can SSH in from another computer, which is usually easier beacuse you can copy/paste, etc
 
-# Generate a SSH key pair by:
+# Generate a SSH key pair on the Pi by:
 # $ ssh-keygen
-# (use the default location, no passphrase)
+# use the default location, no passphrase - just hit return when it asks you for these things
 
 # Authenticate the SSH key you created into GitHub
 # For this, go to https://github.com/The-Public-Radio/ops_tools/settings/keys and paste the contents of ~/.ssh/id_rsa.pub
 
-# Now copy this file (install.sh) over to the Pi via `scp`
+# Now copy this file (install.sh) over to the Pi via scp
+# or, if you're ssh'd in, touch a new file and just paste the contents of this file into that one and `chmod +x` it
 
 # Once you've done everything above, run:
-#	$ sudo ./install.sh
+# $ sudo ./install.sh
 # and everything should set itself up!
 
 # start ssh-agent, add your ssh key to it
@@ -66,10 +67,15 @@ git clone git@github.com:markondej/fm_transmitter.git /home/pi/fm_transmitter
 cd /home/pi/fm_transmitter
 make
 
+# make user 'pi' an owner of all of those local repos
+chown pi /home/pi/ops_tools/* /home/pi/Firmware/* /home/pi/fm_transmitter/*
+
+
 # Set up CUPS for your Dymo 4XL and 450 Turbo
 # make user 'pi' a CUPS admin
 usermod -a -G lpadmin pi
-# make sure remote users can make changes to CUPS
+
+# make sure remote users can make changes to CUPS by editing your cupsd.conf file
 cat > /etc/cups/cupsd.conf <<- EOM
 # foo
 #
@@ -210,6 +216,11 @@ WebInterface Yes
 #
 EOM
 
+
+
+
+
+
 # restart CUPS
 /etc/init.d/cups restart
 
@@ -226,5 +237,7 @@ rm -rf /home/pi/ops_tools/temp/*
 
 # Now open a web browser and log onto the pi's CUPS server using port 631. 
 # Add the relevant DYMO printers and confirm that they work by printing test pages.
+
+
 # NOTE - i've had some issues compiling the DYMO drivers. If that fails, try
 # $ sudo apt-get install printer-driver-dymo
