@@ -226,3 +226,5 @@ rm -rf /home/pi/ops_tools/temp/*
 
 # Now open a web browser and log onto the pi's CUPS server using port 631. 
 # Add the relevant DYMO printers and confirm that they work by printing test pages.
+# NOTE - i've had some issues compiling the DYMO drivers. If that fails, try
+# $ sudo apt-get install printer-driver-dymo
