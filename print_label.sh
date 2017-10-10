@@ -12,7 +12,7 @@
 script_help() {
 	cat <<- EOM
 Usage:
-./print_labels.sh <env> <auth_token>
+./print_label.sh <env> <auth_token>
 
 Options:
 ----------------

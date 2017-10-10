@@ -4,7 +4,6 @@
 # Usage:
 # ./reprint_labels.sh <env> <auth_token>
 #
-# <tmp_dir>       tmp directory for label pdfs, defaults: ./
 # <env>       environment to download labels for [staging, production]
 # <auth_token>     tpr-coordinator auth token
 
@@ -13,18 +12,19 @@
 script_help() {
   cat <<- EOM
 Usage:
-./print_labels.sh <env>
+./reprint_labels.sh <env> <auth_token>
 
 Options:
 ----------------
-<env>       environment to download labels for [staging, production]
+<env>         environment to download labels for [staging, production]
+<auth_token>  API key
 ----------------
 EOM
 exit
 }
 
 clean_up() {
-  rmdir $tmp_dir
+  rm -rf $tmp_dir/*
 }
 
 # Set some base variables
@@ -34,7 +34,7 @@ if [[ $1 == "--help" || "$#" -lt 1 ]];
   then script_help;
 fi
 
-auth_token=$2;
+auth_token="$2";
 
 # Check env
 if [[ $1 == 'production' ]]; then
@@ -48,15 +48,23 @@ else
 fi
 
 # Make temp tmp_dir
-tmp_dir='./tmp'
-mkdir $tmp_dir
+basename="$(dirname $0)"
+tmp_dir="$basename/temp"
+
+# make the temp directory. -p forces no error if temp directory already exists.
+mkdir -p $tmp_dir
+
+# move to the temp directory
+cd $tmp_dir
+# remove any files that may be there already
+clean_up
 
 # Pull down all label_printed, but not yet boxed shipments
 curl -s -H "$headers" $url/shipments?shipment_status=label_printed | jq -c '[.data[] | {id: .id, label_data: .label_data}][]' | while read i; do
   label_data=$(echo -n $i | jq -r '.label_data' | tr -d '\n')
   id=$(echo -n $i | jq '.id')
-
-  echo -n $label_data | base64 -d > ./tmp/$id.pdf
+  # put the label data in a pdf in $tmp_dir
+  echo -n $label_data | base64 -d > $id.pdf
 done
 
 if [[ $(ls $tmp_dir/ | wc -l) == 0  ]]; then
@@ -72,44 +80,15 @@ for file in $tmp_dir/*.pdf; do
   lpr -P DYMO_LabelWriter_4XL $file
   if [[ $? -ne 0 ]]; then
     echo "ERROR: $file could not be put in print queue. Removing file. Fix errors and re-run script."
-    rm $file
+    echo "Cancelling process!"
+    clean_up
+    exit 1
   fi
+  echo "Updating shipment_id $id in the order database"
+  curl -X PUT $url/shipments/$id -H "$headers" -H 'Content-Type: application/json' -d '{"shipment": {"shipment_status": "label_printed"}}' > /dev/null 2>&1
 done
 
-# Sleep before starting print loop check
-echo 'Sleeping before updating status'
-sleep 1
-
-# Check print queue in loop, deleting images that are not present in queue
-# (already printed) and updating coordinator with status label_printed
-
-# While there are files in the directory....
-while [ $(ls $tmp_dir | wc -l) -gt 0 ]; do
-  echo "Starting check for files in $tmp_dir"
-  for file in $tmp_dir/*.pdf; do
-    echo '----------------'
-    file_name=$(echo $file | sed 's/.*\///')
-    echo "Checking print queue for $file_name"
-    # check to see if the file is in the queue
-    in_queue=$(lpq -P DYMO_LabelWriter_4XL | grep $file_name | wc -l)
-    if [[ in_queue -gt 0 ]]; then
-      echo "$file_name is still in print queue. Moving on."
-    else
-      echo "$file_name no longer in print queue."
-      # if not in queue, assume it printed and update coordinator
-      shipment_id=$(echo $file_name | cut -d. -f1)
-      echo "Updating shipment_id $shipment_id"
-      curl  -X PUT $url/shipments/$shipment_id -H "$headers" -H 'Content-Type: application/json' -d '{"shipment": {"shipment_status": "label_printed"}}' > /dev/null 2>&1
-      if [[ $? -ne 0 ]]; then
-        echo "Error updating shipment $shipment_id status!"
-      fi
-      # delete file
-      rm $file
-    fi
-  done
-  echo 'Sleeping before checking queue again'
-  sleep 5
-done
-
+# don't do any queue checking; it's not worth it.
 clean_up
-echo 'All new labels printed ✅'
+echo 'All new labels sent to print ✅'
+exit 0
