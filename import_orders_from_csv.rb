@@ -1,20 +1,27 @@
 #!/usr/bin/ruby
 # Upload kickstarter orders from a CSV to the TPR-Coordinator
 # 
-# Usage: ruby import_orders_from_csv.rb <path_to_csv> <auth_token> <source>
+# Usage: ruby import_orders_from_csv.rb <path_to_csv> <env> <auth_token> <source>
 
 
 
 require 'CSV'
 require 'httparty'
 
+# set environment
+env = ARGV[1]
+
+case env
+when 'production'
+	url='https://api.thepublicrad.io/orders'
+when 'staging'
+	url='https://api-staging.thepublicrad.io/orders'
+end
 # read in auth token 
-# NOTE FOR GABE - DOES THE LINE BELOW AND LINE 63 WORK??????????????????
-auth_token = ARGV[1]
+auth_token = ARGV[2]
 
 # set source
-# NOTE FOR GABE - DOES THE LINE BELOW AND LINE 42 WORK??????????????????
-source = ARGV[2]
+source = ARGV[3]
  
 # Import CSV
 backers_csv = CSV.read(ARGV[0])
@@ -59,10 +66,9 @@ backer_list.each do |backer|
 	order_params['frequencies'] = { backer['Shipping Country Code']  => frequencies.compact }
 
 	# Post to TPR Coordinator
-	url = 'https://api.thepublicrad.io/orders'
-	headers = {'Authorization' => 'Bearer 'auth_token, 'Content-Type' => 'application/json'}
-  
-  response = HTTParty.post(url, headers: headers, body: order_params.to_json)
+	headers = {'Authorization' => "Bearer #{auth_token}", 'Content-Type' => 'application/json'}
+	puts url  
+  	response = HTTParty.post(url, headers: headers, body: order_params.to_json)
 
   if (200..299).include?(response.code)
   	puts 'Success!'
