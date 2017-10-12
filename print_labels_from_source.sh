@@ -89,7 +89,22 @@ for file in $tmp_dir/*.pdf; do
     exit 1
   fi
   echo "Updating shipment_id $id in the order database"
-  curl -X PUT $url/shipments/$id -H "$headers" -H 'Content-Type: application/json' -d '{"shipment": {"shipment_status": "label_printed"}}' > /dev/null 2>&1
+
+###############################################################
+#######################  WARNING    ###########################
+# THE COMMENTED-OUT LINE BELOW IS NOT SAFE TO RUN
+
+
+
+
+
+
+
+
+
+
+
+#  curl -X PUT $url/shipments/$id -H "$headers" -H 'Content-Type: application/json' -d '{"shipment": {"shipment_status": "label_printed"}}' > /dev/null 2>&1
 done
 
 # don't do any queue checking; it's not worth it.
