@@ -66,7 +66,7 @@ clean_up
 curl -s -H "$headers" $url/orders?order_source=$order_source | jq -c '[.data[] | {id: .id}][]' | while read i; do
   id=$(echo -n $i | jq '.id')
   # put the label data in a pdf in $tmp_dir
-  r = curl -s -H "$headers" $url/shipments?order_id=$id | jq -c '[.data[] | {label_data: .label_data}][]'
+  r=$(curl -s -H "$headers" $url/shipments?order_id=$id | jq -c '[.data[] | {label_data: .label_data}][]')
   label_data=$(echo -n $r | jq '.label_data')
   echo -n $label_data | base64 -d > $id.pdf
 done
