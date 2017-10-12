@@ -18,6 +18,13 @@
 # Authenticate the SSH key you created into GitHub
 # For this, go to https://github.com/The-Public-Radio/ops_tools/settings/keys and paste the contents of ~/.ssh/id_rsa.pub
 
+# Now change the hostname
+# $ sudo nano /etc/hostname
+# $ sudo nano /etc/hosts
+# $ sudo nano hosts
+
+
+
 # Now copy this file (install.sh) over to the Pi via scp
 # or, if you're ssh'd in, touch a new file and just paste the contents of this file into that one and `chmod +x` it
 
@@ -232,6 +239,7 @@ cd /home/pi/ops_tools/temp/dymo-cups-drivers-1.4.0.5
 ./configure
 make
 make install
+
 
 rm -rf /home/pi/ops_tools/temp/*
 
