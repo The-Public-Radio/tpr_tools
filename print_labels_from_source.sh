@@ -2,7 +2,7 @@
 #
 # Print labels for shipments
 # Usage:
-# ./reprint_labels.sh <env> <auth_token> <order_source>
+# ./print_labels_from_source.sh <env> <auth_token> <order_source>
 #
 # <env>       environment to download labels for [staging, production]
 # <auth_token>     tpr-coordinator auth token
