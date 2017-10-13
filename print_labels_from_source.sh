@@ -64,11 +64,15 @@ clean_up
 
 # Pull down all label_printed, but not yet boxed shipments
 curl -s -H "$headers" $url/orders?order_source=$order_source | jq -c '[.data[] | {id: .id}][]' | while read i; do
-  id=$(echo -n $i | jq '.id')
+  order_id=$(echo -n $i | jq '.id')
+  echo "order_id is " $order_id
+  
   # put the label data in a pdf in $tmp_dir
-  r=$(curl -s -H "$headers" $url/shipments?order_id=$id | jq -c '[.data[] | {id: .id, label_data: .label_data}][]')
+  r=$(curl -s -H "$headers" $url/shipments?order_id=$order_id | jq -c '[.data[] | {id: .id, label_data: .label_data}][]')
   label_data=$(echo -n $r | jq -r '.label_data')
   shipment_id=$(echo -n $r | jq '.id')
+  echo "shipment_id is " $shipment_id
+
   # Store label in pdf file that's named for the shipment_id
   echo -n $label_data | base64 -d > ./$shipment_id.pdf
   # Print label 
