@@ -70,9 +70,9 @@ curl -s -H "$headers" $url/orders?order_source=$order_source | jq -c '[.data[] |
   label_data=$(echo -n $r | jq -r '.label_data')
   shipment_id=$(echo -n $r | jq '.id')
   # Store label in pdf file that's named for the shipment_id
-  echo -n $label_data | base64 -d > $shipment_id.pdf
+  echo -n $label_data | base64 -d > ./$shipment_id.pdf
   # Print label 
-  lpr -P DYMO_LabelWriter_4XL $shipment_id.pdf
+  lpr -P DYMO_LabelWriter_4XL ./$shipment_id.pdf
   # Update coordinator
   if [ -z "$shipment_id" ]; then
     echo "Shipment ID empty. Exiting to not set all shipments as printed";
