@@ -19,7 +19,7 @@ qrencode -o /home/pi/ops_tools/temp/sn.png "$1"
 convert -resize 300% /home/pi/ops_tools/temp/sn.png /home/pi/ops_tools/temp/sn.png
 
 # merge two images into one
-convert /home/pi/ops_tools/data/WBEZ_label.png /home/pi/ops_tools/temp/sn.png -gravity center -geometry +0+300 -composite /home/pi/ops_tools/temp/label.png
+convert /home/pi/ops_tools/data/WBEZ_white.png /home/pi/ops_tools/temp/sn.png -gravity center -geometry +0+300 -composite /home/pi/ops_tools/temp/label.png
 
 # print the result
 lpr -P DYMO_LabelWriter_450_Turbo /home/pi/ops_tools/temp/label.png
