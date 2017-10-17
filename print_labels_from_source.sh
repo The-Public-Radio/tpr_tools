@@ -13,7 +13,7 @@
 script_help() {
   cat <<- EOM
 Usage:
-./reprint_labels.sh <env> <auth_token>
+./reprint_labels.sh <env> <auth_token> <order_source>
 
 Options:
 ----------------
