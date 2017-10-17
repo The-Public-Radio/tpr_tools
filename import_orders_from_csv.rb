@@ -8,8 +8,12 @@
 require 'CSV'
 require 'httparty'
 
-# set environment
+# set arguments
+backers_csv = CSV.read(ARGV[0])
 env = ARGV[1]
+auth_token = ARGV[2]
+source = ARGV[3]
+
 
 case env
 when 'production'
@@ -17,14 +21,11 @@ when 'production'
 when 'staging'
 	url='https://api-staging.thepublicrad.io/orders'
 end
-# read in auth token 
-auth_token = ARGV[2]
 
-# set source
-source = ARGV[3]
+
  
 # Import CSV
-backers_csv = CSV.read(ARGV[0])
+
 headers = backers_csv.shift
 
 backer_list = []
