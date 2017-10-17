@@ -69,13 +69,13 @@ curl -s -H "$headers" $url/orders?order_source=$order_source | jq -c '[.data[] |
 
   # find the shipments that correspond with this order. there may be multiple shipments per order, so read them in one by one
   curl -s -H "$headers" $url/shipments?order_id=$order_id | grep 'label_created' | jq -c '[.data[] | {id: .id, label_data: .label_data}][]' | while read i; do
-    shipment_id=$(echo -n $r | jq '.id');
+    shipment_id=$(echo -n $i | jq '.id');
     # if there IS a shipment_id that has a label_created status
     if [ ! -z "shipment_id" ]; then
       # set up label_data and shipment variables
       echo "shipment_id $shipment_id needs to be printed";
 
-      label_data=$(echo -n $r | jq -r '.label_data');
+      label_data=$(echo -n $i | jq -r '.label_data');
       # Store label in pdf file that's named for the shipment_id
       echo -n $label_data | base64 -d > ./$shipment_id.pdf;
       # Print label 
