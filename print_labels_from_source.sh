@@ -71,7 +71,7 @@ curl -s -H "$headers" $url/orders?order_source=$order_source | jq -c '[.data[] |
   curl -s -H "$headers" $url/shipments?order_id=$order_id | grep 'label_created' | jq -c '[.data[] | {id: .id, label_data: .label_data}][]' | while read i; do
     shipment_id=$(echo -n $r | jq '.id');
     # if there IS a shipment_id that has a label_created status
-    if [ ! -z "shipment_id" ]; then
+    if [ -z "shipment_id" ]; then
       # set up label_data and shipment variables
       echo "shipment_id $shipment_id needs to be printed";
 
