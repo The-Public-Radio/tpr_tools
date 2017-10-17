@@ -81,8 +81,15 @@ curl -s -H "$headers" $url/orders?order_source=$order_source | jq -c '[.data[] |
       echo -n $label_data | base64 -d > ./$shipment_id.pdf
       # Print label 
       lpr -P DYMO_LabelWriter_4XL ./$shipment_id.pdf
-      # Update coordinator
-      curl -X PUT $url/shipments/$shipment_id -H "$headers" -H 'Content-Type: application/json' -d '{"shipment": {"shipment_status": "label_printed"}}' > /dev/null 2>&1;
+
+      # confirm that shipment_id isn't empty, which would be *bad*
+      if [ -z "$shipment_id" ]; then
+        echo "Shipment ID empty. Exiting to not set all shipments as printed";
+        exit;
+      # if shipment_id is defined, then update it!
+      else
+        curl -X PUT $url/shipments/$shipment_id -H "$headers" -H 'Content-Type: application/json' -d '{"shipment": {"shipment_status": "label_printed"}}' > /dev/null 2>&1;
+      fi
     fi
   done
 done
