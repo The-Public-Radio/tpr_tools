@@ -62,28 +62,29 @@ cd $tmp_dir
 # remove any files that may be there already
 clean_up
 
-# Pull down all label_printed, but not yet boxed shipments
+# Pull down all orders from the source you want
 curl -s -H "$headers" $url/orders?order_source=$order_source | jq -c '[.data[] | {id: .id}][]' | while read i; do
   order_id=$(echo -n $i | jq '.id')
   echo "order_id is " $order_id
-  
-  # put the label data in a pdf in $tmp_dir
-  r=$(curl -s -H "$headers" $url/shipments?order_id=$order_id | jq -c '[.data[] | {id: .id, label_data: .label_data}][]')
-  label_data=$(echo -n $r | jq -r '.label_data')
-  shipment_id=$(echo -n $r | jq '.id')
-  echo "shipment_id is " $shipment_id
 
-  # Store label in pdf file that's named for the shipment_id
-  echo -n $label_data | base64 -d > ./$shipment_id.pdf
-  # Print label 
-  lpr -P DYMO_LabelWriter_4XL ./$shipment_id.pdf
-  # Update coordinator
-  if [ -z "$shipment_id" ]; then
-    echo "Shipment ID empty. Exiting to not set all shipments as printed";
-    exit;
-  else
-    curl -X PUT $url/shipments/$shipment_id -H "$headers" -H 'Content-Type: application/json' -d '{"shipment": {"shipment_status": "label_printed"}}' > /dev/null 2>&1;
-  fi
+  # find the shipments that correspond with this order. there may be multiple shipments per order, so read them in one by one
+  r=$(curl -s -H "$headers" $url/shipments?order_id=$order_id | grep 'label_created' | jq -c '[.data[] | {id: .id, label_data: .label_data}][]') | while read i; do
+    # if there's no shipment_id that has a label_created status
+    if [ -z "$r" ]; then
+      echo "all shipments in order_id $order_id have been printed"
+    else
+      # set up label_data and shipment variables
+      label_data=$(echo -n $r | jq -r '.label_data')
+      shipment_id=$(echo -n $r | jq '.id')
+
+      # Store label in pdf file that's named for the shipment_id
+      echo -n $label_data | base64 -d > ./$shipment_id.pdf
+      # Print label 
+      lpr -P DYMO_LabelWriter_4XL ./$shipment_id.pdf
+      # Update coordinator
+      curl -X PUT $url/shipments/$shipment_id -H "$headers" -H 'Content-Type: application/json' -d '{"shipment": {"shipment_status": "label_printed"}}' > /dev/null 2>&1;
+    fi
+  done
 done
 
 # if [[ $(ls $tmp_dir/ | wc -l) == 0  ]]; then
