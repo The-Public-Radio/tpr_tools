@@ -71,17 +71,17 @@ curl -s -H "$headers" $url/orders?order_source=$order_source | jq -c '[.data[] |
   r=$(curl -s -H "$headers" $url/shipments?order_id=$order_id | grep 'label_created' | jq -c '[.data[] | {id: .id, label_data: .label_data}][]') | while read i; do
     # if there's no shipment_id that has a label_created status
     if [ -z "$r" ]; then
-      echo "all shipments in order_id $order_id have been printed"
+      echo "all shipments in order_id $order_id have been printed";
     else
       # set up label_data and shipment variables
-      label_data=$(echo -n $r | jq -r '.label_data')
-      shipment_id=$(echo -n $r | jq '.id')
-      echo "shipment_id $shipment_id needs to be printed"
+      label_data=$(echo -n $r | jq -r '.label_data');
+      shipment_id=$(echo -n $r | jq '.id');
+      echo "shipment_id $shipment_id needs to be printed";
 
       # Store label in pdf file that's named for the shipment_id
-      echo -n $label_data | base64 -d > ./$shipment_id.pdf
+      echo -n $label_data | base64 -d > ./$shipment_id.pdf;
       # Print label 
-      lpr -P DYMO_LabelWriter_4XL ./$shipment_id.pdf
+      lpr -P DYMO_LabelWriter_4XL ./$shipment_id.pdf;
 
       # confirm that shipment_id isn't empty, which would be *bad*
       if [ -z "$shipment_id" ]; then
