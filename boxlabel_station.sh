@@ -3,12 +3,12 @@
 # This script creates a label that's used for the outside of TPR's 
 # shipping box.
 #
-# Usage: $ boxlabel_WBEZ.sh <serial number>
+# Usage: $ boxlabel_station.sh <serial number>
 
 # check number of arguments and give feedback if it's not 2
 if [ "$#" -ne 1 ]; then
   echo "Wrong number of arguments!"
-  echo "Usage: $ boxlabel_WBEZ.sh <serial number>" >&2
+  echo "Usage: $ boxlabel_station.sh <serial number>" >&2
   exit 1
 fi
 
@@ -19,7 +19,7 @@ qrencode -o /home/pi/ops_tools/temp/sn.png "$1"
 convert -resize 300% /home/pi/ops_tools/temp/sn.png /home/pi/ops_tools/temp/sn.png
 
 # merge two images into one
-convert /home/pi/ops_tools/data/WBEZ_white.png /home/pi/ops_tools/temp/sn.png -gravity center -geometry +0+300 -composite /home/pi/ops_tools/temp/label.png
+convert /home/pi/ops_tools/data/label_KUER.png /home/pi/ops_tools/temp/sn.png -gravity center -geometry +0+300 -composite /home/pi/ops_tools/temp/label.png
 
 # print the result
 lpr -P DYMO_LabelWriter_450_Turbo /home/pi/ops_tools/temp/label.png
