@@ -33,7 +33,6 @@ if [ $3 != "KUER" ] && [ $3 != "WMBR" ] && [ $3 != "WBEZ" ]; then
 # else, i.e. if order_source IS a radio station
 else
 	bgname=/home/pi/ops_tools/data/label_$3.png
-	echo $bgname
 	convert $bgname /home/pi/ops_tools/temp/sn.png \
 	-gravity center -geometry +0+300 -composite /home/pi/ops_tools/temp/label.png
 fi
