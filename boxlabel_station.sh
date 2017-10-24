@@ -3,7 +3,7 @@
 # This script creates a label that's used for the outside of TPR's 
 # shipping box.
 #
-# Usage: $ boxlabel_station.sh <serial number>
+# Usage: $ boxlabel_station.sh <source> <serial number>
 
 # check number of arguments and give feedback if it's not 2
 if [ "$#" -ne 1 ]; then
