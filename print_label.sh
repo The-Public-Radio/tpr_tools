@@ -42,7 +42,7 @@ if [[ $1 == 'production' ]]; then
 	headers="Authorization: Bearer $auth_token";
 elif [[ $1 == 'staging' ]]; then
 	url='api-staging.thepublicrad.io';
-	headers="Authorization: Bearer 1bXdA4I8r10gmMEDT5S4n0yNwyR8BlzB";
+	headers="Authorization: Bearer $auth_token";
 else
 	script_help
 fi
