@@ -56,7 +56,7 @@ elif country in Americas:
 elif country == 'AU':
         band = str(0)
         deemphasis = str(1)
-        spacing = str(0)
+        spacing = str(1)
 elif country == 'JP':
         band = str(2)
         deemphasis = str(1)
@@ -76,7 +76,7 @@ print 'eeprom_filename closed'
 print exit
 
 if (exit != 0):
-	print 'ERROR: failed at eeprom/py. Log below.'
+	print 'ERROR: failed at eeprom.py. Log below.'
 	subprocess.call(['cat', eeprom_filename])
 	sys.exit(1)
 else:
