@@ -1,6 +1,6 @@
 #!/bin/bash
 # 
-# The Public Radio - Raspberry Py installation script
+# The Public Radio - Raspberry Pi installation script
 # NOTE: MUST BE RUN AS ROOT
 #
 
@@ -18,7 +18,7 @@
 # Authenticate the SSH key you created into GitHub
 # For this, go to https://github.com/The-Public-Radio/ops_tools/settings/keys and paste the contents of ~/.ssh/id_rsa.pub
 
-# Now change the hostname
+# Now change the hostname to something like "TPR-0"
 # $ sudo nano /etc/hostname
 # $ sudo nano /etc/hosts
 # $ sudo nano hosts
@@ -77,6 +77,12 @@ make
 # make user 'pi' an owner of all of those local repos
 chown pi /home/pi/ops_tools/* /home/pi/Firmware/* /home/pi/fm_transmitter/*
 
+# add these repos to $PATH
+cat > /home/pi/.profile <<- EOM
+# add our repos to PATH
+PATH=$PATH:/home/pi/ops_tools:/home/pi/fm_transmitter
+EOM
+
 
 # Set up CUPS for your Dymo 4XL and 450 Turbo
 # make user 'pi' a CUPS admin
@@ -84,7 +90,7 @@ usermod -a -G lpadmin pi
 
 # make sure remote users can make changes to CUPS by editing your cupsd.conf file
 cat > /etc/cups/cupsd.conf <<- EOM
-# foo
+# 
 #
 # Sample configuration file for the CUPS scheduler.  See "man cupsd.conf" for a
 # complete description of this file.
