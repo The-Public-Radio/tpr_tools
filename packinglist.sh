@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# This script creates a shipping label to be put inside the box.
+# This script creates a packing list to be put inside the box.
 #
-# Usage: $ packinglist.sh <frequency> <serial number> <source>
+# Usage: $ packinglist.sh <source> <order_no> <name> <address_1> <address_2> <zip> <city> <message> <radio_1> <radio_2> <radio_3>
 
 
 # CONTAINS:
@@ -15,18 +15,21 @@
 	#	City			40
 	#	Gift Message	140
 	#	Order #			8
-	#	UG address 		140 58th Street Building B, STE SAB Brookly, NY 11220
+	#	UG address 		140 58th Street, Building B STE SAB, Brooklyn, NY 11220
+	#	UG phone		+1.888.356.0056
+	#	UG email		custom@uncommongoods.com
 	#	UG logo
 	#	UG Return Policy		Return Policy: Please contact Customer Service at +1.888­.398.­3542 or 
 	#							help@uncommongoods.com for assistance. This item was custom­made for you and is non­ returnable.
 
 
-# check number of arguments and give feedback if it's not 3
-#if [ "$#" -ne 3 ]; then
-#  echo "Wrong number of arguments!"
-#  echo "Usage: $ boxlabel.sh <frequency> <serial number> <source>" >&2
-#  exit 1
-#fi
+
+# check number of arguments and give feedback if it's not 11
+if [ "$#" -ne 11 ]; then
+  echo "Wrong number of arguments!"
+  echo "Usage: $ packinglist.sh <source> <order_no> <name> <address_1> <address_2> <zip> <city> <message> <radio_1> <radio_2> <radio_3>" >&2
+  exit 1
+fi
 
 
 # create text image
