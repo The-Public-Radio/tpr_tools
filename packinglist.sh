@@ -54,7 +54,7 @@ convert -pointsize 32 -font /usr/share/fonts/truetype/msttcorefonts/Courier_New_
 
 
 # merge order_info into background
-convert /home/pi/ops_tools/temp/uncommongoods_background.png /home/pi/ops_tools/temp/order_info.png \
+convert /home/pi/ops_tools/data/uncommongoods_background.png /home/pi/ops_tools/temp/order_info.png \
 -gravity center -geometry +0+0 -composite /home/pi/ops_tools/temp/packinglist.png
 
 # print the result
