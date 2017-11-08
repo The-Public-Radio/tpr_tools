@@ -2,7 +2,7 @@
 
 # This script creates a packing list to be put inside the box.
 #
-# Usage: $ packinglist.sh <source> <order_no> <name> <address_1> <address_2>  <city> <state> <zip> <message> <radio_1> <radio_2> <radio_3>
+# Usage: $ packinglist.sh <source> <order_no> <name> <address_1> <address_2> <city> <state> <zip> <message> <radio_1> <radio_2> <radio_3>
 
 
 # CONTAINS:
