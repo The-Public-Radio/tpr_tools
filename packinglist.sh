@@ -77,7 +77,7 @@ convert -pointsize 32 -font /usr/share/fonts/truetype/msttcorefonts/Courier_New_
 
 #merge part_list into packing_list
 convert /home/pi/ops_tools/temp/packing_list.png /home/pi/ops_tools/temp/part_list.png \
--gravity center -geometry +0+0 -composite /home/pi/ops_tools/temp/packing_list.png
+-gravity center -geometry +0+324 -composite /home/pi/ops_tools/temp/packing_list.png
 
 # print the result
 lpr -P DYMO_LabelWriter_450_Turbo /home/pi/ops_tools/temp/packing_list.png
