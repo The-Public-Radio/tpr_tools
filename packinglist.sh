@@ -40,9 +40,9 @@ city="$6"
 state="$7"
 zip="$8"
 message="$9"
-radio_1="{$10}"
-radio_2="{$11}"
-radio_3="{$12}"
+radio_1="${10}"
+radio_2="${11}"
+radio_3="${12}"
 
 echo $radio_1
 
