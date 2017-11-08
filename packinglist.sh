@@ -60,18 +60,27 @@ radio_3="76.1"
 
 # create order info
 convert -pointsize 32 -font /usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold.ttf \
--size 601.5x864 caption:'To:\n'"$name"'\n'"$address_1"'\n'"$address_2"'\n'"$city"'\n'"$zip"'\n\nOrder no:\n'"$order_no"'\n\nMessage:\n'"$message" /home/pi/ops_tools/temp/order_info.png
+-size 601.5x864 caption:'To:\n'"$name"'\n'"$address_1"'\n'"$address_2"'\n'"$city"'\n'"$zip"'\n\nOrder no:\n'"$order_no"'\n\nMessage:\n'"$message" \
+/home/pi/ops_tools/temp/order_info.png
 
 # debug - print just the order info
 #lpr -P DYMO_LabelWriter_450_Turbo /home/pi/ops_tools/temp/order_info.png
 
-
 # merge order_info into background
 convert /home/pi/ops_tools/data/uncommongoods_background.png /home/pi/ops_tools/temp/order_info.png \
--gravity center -geometry +0-113 -composite /home/pi/ops_tools/temp/packinglist.png
+-gravity center -geometry +0-113 -composite /home/pi/ops_tools/temp/packing_list.png
+
+# create part list
+convert -pointsize 32 -font /usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold.ttf \
+-size 601.5x192 caption:'Qty\tItem\t\t\t\t\t\t\tFrequency\n\n1\t\tThe Public Radio\t\t'"$radio_1"'n1\t\tThe Public Radio\t\t'"$radio_2"'n1\t\tThe Public Radio\t\t'"$radio_3" \
+/home/pi/ops_tools/temp/part_list.png
+
+#merge part_list into packing_list
+convert /home/pi/ops_tools/temp/packing_list.png /home/pi/ops_tools/temp/part_list.png \
+-gravity center -geometry +0+0 -composite /home/pi/ops_tools/temp/packing_list.png
 
 # print the result
-lpr -P DYMO_LabelWriter_450_Turbo /home/pi/ops_tools/temp/packinglist.png
+lpr -P DYMO_LabelWriter_450_Turbo /home/pi/ops_tools/temp/packing_list.png
 
 # delete all the temp files
 #srm -rf /home/pi/ops_tools/temp/*
