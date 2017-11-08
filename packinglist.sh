@@ -11,8 +11,8 @@
 	#	Name			32		[recipient, not buyer]
 	#	Address 1		40
 	#	Address 2		40
-	#	Zip				16
 	#	City			40
+	#	Zip				16
 	#	Gift Message	140
 	#	Order #			8
 	#	UG address 		140 58th Street, Building B STE SAB, Brooklyn, NY 11220
