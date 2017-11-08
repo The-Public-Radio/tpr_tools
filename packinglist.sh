@@ -2,7 +2,7 @@
 
 # This script creates a packing list to be put inside the box.
 #
-# Usage: $ packinglist.sh <source> <order_no> <name> <address_1> <address_2> <zip> <city> <message> <radio_1> <radio_2> <radio_3>
+# Usage: $ packinglist.sh <source> <order_no> <name> <address_1> <address_2>  <city> <state> <zip> <message> <radio_1> <radio_2> <radio_3>
 
 
 # CONTAINS:
@@ -12,6 +12,7 @@
 	#	Address 1		40
 	#	Address 2		40
 	#	City			40
+	#	State 			2
 	#	Zip				16
 	#	Gift Message	140
 	#	Order #			8
@@ -21,8 +22,6 @@
 	#	UG logo
 	#	UG Return Policy		Return Policy: Please contact Customer Service at +1.888­.398.­3542 or 
 	#							help@uncommongoods.com for assistance. This item was custom­made for you and is non­ returnable.
-
-# 
 
 
 # check number of arguments and give feedback if it's not 12
@@ -44,6 +43,8 @@ message="$9"
 radio_1="$10"
 radio_2="$11"
 radio_3="$12"
+
+echo $radio_1
 
 #order_source="foo"
 #order_no="12345678"
