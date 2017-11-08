@@ -60,7 +60,7 @@ radio_3="$12"
 
 # create order info
 convert -pointsize 32 -font /usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold.ttf \
--size 601.5x864 caption:'To:\n'"$name"'\n'"$address_1"'\n'"$address_2"'\n'"$city"'\n'"$zip"'\n\nOrder no:\n'"$order_no"'\n\nMessage:\n'"$message" \
+-size 601.5x864 caption:'To:\n'"$name"'\n'"$address_1"'\n'"$address_2"'\n'"$city"', '"$state"'\n'"$zip"'\n\nOrder no:\n'"$order_no"'\n\nMessage:\n'"$message" \
 /home/pi/ops_tools/temp/order_info.png
 
 # debug - print just the order info
