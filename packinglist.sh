@@ -46,8 +46,8 @@ radio_2="$11"
 radio_3="$12"
 
 # create order info
-convert -density 300 -pointsize 16 -font /usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold.ttf \
--size 601.5x864 label:'To:\n'"$name"'\n'"$address_1"'\n'"$address_2"'\n'"$city"'\n'"$zip"'\n\nOrder no:\n'"$order_no"'\n\nMessage:\n'"$message" /home/pi/ops_tools/temp/order_info.png
+convert -pointsize 32 -font /usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold.ttf \
+-size 601.5x864 -gravity North caption:'To:\n'"$name"'\n'"$address_1"'\n'"$address_2"'\n'"$city"'\n'"$zip"'\n\nOrder no:\n'"$order_no"'\n\nMessage:\n'"$message" /home/pi/ops_tools/temp/order_info.png
 
 # create 
 # create text image
