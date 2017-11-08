@@ -72,12 +72,12 @@ convert /home/pi/ops_tools/data/uncommongoods_background.png /home/pi/ops_tools/
 
 # create part list
 convert -pointsize 32 -font /usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold.ttf \
--size 601.5x192 caption:'Qty\tItem\t\t\t\t\t\t\tFrequency\n\n1\t\tThe Public Radio\t\t'"$radio_1"'n1\t\tThe Public Radio\t\t'"$radio_2"'n1\t\tThe Public Radio\t\t'"$radio_3" \
+-size 601.5x192 caption:'Qty\nItem\t\t\t\t\t\t\tFrequency\n\n1\t\tThe Public Radio\t\t'"$radio_1"'n1\t\tThe Public Radio\t\t'"$radio_2"'n1\t\tThe Public Radio\t\t'"$radio_3" \
 /home/pi/ops_tools/temp/part_list.png
 
 #merge part_list into packing_list
 convert /home/pi/ops_tools/temp/packing_list.png /home/pi/ops_tools/temp/part_list.png \
--gravity center -geometry +0+324 -composite /home/pi/ops_tools/temp/packing_list.png
+-gravity center -geometry +0+356 -composite /home/pi/ops_tools/temp/packing_list.png
 
 # print the result
 lpr -P DYMO_LabelWriter_450_Turbo /home/pi/ops_tools/temp/packing_list.png
