@@ -32,18 +32,31 @@ if [ "$#" -ne 12 ]; then
   exit 1
 fi
 
-order_source="$1"
-order_no="$2"
-name="$3"
-address_1="$4"
-address_2="$5"
-city="$6"
-zip="$7"
-state="$8"
-message="$9"
-radio_1="$10"
-radio_2="$11"
-radio_3="$12"
+#order_source="$1"
+#order_no="$2"
+#name="$3"
+#address_1="$4"
+#address_2="$5"
+#city="$6"
+#zip="$7"
+#state="$8"
+#message="$9"
+#radio_1="$10"
+#radio_2="$11"
+#radio_3="$12"
+
+order_source="foo"
+order_no="12345678"
+name="spencer 90123456789012345678901234"
+address_1="12 456789012345678 01234567890123456 890"
+address_2="12 456789012 45678901234567890123456 890"
+city="1234567890123456789012345678901234567890"
+zip="1234567890123456"
+state="NY"
+message="12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890"
+radio_1="103.5"
+radio_2="88.1"
+radio_3="76.1"
 
 # create order info
 convert -pointsize 32 -font /usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold.ttf \
@@ -55,7 +68,7 @@ convert -pointsize 32 -font /usr/share/fonts/truetype/msttcorefonts/Courier_New_
 
 # merge order_info into background
 convert /home/pi/ops_tools/data/uncommongoods_background.png /home/pi/ops_tools/temp/order_info.png \
--gravity center -geometry +0-81 -composite /home/pi/ops_tools/temp/packinglist.png
+-gravity center -geometry +0-113 -composite /home/pi/ops_tools/temp/packinglist.png
 
 # print the result
 lpr -P DYMO_LabelWriter_450_Turbo /home/pi/ops_tools/temp/packinglist.png
