@@ -49,21 +49,16 @@ radio_3="$12"
 convert -pointsize 32 -font /usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold.ttf \
 -size 601.5x864 caption:'To:\n'"$name"'\n'"$address_1"'\n'"$address_2"'\n'"$city"'\n'"$zip"'\n\nOrder no:\n'"$order_no"'\n\nMessage:\n'"$message" /home/pi/ops_tools/temp/order_info.png
 
-lpr -P DYMO_LabelWriter_450_Turbo /home/pi/ops_tools/temp/order_info.png
+# debug - print just the order info
+#lpr -P DYMO_LabelWriter_450_Turbo /home/pi/ops_tools/temp/order_info.png
 
-# create 
-# create text image
-#convert -density 300 -pointsize 10 -font \
-#/usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold.ttf \
-#-size 637.5x1200 -gravity North \
-#label:'' \
-#/home/pi/ops_tools/temp/background.png
-## merge two images into one
-#convert /home/pi/ops_tools/temp/background.png /home/pi/ops_tools/temp/sn.png \
-#-gravity center -geometry +0+300 -composite /home/pi/ops_tools/temp/packinglist.png
+
+# merge order_info into background
+convert /home/pi/ops_tools/temp/uncommongoods_background.png /home/pi/ops_tools/temp/order_info.png \
+-gravity center -geometry +0+0 -composite /home/pi/ops_tools/temp/packinglist.png
 
 # print the result
-#lpr -P DYMO_LabelWriter_450_Turbo /home/pi/ops_tools/temp/packinglist.png
+lpr -P DYMO_LabelWriter_450_Turbo /home/pi/ops_tools/temp/packinglist.png
 
 # delete all the temp files
 #srm -rf /home/pi/ops_tools/temp/*
