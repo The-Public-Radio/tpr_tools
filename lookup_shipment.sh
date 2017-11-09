@@ -78,7 +78,13 @@ order_source=$(echo -n $order | jq '.order_source')
 #echo "order_source is" $order_source
 
 
+radios=($(curl -s -H "$headers" $url/shipments/$shipment_id/radios | jq -c '[.data[] | .frequency][]' | sed 's/"//g'))
 
+radio_count=${#radios[@]}
+#echo "radio_count is" $radio_count
+
+output="$order_source order_number $name $street_address_1 $street_address_2 $city $state $postal_code 'a very very very very very long message' ${radios[0]} ${radios[1]} ${radios[2]}"
+echo $output
 
 
 
