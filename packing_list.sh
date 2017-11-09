@@ -1,19 +1,6 @@
 #!/bin/bash
 
-# This script looks up a shipment and returns relevant info
 
-# Info to get:
-#	* name
-#	* street_address_1
-#	* street_address_2
-#	* city
-#	* state
-#	* postal_code
-#	* order_source
-#	* uncommon goods order number
-#	* radio 1 frequency
-#	* radio 2 frequency
-#	* radio 3 frequency
 
 if [ "$#" -ne 3 ]; then
   echo "Wrong number of arguments!"
@@ -78,6 +65,7 @@ order_source=$(eval echo $order_source)
 radios=($(curl -s -H "$headers" $url/shipments/$shipment_id/radios | jq -c '[.data[] | .frequency][]' | sed 's/"//g'))
 # get the number of radios in the shipment, for good measure
 radio_count=${#radios[@]}
+echo "radio_count is" $radio_count
 
 
 # create order info image
