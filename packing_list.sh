@@ -81,15 +81,15 @@ convert /home/pi/ops_tools/data/uncommongoods_background.png /home/pi/ops_tools/
 -gravity center -geometry +0-113 -composite /home/pi/ops_tools/temp/packing_list.png
 
 # create part list, and make it the right number of rows
-if [[ radio_count == 1 ]]; then
+if [[ radio_count -eq 1 ]]; then
 	convert -pointsize 32 -font /usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold.ttf \
 	-size 601.5x192 caption:'Qty Item               Freq\n\n1   The Public Radio   '"${radios[0]}" \
 	/home/pi/ops_tools/temp/part_list.png
-elif [[ radio_count == 2 ]]; then
+elif [[ radio_count -eq 2 ]]; then
 	convert -pointsize 32 -font /usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold.ttf \
 	-size 601.5x192 caption:'Qty Item               Freq\n\n1   The Public Radio   '"${radios[0]}"'\n1   The Public Radio   '"${radios[1]}" \
 	/home/pi/ops_tools/temp/part_list.png
-elif [[ radio_count == 3 ]]; then
+elif [[ radio_count -eq 3 ]]; then
 	convert -pointsize 32 -font /usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold.ttf \
 	-size 601.5x192 caption:'Qty Item               Freq\n\n1   The Public Radio   '"${radios[0]}"'\n1   The Public Radio   '"${radios[1]}"'\n1   The Public Radio   '"${radios[2]}" \
 	/home/pi/ops_tools/temp/part_list.png
