@@ -63,7 +63,7 @@ order_source=$(eval echo $order_source)
 message=$""
 
 if [ "$street_address_2" == "null" ]; then
-	$street_address_2=$""
+	$street_address_2=$" "
 fi
 
 echo "street_address_2 is" $street_address_2
