@@ -60,6 +60,7 @@ postal_code=$(echo -n $order | jq '.postal_code')
 postal_code=$(eval echo $postal_code)
 order_source=$(echo -n $order | jq '.order_source')
 order_source=$(eval echo $order_source)
+message=$""
 
 # get the radios in the shipment, put the frequencies in an array
 radios=($(curl -s -H "$headers" $url/shipments/$shipment_id/radios | jq -c '[.data[] | .frequency][]' | sed 's/"//g'))
@@ -69,9 +70,15 @@ echo "radio_count is" $radio_count
 
 
 # create order info image
-convert -pointsize 32 -font /usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold.ttf \
--size 601.5x864 caption:'To:\n'"$name"'\n'"$street_address_1"'\n'"$street_address_2"'\n'"$city"', '"$state"'\n'"$postal_code"'\n\nOrder no:\n'"$order_no"'\n\nMessage:\n'"$message" \
-/home/pi/ops_tools/temp/order_info.png
+if [ "$message" == "" ]; then
+   convert -pointsize 32 -font /usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold.ttf \
+	-size 601.5x864 caption:'To:\n'"$name"'\n'"$street_address_1"'\n'"$street_address_2"'\n'"$city"', '"$state"'\n'"$postal_code"'\n\nOrder no:\n'"$order_no" \
+	/home/pi/ops_tools/temp/order_info.png
+else
+	convert -pointsize 32 -font /usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold.ttf \
+	-size 601.5x864 caption:'To:\n'"$name"'\n'"$street_address_1"'\n'"$street_address_2"'\n'"$city"', '"$state"'\n'"$postal_code"'\n\nOrder no:\n'"$order_no"'\n\nMessage:\n'"$message" \
+	/home/pi/ops_tools/temp/order_info.png
+fi
 
 # debug - print just the order info
 #lpr -P DYMO_LabelWriter_450_Turbo /home/pi/ops_tools/temp/order_info.png
@@ -103,7 +110,7 @@ convert /home/pi/ops_tools/temp/packing_list.png /home/pi/ops_tools/temp/part_li
 -gravity center -geometry +0+356 -composite /home/pi/ops_tools/temp/packing_list.png
 
 # print the result
-lpr -P DYMO_LabelWriter_450_Turbo /home/pi/ops_tools/temp/packing_list.png
+lpr -P DYMO_LabelWriter_450_Turbo_Paper /home/pi/ops_tools/temp/packing_list.png
 
 
 # delete all the temp files
