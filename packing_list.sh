@@ -62,6 +62,8 @@ order_source=$(echo -n $order | jq '.order_source')
 order_source=$(eval echo $order_source)
 message=$""
 
+echo "street_address_2 is" $street_address_2
+
 # get the radios in the shipment, put the frequencies in an array
 radios=($(curl -s -H "$headers" $url/shipments/$shipment_id/radios | jq -c '[.data[] | .frequency][]' | sed 's/"//g'))
 # get the number of radios in the shipment, for good measure
