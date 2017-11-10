@@ -62,6 +62,10 @@ order_source=$(echo -n $order | jq '.order_source')
 order_source=$(eval echo $order_source)
 message=$""
 
+if [ "$street_address_2" == "null" ]; then
+	$street_address_2=$""
+fi
+
 echo "street_address_2 is" $street_address_2
 
 # get the radios in the shipment, put the frequencies in an array
