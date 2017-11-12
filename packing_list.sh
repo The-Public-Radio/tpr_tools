@@ -42,7 +42,8 @@ fi
 shipment=$(curl -s -H "$headers" $url/shipments?tracking_number=$tracking_number \
 	| jq -c '[.data | {id: .id, order_id: .order_id}][]')
 shipment_id=$(echo -n $shipment | jq '.id')
-order_id=$(echo -n $shipment | jq '.order_id');
+order_id=$(echo -n $shipment | jq '.order_id')
+
 
 # get all of the order info. strip the quotes off.
 order=$(curl -s -H "$headers" $url/orders/$order_id)
@@ -60,7 +61,8 @@ postal_code=$(echo -n $order | jq '.postal_code')
 postal_code=$(eval echo $postal_code)
 order_source=$(echo -n $order | jq '.order_source')
 order_source=$(eval echo $order_source)
-message=$""
+reference_number=$(echo -n $shipment | jq '.reference_number')
+comments=$(echo -n $shipment | jq '.comments')
 
 if [ "$street_address_2" == "null" ]; then
 	$street_address_2=$" "
@@ -76,13 +78,13 @@ echo "radio_count is" $radio_count
 
 
 # create order info image
-if [ "$message" == "" ]; then
+if [ "$comments" == "" ]; then
    convert -pointsize 32 -font /usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold.ttf \
 	-size 601.5x864 caption:'To:\n'"$name"'\n'"$street_address_1"'\n'"$street_address_2"'\n'"$city"', '"$state"'\n'"$postal_code"'\n\nOrder no:\n'"$order_no" \
 	/home/pi/ops_tools/temp/order_info.png
 else
 	convert -pointsize 32 -font /usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold.ttf \
-	-size 601.5x864 caption:'To:\n'"$name"'\n'"$street_address_1"'\n'"$street_address_2"'\n'"$city"', '"$state"'\n'"$postal_code"'\n\nOrder no:\n'"$order_no"'\n\nMessage:\n'"$message" \
+	-size 601.5x864 caption:'To:\n'"$name"'\n'"$street_address_1"'\n'"$street_address_2"'\n'"$city"', '"$state"'\n'"$postal_code"'\n\nOrder no:\n'"$order_no"'\n\nMessage:\n'"$comments" \
 	/home/pi/ops_tools/temp/order_info.png
 fi
 
