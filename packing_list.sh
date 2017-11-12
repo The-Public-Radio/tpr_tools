@@ -64,9 +64,9 @@ order_source=$(eval echo $order_source)
 reference_number=$(echo -n $shipment | jq '.reference_number')
 comments=$(echo -n $shipment | jq '.comments')
 
-if [[ -z "$street_address_2" ]]; then
+if [[ "$street_address_2" == "null" ]]; then
 	echo "$street_address has zero length"
-	$street_address_2=$" "
+	street_address_2=$" "
 fi
 
 echo "street_address_2 is" $street_address_2
@@ -79,13 +79,13 @@ radio_count=${#radios[@]}
 
 
 # create order info image
-if [ -z "$comments" ]; then
+if [[ "$comments" == "null" ]]; then
    convert -pointsize 32 -font /usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold.ttf \
-	-size 601.5x864 caption:'To:\n'"$name"'\n'"$street_address_1"'\n'"$street_address_2"'\n'"$city"', '"$state"'\n'"$postal_code"'\n\nOrder no:\n'"$order_no" \
+	-size 601.5x864 caption:'To:\n'"$name"'\n'"$street_address_1"'\n'"$street_address_2"'\n'"$city"', '"$state"'\n'"$postal_code"'\n\nOrder no:\n'"$reference_number" \
 	/home/pi/ops_tools/temp/order_info.png
 else
 	convert -pointsize 32 -font /usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold.ttf \
-	-size 601.5x864 caption:'To:\n'"$name"'\n'"$street_address_1"'\n'"$street_address_2"'\n'"$city"', '"$state"'\n'"$postal_code"'\n\nOrder no:\n'"$order_no"'\n\nMessage:\n'"$comments" \
+	-size 601.5x864 caption:'To:\n'"$name"'\n'"$street_address_1"'\n'"$street_address_2"'\n'"$city"', '"$state"'\n'"$postal_code"'\n\nOrder no:\n'"$reference_number"'\n\nMessage:\n'"$comments" \
 	/home/pi/ops_tools/temp/order_info.png
 fi
 
