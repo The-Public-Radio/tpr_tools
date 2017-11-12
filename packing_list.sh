@@ -64,7 +64,7 @@ order_source=$(eval echo $order_source)
 reference_number=$(echo -n $shipment | jq '.reference_number')
 comments=$(echo -n $shipment | jq '.comments')
 
-if [ -z "$street_address_2" ]; then
+if [[ -z "$street_address_2" ]]; then
 	echo "$street_address has zero length"
 	$street_address_2=$" "
 fi
