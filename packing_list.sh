@@ -66,10 +66,7 @@ reference_number=$(eval echo $reference_number)
 comments=$(echo -n $order | jq '.comments')
 comments=$(eval echo $comments)
 
-if [[ "$street_address_2" == "null" ]]; then
-	echo "$street_address has zero length"
-	street_address_2=$" "
-fi
+
 
 echo "street_address_2 is" $street_address_2
 
@@ -82,13 +79,25 @@ radio_count=${#radios[@]}
 
 # create order info image
 if [[ "$comments" == "null" ]]; then
-   convert -pointsize 32 -font /usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold.ttf \
-	-size 601.5x864 caption:'To:\n'"$name"'\n'"$street_address_1"'\n'"$street_address_2"'\n'"$city"', '"$state"'\n'"$postal_code"'\n\nOrder no:\n'"$reference_number" \
-	/home/pi/ops_tools/temp/order_info.png
+	if [[ "$street_address_2" == "null" ]]; then
+		convert -pointsize 32 -font /usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold.ttf \
+		-size 601.5x864 caption:'To:\n'"$name"'\n'"$street_address_1"'\n'"$city"', '"$state"'\n'"$postal_code"'\n\nOrder no:\n'"$reference_number" \
+		/home/pi/ops_tools/temp/order_info.png
+	else
+		convert -pointsize 32 -font /usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold.ttf \
+		-size 601.5x864 caption:'To:\n'"$name"'\n'"$street_address_1"'\n'"$street_address_2"'\n'"$city"', '"$state"'\n'"$postal_code"'\n\nOrder no:\n'"$reference_number" \
+		/home/pi/ops_tools/temp/order_info.png
+	fi
 else
-	convert -pointsize 32 -font /usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold.ttf \
-	-size 601.5x864 caption:'To:\n'"$name"'\n'"$street_address_1"'\n'"$street_address_2"'\n'"$city"', '"$state"'\n'"$postal_code"'\n\nOrder no:\n'"$reference_number"'\n\nMessage:\n'"$comments" \
-	/home/pi/ops_tools/temp/order_info.png
+	if [[ "$street_address_2" == "null" ]]; then
+		convert -pointsize 32 -font /usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold.ttf \
+		-size 601.5x864 caption:'To:\n'"$name"'\n'"$street_address_1"'\n'"$city"', '"$state"'\n'"$postal_code"'\n\nOrder no:\n'"$reference_number"'\n\nMessage:\n'"$comments" \
+		/home/pi/ops_tools/temp/order_info.png
+	else
+		convert -pointsize 32 -font /usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold.ttf \
+		-size 601.5x864 caption:'To:\n'"$name"'\n'"$street_address_1"'\n'"$street_address_2"'\n'"$city"', '"$state"'\n'"$postal_code"'\n\nOrder no:\n'"$reference_number"'\n\nMessage:\n'"$comments" \
+		/home/pi/ops_tools/temp/order_info.png
+	fi
 fi
 
 # debug - print just the order info
