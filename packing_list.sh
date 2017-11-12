@@ -64,7 +64,8 @@ order_source=$(eval echo $order_source)
 reference_number=$(echo -n $shipment | jq '.reference_number')
 comments=$(echo -n $shipment | jq '.comments')
 
-if [ -z "$street_address_2"  ]; then
+if [ -z "$street_address_2" ]; then
+	echo "$street_address has zero length"
 	$street_address_2=$" "
 fi
 
@@ -74,7 +75,7 @@ echo "street_address_2 is" $street_address_2
 radios=($(curl -s -H "$headers" $url/shipments/$shipment_id/radios | jq -c '[.data[] | .frequency][]' | sed 's/"//g'))
 # get the number of radios in the shipment, for good measure
 radio_count=${#radios[@]}
-echo "radio_count is" $radio_count
+#echo "radio_count is" $radio_count
 
 
 # create order info image
