@@ -44,8 +44,6 @@ radio_1="${10}"
 radio_2="${11}"
 radio_3="${12}"
 
-echo $radio_1
-
 #order_source="foo"
 #order_no="12345678"
 #name="spencer 90123456789012345678901234"
