@@ -38,7 +38,7 @@ elif [ $3 = "uncommon_goods" ]; then
 	label:'\n\n\nYour Public Radio\nis tuned to\n'"$1"' MHz\n\n\nEnjoy :)' \
 	/home/pi/ops_tools/temp/background.png
 	# merge with uncommon_goods logo
-	convert /home/pi/ops_tools/data/label_uncommon_goods.png /home/pi/ops_tools/temp/background.png \
+	convert /home/pi/ops_tools/temp/background.png /home/pi/ops_tools/data/uncommongoods_logo.png \
 	-composite /home/pi/ops_tools/temp/background.png
 	# merge two images into one
 	convert /home/pi/ops_tools/temp/background.png /home/pi/ops_tools/temp/sn.png \
@@ -56,4 +56,4 @@ fi
 lpr -P DYMO_LabelWriter_450_Turbo /home/pi/ops_tools/temp/label.png
 
 # delete all the temp files
-rm -rf /home/pi/ops_tools/temp/*
+#rm -rf /home/pi/ops_tools/temp/*
