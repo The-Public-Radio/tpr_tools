@@ -61,8 +61,10 @@ postal_code=$(echo -n $order | jq '.postal_code')
 postal_code=$(eval echo $postal_code)
 order_source=$(echo -n $order | jq '.order_source')
 order_source=$(eval echo $order_source)
-reference_number=$(echo -n $shipment | jq '.reference_number')
-comments=$(echo -n $shipment | jq '.comments')
+reference_number=$(echo -n $order | jq '.reference_number')
+reference_number=$(eval echo $reference_number)
+comments=$(echo -n $order | jq '.comments')
+comments=$(eval echo $comments)
 
 if [[ "$street_address_2" == "null" ]]; then
 	echo "$street_address has zero length"
