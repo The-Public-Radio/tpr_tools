@@ -64,7 +64,7 @@ order_source=$(eval echo $order_source)
 reference_number=$(echo -n $shipment | jq '.reference_number')
 comments=$(echo -n $shipment | jq '.comments')
 
-if [ "$street_address_2" == "null" ]; then
+if [ "$street_address_2" -z ]; then
 	$street_address_2=$" "
 fi
 
@@ -78,7 +78,7 @@ echo "radio_count is" $radio_count
 
 
 # create order info image
-if [ "$comments" == "" ]; then
+if [ "$comments" -z ]; then
    convert -pointsize 32 -font /usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold.ttf \
 	-size 601.5x864 caption:'To:\n'"$name"'\n'"$street_address_1"'\n'"$street_address_2"'\n'"$city"', '"$state"'\n'"$postal_code"'\n\nOrder no:\n'"$order_no" \
 	/home/pi/ops_tools/temp/order_info.png
