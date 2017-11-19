@@ -30,9 +30,9 @@ if (len(sys.argv) != 4):
 eeprom_filename = '/home/pi/ops_tools/temp/eeprom'
 
 # set regions
-EU = ['AE','BE','BG','CZ','DE','EE','IE','EL','ES','FR','FO','HR','IT','CY','LV','LT','LU','HU','MT','NL','NZ','AT','PL','PT','RO','SI','SK','FI','SE','UK','GB','DK','CH','ZA']
-Americas = ['US','CA','AI','AG','AW','BS','BB','BZ','BM','VG','CA','KY','CR','CU','CW','DM','DO','SV','GL','GD','GP','GT','HT','HN','JM','MQ','MX','PM','MS','CW','KN','NI','PA','PR','KN','LC','PM','VC','TT','TC','VI','SX','BQ','SA','SE','AR','BO','BR','CL','CO','EC','FK','GF','GY','PY','PE','SR','UY','VE']
-Asia = ['AF','AM','AZ','BH','BD','BT','BN','KH','CN','CX','CC','IO','GE','HK','IN','ID','IR','IQ','IL','JO','KZ','KP','KR','KW','KG','LA','LB','MO','MY','MV','MN','MM','NP','OM','PK','PH','QA','SA','SG','LK','SY','TW','TJ','TH','TR','TM','AE','UZ','VN','YE','PS']
+EU = ['BE','BG','CZ','DE','EE','IE','EL','ES','FR','FO','HR','IT','CY','LV','LT','LU','HU','MT','NL','NO','NZ','AT','PL','PT','RO','SI','SK','FI','GB','DK','CH','ZA']
+Americas = ['US','CA','AI','AG','AW','BS','BB','BZ','BM','VG','KY','CR','CU','CW','DM','DO','SV','GL','GD','GP','GT','HT','HN','JM','MQ','MX','PM','MS','KN','NI','PA','PR','LC','VC','TT','TC','VI','SX','BQ','SE','AR','BO','BR','CL','CO','EC','FK','GF','GY','PY','PE','SR','UY','VE']
+Asia = ['AF','AM','AZ','BH','BD','BT','BN','KH','CN','CX','CC','IO','GE','HK','IN','ID','IR','IQ','IL','JO','KZ','KR','KW','KG','LA','LB','MO','MY','MV','MN','MM','NP','OM','PK','PH','QA','SA','SG','LK','SY','TW','TJ','TH','TR','TM','AE','UZ','VN','YE','PS']
 
 
 # set input variables
