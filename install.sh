@@ -75,7 +75,7 @@ cd /home/pi/fm_transmitter
 make
 
 # make user 'pi' an owner of all of those local repos
-chown pi /home/pi/ops_tools/* /home/pi/Firmware/* /home/pi/fm_transmitter/*
+chown -R pi /home/pi/ops_tools/ /home/pi/Firmware/ /home/pi/fm_transmitter/
 
 # add these repos to $PATH
 cat > /home/pi/.profile <<- EOM
