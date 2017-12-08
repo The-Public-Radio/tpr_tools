@@ -55,6 +55,7 @@ apt-get -y install gdb-avr
 apt-get -y install avr-libc
 apt-get -y install avrdude
 apt-get -y install jq
+apt-get install libsndfile1-dev
 
 # install pip packages
 pip install intelhex
@@ -72,6 +73,13 @@ git clone git@github.com:The-Public-Radio/Firmware.git /home/pi/Firmware
 git clone git@github.com:markondej/fm_transmitter.git /home/pi/fm_transmitter
 # make fm_transmitter
 cd /home/pi/fm_transmitter
+make
+
+# Clone PiFmRds
+git clone https://github.com/ChristopheJacquet/PiFmRds.git /home/pi/PiFmRds
+# make PiFmRds
+cd /home/pi/PiFmRds/src
+make clean
 make
 
 # make user 'pi' an owner of all of those local repos
