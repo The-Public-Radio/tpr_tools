@@ -10,6 +10,11 @@
 # reboot
 
 # Now you can SSH in from another computer, which is usually easier beacuse you can copy/paste, etc
+# To make it easier to ssh into the Pi from your computer, you can edit ~/.ssh/config and add something like this to it:
+#   host 0
+#     HostName TPR-0.local
+#     user pi
+# And then copy your computer's ssh key (~/.ssh/id_rsa.pub) over to a new file on the pi at ~/.ssh/authorized_keys
 
 # Generate a SSH key pair on the Pi by:
 # $ ssh-keygen
@@ -17,13 +22,6 @@
 
 # Authenticate the SSH key you created into GitHub
 # For this, go to https://github.com/The-Public-Radio/ops_tools/settings/keys and paste the contents of ~/.ssh/id_rsa.pub
-
-# Now change the hostname to something like "TPR-0"
-# $ sudo nano /etc/hostname
-# $ sudo nano /etc/hosts
-# $ sudo nano hosts
-
-
 
 # Now copy this file (install.sh) over to the Pi via scp
 # or, if you're ssh'd in, touch a new file and just paste the contents of this file into that one and `chmod +x` it
@@ -36,6 +34,7 @@
 eval "$(ssh-agent -s)"
 ssh-add /home/pi/.ssh/id_rsa
 
+rm -rf /home/pi/Music /home/pi/Pictures /home/pi/Templates /home/pi/Videos /home/pi/python_games /home/pi/Documents
 
 # update apt-get
 apt-get update
@@ -55,7 +54,8 @@ apt-get -y install gdb-avr
 apt-get -y install avr-libc
 apt-get -y install avrdude
 apt-get -y install jq
-apt-get install libsndfile1-dev
+apt-get -y install libsndfile1-dev
+apt-get -y install printer-driver-dymo
 
 # install pip packages
 pip install intelhex
@@ -83,12 +83,12 @@ make clean
 make
 
 # make user 'pi' an owner of all of those local repos
-chown -R pi /home/pi/ops_tools/ /home/pi/Firmware/ /home/pi/fm_transmitter/
+chown -R pi /home/pi/ops_tools/ /home/pi/Firmware/ /home/pi/fm_transmitter/ /home/pi/PiFmRds/
 
 # add these repos to $PATH
 cat > /home/pi/.profile <<- EOM
 # add our repos to PATH
-PATH=$PATH:/home/pi/ops_tools:/home/pi/fm_transmitter
+PATH=$PATH:/home/pi/ops_tools:/home/pi/fm_transmitter:/home/pi/PiFmRds
 EOM
 
 
@@ -238,21 +238,17 @@ WebInterface Yes
 EOM
 
 
-
-
-
-
 # restart CUPS
 /etc/init.d/cups restart
 
 # extract the DYMO driver tarball that's inside ops_tools
-tar -xvf /home/pi/ops_tools/dymo-cups-drivers-1.4.0.tar.gz -C /home/pi/ops_tools/temp
+#tar -xvf /home/pi/ops_tools/dymo-cups-drivers-1.4.0.tar.gz -C /home/pi/ops_tools/temp
 
 # change directories
-cd /home/pi/ops_tools/temp/dymo-cups-drivers-1.4.0.5
-./configure
-make
-make install
+#cd /home/pi/ops_tools/temp/dymo-cups-drivers-1.4.0.5
+#./configure
+#make
+#make install
 
 
 rm -rf /home/pi/ops_tools/temp/*
@@ -263,3 +259,9 @@ rm -rf /home/pi/ops_tools/temp/*
 
 # NOTE - i've had some issues compiling the DYMO drivers. If that fails, try
 # $ sudo apt-get install printer-driver-dymo
+
+
+# If you need to change the hostname (to something like "TPR-0"):
+# $ sudo nano /etc/hostname
+# $ sudo nano /etc/hosts
+# $ sudo nano hosts
