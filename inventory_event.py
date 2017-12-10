@@ -35,7 +35,7 @@ if event not in events:
 	sys.exit(1)
 
 timestamp = datetime.datetime.now().isoformat()
-print 'time is' timestamp
+print 'time is', timestamp
 
 scope = ['https://spreadsheets.google.com/feeds']
 credentials = ServiceAccountCredentials.from_json_keyfile_name('/home/pi/tpr-inv.json', scope)
