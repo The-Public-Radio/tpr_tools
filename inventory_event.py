@@ -73,7 +73,7 @@ def record_fulfill(user):
 
 def store_event(user):
 	f = open('/home/pi/ops_tools/data/stored_inventory_events.csv','a')
-	f.write('%d,%d,%d' % event timestamp user)
+	f.write('%d,%d,%d' % (event, timestamp, user)
 	f.close()
 
 store_event(username)
