@@ -17,13 +17,9 @@ from oauth2client.service_account import ServiceAccountCredentials
 # Set username. Ideally the username is always set to be a person's name (or similar),
 # but in the cases where it's not set then the Raspberry Pi's $HOSTNAME will suffice.
 if (len(sys.argv) == 3):
-	print 'three'
 	username = sys.argv[2]
-	print username
 elif (len(sys.argv) == 2):
-	print 'two'
-	username = os.uname()[1]
-	print username
+	username = uname()[1]
 else:
 	print 'ERROR - wrong number of arguments.'
 	print 'Usage: $ inventory_event.py <event> <username>'
@@ -39,7 +35,7 @@ if event not in events:
 	sys.exit(1)
 
 timestamp = datetime.datetime.now().isoformat()
-print timestamp
+print 'time is' timestamp
 
 scope = ['https://spreadsheets.google.com/feeds']
 credentials = ServiceAccountCredentials.from_json_keyfile_name('/home/pi/tpr-inv.json', scope)
