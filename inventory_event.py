@@ -55,11 +55,11 @@ def assemble(user):
 
 def fulfill(user):
 	antenna = spreadsheet.worksheet("PR2034")
-	antenna.append_row(["radio_assemble", timestamp, "-1", user])
+	antenna.append_row(["radio_fulfill", timestamp, "-1", user])
 	box = spreadsheet.worksheet("PR2500")
-	box.append_row(["radio_assemble", timestamp, "-1", user])
+	box.append_row(["radio_fulfill", timestamp, "-1", user])
 	jar = spreadsheet.worksheet("PR1016")
-	jar.append_row(["radio_assemble", timestamp, "-1", user])
+	jar.append_row(["radio_fulfill", timestamp, "-1", user])
 
 if (event == 'assemble'):
 	assemble(username)
