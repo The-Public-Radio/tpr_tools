@@ -12,6 +12,7 @@ import gspread
 import datetime
 from os import uname
 import sys
+import csv
 from oauth2client.service_account import ServiceAccountCredentials
 
 # Set username. Ideally the username is always set to be a person's name (or similar),
@@ -72,7 +73,7 @@ def record_fulfill(user):
 
 def store_event(user):
 	f = open('/home/pi/ops_tools/data/stored_inventory_events.csv','a')
-	f.write(event,timestamp,user)
+	f.write('%d,%d,%d' % event timestamp user)
 	f.close()
 
 store_event(username)
