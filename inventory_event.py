@@ -37,10 +37,10 @@ if event not in events:
 timestamp = datetime.datetime.now().isoformat()
 print 'time is', timestamp
 
-scope = ['https://spreadsheets.google.com/feeds']
-credentials = ServiceAccountCredentials.from_json_keyfile_name('/home/pi/tpr-inv.json', scope)
-c = gspread.authorize(credentials)
-spreadsheet = c.open('PR9450 Part Usage')
+#scope = ['https://spreadsheets.google.com/feeds']
+#credentials = ServiceAccountCredentials.from_json_keyfile_name('/home/pi/tpr-inv.json', scope)
+#c = gspread.authorize(credentials)
+#spreadsheet = c.open('PR9450 Part Usage')
 
 
 # NOTE: This function takes a long time (~20s) to run. This is not practical for on-the-fly use,
