@@ -52,6 +52,8 @@ def assemble(user):
 	screw.append_row(["radio_assemble", timestamp, "-4", user])	
 	knob = spreadsheet.worksheet("PR2036")
 	knob.append_row(["radio_assemble", timestamp, "-1", user])
+	mech_assy = spreadsheet.worksheet("PR2040")
+	mech_assy.append_row(["radio_assemble", timestamp, "+1", user])
 
 def fulfill(user):
 	antenna = spreadsheet.worksheet("PR2034")
@@ -60,6 +62,8 @@ def fulfill(user):
 	box.append_row(["radio_fulfill", timestamp, "-1", user])
 	jar = spreadsheet.worksheet("PR1016")
 	jar.append_row(["radio_fulfill", timestamp, "-1", user])
+	mech_assy = spreadsheet.worksheet("PR2040")
+	mech_assy.append_row(["radio_assemble", timestamp, "-1", user])
 
 if (event == 'assemble'):
 	assemble(username)
