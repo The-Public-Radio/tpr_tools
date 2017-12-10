@@ -6,3 +6,4 @@ creds.json
 endicia_export_log.xml
 temp/*
 data/client_id.json
+data/stored_inventory_events.csv
