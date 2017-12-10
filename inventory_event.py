@@ -48,12 +48,28 @@ c = gspread.authorize(credentials)
 spreadsheet = c.open('PR9450 Part Usage')
 
 
-def assemble(username):
+def assemble(user):
 	PCB = spreadsheet.worksheet("PR9027")
-	PCB.append_row(["radio_assemble", timestamp, username])
+	PCB.append_row(["radio_assemble", timestamp, "-1", user])
+	lid = spreadsheet.worksheet("PR1014")
+	lid.append_row(["radio_assemble", timestamp, "-1", user])
+	screw = spreadsheet.worksheet("PR2039")
+	screw.append_row(["radio_assemble", timestamp, "-4", user])	
+	knob = spreadsheet.worksheet("PR2036")
+	knob.append_row(["radio_assemble", timestamp, "-1", user])
+
+def fulfill(user):
+	antenna = spreadsheet.worksheet("PR2034")
+	antenna.append_row(["radio_assemble", timestamp, "-1", user])
+	box = spreadsheet.worksheet("PR2500")
+	box.append_row(["radio_assemble", timestamp, "-1", user])
+	jar = spreadsheet.worksheet("PR1016")
+	jar.append_row(["radio_assemble", timestamp, "-1", user])
 
 if (event == 'assemble'):
 	assemble(username)
+elif (event == 'fulfill'):
+	fulfill(username)
 
 
 
