@@ -76,6 +76,7 @@ def store_event(user):
 	f.close()
 
 store_event(username)
+sys.exit(0)
 
 #if (event == 'assemble'):
 #	store_assemble(username)
