@@ -43,7 +43,9 @@ c = gspread.authorize(credentials)
 spreadsheet = c.open('PR9450 Part Usage')
 
 
-def assemble(user):
+# NOTE: This function takes a long time (~20s) to run. This is not practical for on-the-fly use,
+# so this function is NOT currently being used.
+def record_assemble(user):
 	PCB = spreadsheet.worksheet("PR9027")
 	PCB.append_row(["radio_assemble", timestamp, "-1", user])
 	lid = spreadsheet.worksheet("PR1014")
@@ -55,7 +57,9 @@ def assemble(user):
 	mech_assy = spreadsheet.worksheet("PR2040")
 	mech_assy.append_row(["radio_assemble", timestamp, "+1", user])
 
-def fulfill(user):
+# NOTE: This function takes a long time (~20s) to run. This is not practical for on-the-fly use,
+# so this function is NOT currently being used.
+def record_fulfill(user):
 	antenna = spreadsheet.worksheet("PR2034")
 	antenna.append_row(["radio_fulfill", timestamp, "-1", user])
 	box = spreadsheet.worksheet("PR2500")
@@ -65,10 +69,18 @@ def fulfill(user):
 	mech_assy = spreadsheet.worksheet("PR2040")
 	mech_assy.append_row(["radio_assemble", timestamp, "-1", user])
 
-if (event == 'assemble'):
-	assemble(username)
-elif (event == 'fulfill'):
-	fulfill(username)
+
+def store_event(user):
+	f = open('/home/pi/ops_tools/data/stored_inventory_events.csv','w')
+	f.write(event','timestamp','user'\n')
+	f.close()
+
+store_event(username)
+
+#if (event == 'assemble'):
+#	store_assemble(username)
+#elif (event == 'fulfill'):
+#	store_fulfill(username)
 
 
 
