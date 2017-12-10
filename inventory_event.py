@@ -50,13 +50,16 @@ spreadsheet = c.open('PR9450 Part Usage')
 
 def assemble(username):
 	PCB = spreadsheet.worksheet("PR9027")
-	PCB.append_row([])
+	PCB.append_row(["radio_assemble", timestamp, username])
+
+if (event == 'assemble'):
+	assemble(username)
 
 
 
 
-worksheet = spreadsheet.worksheet("PR9027") 
-print worksheet
-
-print worksheet.acell('A2').value
-worksheet.append_row(["A", "B", "C"])
+#worksheet = spreadsheet.worksheet("PR9027") 
+#print worksheet
+#
+#print worksheet.acell('A2').value
+#worksheet.append_row(["A", "B", "C"])
