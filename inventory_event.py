@@ -30,7 +30,7 @@ event = sys.argv[1]
 
 # Confirm that the user wants to do a valid operation.
 if event not in events:
-	print 'ERROR - invalid event.'
+	print 'ERROR - invalid event:', event
 	print 'Use `assemble` or `fulfill`.'
 	sys.exit(1)
 
