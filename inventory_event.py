@@ -21,7 +21,7 @@ if (len(sys.argv) == 3):
 	print username
 elif (len(sys.argv) == 2):
 	print 'two'
-	username = os.getlogin()
+	username = os.uname()[1]
 	print username
 else:
 	print 'ERROR - wrong number of arguments.'
