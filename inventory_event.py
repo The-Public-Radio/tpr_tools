@@ -10,7 +10,7 @@
 
 
 import gspread
-import time
+import datetime
 import os
 import sys
 from oauth2client.service_account import ServiceAccountCredentials
@@ -39,7 +39,7 @@ if event not in events:
 	print 'Use `assemble` or `fulfill`.'
 	sys.exit(1)
 
-timestamp = time.time()
+timestamp = datetime.datetime.now().isoformat()
 print timestamp
 
 scope = ['https://spreadsheets.google.com/feeds']
