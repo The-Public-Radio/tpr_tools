@@ -33,22 +33,30 @@ else:
 events = ['assemble', 'fulfill']
 event = sys.argv[1]
 
+# Confirm that the user wants to do a valid operation.
 if event not in events:
 	print 'ERROR - invalid event.'
 	print 'Use `assemble` or `fulfill`.'
 	sys.exit(1)
-	
+
+timestamp = time.time()
+print timestamp
 
 scope = ['https://spreadsheets.google.com/feeds']
 credentials = ServiceAccountCredentials.from_json_keyfile_name('/home/pi/tpr-inv.json', scope)
-
-
 c = gspread.authorize(credentials)
 spreadsheet = c.open('PR9450 Part Usage')
+
+
+def assemble(username):
+	PCB = spreadsheet.worksheet("PR9027")
+	PCB.append_row([])
+
+
+
 
 worksheet = spreadsheet.worksheet("PR9027") 
 print worksheet
 
 print worksheet.acell('A2').value
-row_to_add = ['foo', 'foo', 'three']
 worksheet.append_row(["A", "B", "C"])
