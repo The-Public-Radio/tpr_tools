@@ -21,13 +21,13 @@ if (len(sys.argv) == 3):
 	print username
 elif (len(sys.argv) == 2):
 	print 'two'
-	username = os.getusername()
+	username = os.getlogin()
 	print username
 else:
 	print 'ERROR - wrong number of arguments.'
 	print 'Usage: $ inventory_event.py <event> <username>'
 
-print username
+#print username
 
 scope = ['https://spreadsheets.google.com/feeds']
 
