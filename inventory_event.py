@@ -18,7 +18,7 @@ if (len(sys.argv) == '3'):
 	username = sys.argv[3]
 elif (len(sys.argv) == '2'):
 	username = os.getusername()
-else
+else:
 	print 'ERROR - wrong number of arguments.'
 	print 'Usage: $ inventory_event.py <event> <username>'
 
