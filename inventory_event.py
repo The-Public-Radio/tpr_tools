@@ -17,10 +17,12 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 if (len(sys.argv) == 3):
 	print 'three'
-	username = sys.argv[3]
+	username = sys.argv[2]
+	print username
 elif (len(sys.argv) == 2):
 	print 'two'
 	username = os.getusername()
+	print username
 else:
 	print 'ERROR - wrong number of arguments.'
 	print 'Usage: $ inventory_event.py <event> <username>'
