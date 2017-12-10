@@ -15,10 +15,10 @@ import os
 import sys
 from oauth2client.service_account import ServiceAccountCredentials
 
-if (len(sys.argv) == '3'):
+if (len(sys.argv) == '4'):
 	print 'three'
-	username = sys.argv[3]
-elif (len(sys.argv) == '2'):
+	username = sys.argv[4]
+elif (len(sys.argv) == '3'):
 	print 'two'
 	username = os.getusername()
 else:
