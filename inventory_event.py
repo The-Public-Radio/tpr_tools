@@ -8,10 +8,9 @@
 #	* Operation (mechanical assembly created OR order fulfilled)
 #	* Username (just a string)
 
-
 import gspread
 import datetime
-import os
+from os import uname
 import sys
 from oauth2client.service_account import ServiceAccountCredentials
 
