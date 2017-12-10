@@ -15,6 +15,8 @@ import os
 import sys
 from oauth2client.service_account import ServiceAccountCredentials
 
+# Set username. Ideally the username is always set to be a person's name (or similar),
+# but in the cases where it's not set then the Raspberry Pi's $HOSTNAME will suffice.
 if (len(sys.argv) == 3):
 	print 'three'
 	username = sys.argv[2]
@@ -26,17 +28,24 @@ elif (len(sys.argv) == 2):
 else:
 	print 'ERROR - wrong number of arguments.'
 	print 'Usage: $ inventory_event.py <event> <username>'
+	sys.exit(1)
 
-#print username
+events = ['assemble', 'fulfill']
+event = sys.argv[1]
+
+if event not in events:
+	print 'ERROR - invalid event.'
+	print 'Use `assemble` or `fulfill`.'
+	sys.exit(1)
+	
 
 scope = ['https://spreadsheets.google.com/feeds']
-
 credentials = ServiceAccountCredentials.from_json_keyfile_name('/home/pi/tpr-inv.json', scope)
 
 
 c = gspread.authorize(credentials)
 spreadsheet = c.open('PR9450 Part Usage')
-print spreadsheet
+
 worksheet = spreadsheet.worksheet("PR9027") 
 print worksheet
 
