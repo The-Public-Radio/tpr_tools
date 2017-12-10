@@ -12,6 +12,7 @@
 import gspread
 import time
 import os
+import sys
 from oauth2client.service_account import ServiceAccountCredentials
 
 if (len(sys.argv) == '3'):
