@@ -16,8 +16,10 @@ import sys
 from oauth2client.service_account import ServiceAccountCredentials
 
 if (len(sys.argv) == '3'):
+	print 'three'
 	username = sys.argv[3]
 elif (len(sys.argv) == '2'):
+	print 'two'
 	username = os.getusername()
 else:
 	print 'ERROR - wrong number of arguments.'
