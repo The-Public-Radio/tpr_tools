@@ -61,6 +61,10 @@ apt-get -y install printer-driver-dymo
 pip install intelhex
 pip install crcmod
 pip install RPi.GPIO
+pip install --upgrade google-api-python-client
+pip install apiclient
+pip install discovery
+pip install gspread
 
 # Clone ops_tools
 git clone git@github.com:The-Public-Radio/ops_tools.git /home/pi/ops_tools

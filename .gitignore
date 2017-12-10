@@ -5,3 +5,4 @@ creds.json
 .DS_Store
 endicia_export_log.xml
 temp/*
+data/client_id.json
