@@ -20,7 +20,7 @@ with open(stored_events_file, newline='') as csvfile:
 			print 'We\'ve got an assemble row!'
 			print 'Looks like', row[2], ' assembled a radio.'
 			# do some stuff
-		elif (row[1] = fulfill):
+		elif (row[1] == fulfill):
 			# do other stuff
 			print 'We\'ve got a fulfill row!'
 			print 'Looks like', row[2], ' fulfilled a radio.'
