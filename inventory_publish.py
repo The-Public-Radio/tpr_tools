@@ -13,7 +13,7 @@ spreadsheet = c.open('PR9450 Part Usage')
 
 stored_events_file = '/home/pi/ops_tools/data/stored_inventory_events.csv'
 
-with open(stored_events_file, newline='') as csvfile:
+with open(stored_events_file, 'wb') as csvfile:
 	csvreader = csv.reader(csvfile, delimiter = ',')
 	for row in csvreader:
 		if (row[1] == assemble):
