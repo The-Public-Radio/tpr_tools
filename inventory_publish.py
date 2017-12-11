@@ -17,11 +17,11 @@ stored_events_file = '/home/pi/ops_tools/data/stored_inventory_events.csv'
 with open(stored_events_file, 'rwb') as f:
 	csvreader = csv.reader(f, delimiter = ',')
 	for row in csvreader:
-		if (row[1] == assemble):
+		if (row[1] == 'assemble'):
 			print 'We\'ve got an assemble row!'
 			print 'Looks like', row[2], ' assembled a radio.'
 			# do some stuff
-		elif (row[1] == fulfill):
+		elif (row[1] == 'fulfill'):
 			# do other stuff
 			print 'We\'ve got a fulfill row!'
 			print 'Looks like', row[2], ' fulfilled a radio.'
