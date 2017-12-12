@@ -87,9 +87,9 @@ with open(stored_events_file, 'rwb') as f:
 
 print PR2040
 
-#for w in worksheets:
-#	sheet = spreadsheet.worksheet(w)
-#	append_rows('%s', w[] % w)
+for w in worksheets:
+	sheet = spreadsheet.worksheet(w)
+	append_rows('%s', w[] % w)
 
 
 
