@@ -85,7 +85,7 @@ with open(stored_events_file, 'rwb') as f:
 			print 'Exiting.'
 			sys.exit(1)
 
-print PR9040
+print PR2040
 
 #for w in worksheets:
 #	sheet = spreadsheet.worksheet(w)
