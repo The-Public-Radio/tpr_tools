@@ -245,24 +245,11 @@ EOM
 # restart CUPS
 /etc/init.d/cups restart
 
-# extract the DYMO driver tarball that's inside ops_tools
-#tar -xvf /home/pi/ops_tools/dymo-cups-drivers-1.4.0.tar.gz -C /home/pi/ops_tools/temp
-
-# change directories
-#cd /home/pi/ops_tools/temp/dymo-cups-drivers-1.4.0.5
-#./configure
-#make
-#make install
-
-
+# clean up
 rm -rf /home/pi/ops_tools/temp/*
 
 # Now open a web browser and log onto the pi's CUPS server using port 631. 
 # Add the relevant DYMO printers and confirm that they work by printing test pages.
-
-
-# NOTE - i've had some issues compiling the DYMO drivers. If that fails, try
-# $ sudo apt-get install printer-driver-dymo
 
 
 # If you need to change the hostname (to something like "TPR-0"):
