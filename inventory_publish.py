@@ -61,7 +61,7 @@ PR1016 = []
 PR2040 = []
 
 #worksheets = ['PR9027', 'PR1024', 'PR2039', 'PR2036', 'PR2040', 'PR2034', 'PR2500', 'PR1016', 'PR2040']
-worksheets = ['PR9040']
+worksheets = [['PR2040', PR2040]]
 
 with open(stored_events_file, 'rwb') as f:
 	csvreader = csv.reader(f, delimiter = ',')
@@ -89,8 +89,10 @@ print 'PR2040 is', PR2040
 
 for w in worksheets:
 	print 'w is', w
-	sheet = spreadsheet.worksheet(w)
-	append_rows('%s', w % w)
+	print 'w[0] is', w[0]
+	print 'w[1] is', w[1]
+	sheet = spreadsheet.worksheet("%s" % w[0])
+	append_rows('%s', w[1] % w[0])
 
 
 
