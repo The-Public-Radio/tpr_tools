@@ -91,7 +91,7 @@ for w in worksheets:
 	append_rows(sheet, w[1])
 
 f = open(stored_events_file, 'w')
-f.write('event,timestamp,user')
+f.write('event,timestamp,user\n')
 f.close()
 
 
