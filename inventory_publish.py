@@ -14,28 +14,6 @@ spreadsheet = c.open('PR9450 Part Usage')
 
 stored_events_file = '/home/pi/ops_tools/data/stored_inventory_events.csv'
 
-#def record_assemble(timestamp, user):
-#	PCB = spreadsheet.worksheet("PR9027")
-#	PCB.append_row(["radio_assemble", timestamp, "-1", user])
-#	lid = spreadsheet.worksheet("PR1014")
-#	lid.append_row(["radio_assemble", timestamp, "-1", user])
-#	screw = spreadsheet.worksheet("PR2039")
-#	screw.append_row(["radio_assemble", timestamp, "-4", user])	
-#	knob = spreadsheet.worksheet("PR2036")
-#	knob.append_row(["radio_assemble", timestamp, "-1", user])
-#	mech_assy = spreadsheet.worksheet("PR2040")
-#	mech_assy.append_row(["radio_assemble", timestamp, "+1", user])
-#
-#def record_fulfill(timestamp, user):
-#	antenna = spreadsheet.worksheet("PR2034")
-#	antenna.append_row(["radio_fulfill", timestamp, "-1", user])
-#	box = spreadsheet.worksheet("PR2500")
-#	box.append_row(["radio_fulfill", timestamp, "-1", user])
-#	jar = spreadsheet.worksheet("PR1016")
-#	jar.append_row(["radio_fulfill", timestamp, "-1", user])
-#	mech_assy = spreadsheet.worksheet("PR2040")
-#	mech_assy.append_row(["radio_assemble", timestamp, "-1", user])
-
 def append_rows(worksheet, list_of_values):
 	col_count = len(list_of_values[0])
 	row_count = worksheet.row_count
