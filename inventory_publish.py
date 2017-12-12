@@ -84,16 +84,16 @@ with open(stored_events_file, 'rwb') as f:
 			print 'Exiting.'
 			sys.exit(1)
 
-
-for w in worksheets:
-	print 'Updating usage of', w[0]
-	sheet = spreadsheet.worksheet("%s" % w[0])
-	append_rows(sheet, w[1])
-
-f = open(stored_events_file, 'w')
-f.write('event,timestamp,user\n')
-f.close()
-
-
-print 'Done!'
-sys.exit(0)
+if len(PR2040):
+	for w in worksheets:
+		print 'Updating usage of', w[0]
+		sheet = spreadsheet.worksheet("%s" % w[0])
+		append_rows(sheet, w[1])
+	f = open(stored_events_file, 'w')
+	f.write('event,timestamp,user\n')
+	f.close()
+	print 'All events recorded!'
+	sys.exit(0)
+else:
+	print 'No events to record!'
+	sys.exit(0)
