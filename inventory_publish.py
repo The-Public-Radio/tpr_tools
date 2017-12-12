@@ -60,7 +60,6 @@ PR2500 = []
 PR1016 = []
 PR2040 = []
 
-#worksheets = ['PR9027', 'PR1024', 'PR2039', 'PR2036', 'PR2040', 'PR2034', 'PR2500', 'PR1016', 'PR2040']
 worksheets = [['PR9027', PR9027], ['PR1014', PR1014], ['PR2039', PR2039], ['PR2036', PR2036], ['PR2040', PR2040], ['PR2034', PR2034], ['PR2500', PR2500], ['PR1016', PR1016]]
 
 with open(stored_events_file, 'rwb') as f:
@@ -87,13 +86,13 @@ with open(stored_events_file, 'rwb') as f:
 
 
 for w in worksheets:
-	#print 'w is', w
-	#print 'w[0] is', w[0]
-	#print 'w[1] is', w[1]
 	print 'Updating usage of', w[0]
 	sheet = spreadsheet.worksheet("%s" % w[0])
 	append_rows(sheet, w[1])
 
+f = open(stored_events_file, 'w')
+f.write('event,timestamp,user')
+f.close()
 
 
 print 'Done!'
