@@ -85,11 +85,12 @@ with open(stored_events_file, 'rwb') as f:
 			print 'Exiting.'
 			sys.exit(1)
 
-print PR2040
+print 'PR2040 is', PR2040
 
 for w in worksheets:
+	print 'w is', w
 	sheet = spreadsheet.worksheet(w)
-	append_rows('%s', w[] % w)
+	append_rows('%s', w % w)
 
 
 
