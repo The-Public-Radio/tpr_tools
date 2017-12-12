@@ -92,7 +92,7 @@ for w in worksheets:
 	print 'w[0] is', w[0]
 	print 'w[1] is', w[1]
 	sheet = spreadsheet.worksheet("%s" % w[0])
-	append_rows(w[0], w[1])
+	append_rows(sheet, w[1])
 
 
 
