@@ -251,6 +251,8 @@ rm -rf /home/pi/ops_tools/temp/*
 # Now open a web browser and log onto the pi's CUPS server using port 631. 
 # Add the relevant DYMO printers and confirm that they work by printing test pages.
 
+# To make things easier, replace line 7 in /etc/profile with the following:
+# PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/games:/usr/games:/home/pi/ops_tools:/home/pi/PiFmRds/src:/home/pi/fm_transmitter"
 
 # If you need to change the hostname (to something like "TPR-0"):
 # $ sudo nano /etc/hostname
