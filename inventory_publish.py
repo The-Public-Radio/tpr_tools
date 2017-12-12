@@ -70,7 +70,7 @@ with open(stored_events_file, 'rwb') as f:
 		if (row[0] == 'assemble'):
 			print 'Looks like', row[2], 'assembled a radio at', row[1]
 			PR9027.append([row[0], row[1], '-1', row[2]])
-			PR1024.append([row[0], row[1], '-1', row[2]])
+			PR1014.append([row[0], row[1], '-1', row[2]])
 			PR2039.append([row[0], row[1], '-4', row[2]])
 			PR2036.append([row[0], row[1], '-1', row[2]])
 			PR2040.append([row[0], row[1], '1', row[2]])
