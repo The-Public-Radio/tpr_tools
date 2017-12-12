@@ -8,6 +8,6 @@ sudo avrdude -P usb -c avrispmkii -p attiny25 -B 5 -b 9600 -U flash:w:/home/pi/o
 
 sudo /home/pi/fm_transmitter/fm_transmitter -f $1 /home/pi/ops_tools/data/1KTest_1s.wav
 
-if [[ $2 == "production"]]
+if [ $2 == "production"]; then
   sudo python /home/pi/ops_tools/inventory_event.py fulfill
 fi
