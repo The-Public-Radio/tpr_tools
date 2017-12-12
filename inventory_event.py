@@ -6,7 +6,7 @@
 #
 # It takes in:
 #	* Operation (mechanical assembly created OR order fulfilled)
-#	* Username (just a string)
+#	* Username (optional, just a string)
 
 #import gspread
 import datetime
