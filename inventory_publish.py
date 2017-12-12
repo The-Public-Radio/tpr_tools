@@ -86,9 +86,12 @@ with open(stored_events_file, 'rwb') as f:
 
 if len(PR2040):
 	for w in worksheets:
-		print 'Updating usage of', w[0]
-		sheet = spreadsheet.worksheet("%s" % w[0])
-		append_rows(sheet, w[1])
+		if len(w[1]):
+			print 'Updating usage of', w[0]
+			sheet = spreadsheet.worksheet("%s" % w[0])
+			append_rows(sheet, w[1])
+		else:
+			print 'No recorded usage of', w[0],'!'
 	f = open(stored_events_file, 'w')
 	f.write('event,timestamp,user\n')
 	f.close()
