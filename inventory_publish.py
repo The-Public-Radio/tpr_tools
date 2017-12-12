@@ -18,6 +18,7 @@ with open(stored_events_file, 'rwb') as f:
 	csvreader = csv.reader(f, delimiter = ',')
 	next(csvreader, None)
 	for row in csvreader:
+		print row[1]
 		if (row[1] == 'assemble'):
 			print 'We\'ve got an assemble row!'
 			print 'Looks like', row[2], ' assembled a radio.'
