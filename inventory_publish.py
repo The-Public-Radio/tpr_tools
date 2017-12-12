@@ -41,10 +41,10 @@ with open(stored_events_file, 'rwb') as f:
 	next(csvreader, None)
 	for row in csvreader:
 		if (row[0] == 'assemble'):
-			print 'Looks like', row[2], 'assembled a radio at' row[1]
+			print 'Looks like', row[2], 'assembled a radio at', row[1]
 			record_assemble(row[1], row[2])
 		elif (row[0] == 'fulfill'):
-			print 'Looks like', row[2], 'fulfilled a radio at' row[1]
+			print 'Looks like', row[2], 'fulfilled a radio at', row[1]
 			record_fulfill(row[1], row[2])
 		else:
 			print 'ERROR - CSV file is not properly formatted.'
