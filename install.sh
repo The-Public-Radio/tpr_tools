@@ -242,6 +242,18 @@ WebInterface Yes
 EOM
 
 
+# Add inventory sync to cron daily tasks
+cat > /etc/cron.daily/inventory_sync <<- EOM
+#!/bin/bash
+
+if [ -e /home/pi/ops_tools/inventory_publish.py ]; then
+  sudo python /home/pi/ops_tools/inventory_publish.py
+fi
+EOM
+# Make inventory sync executable
+chmod a+x /etc/cron.daily/inventory_sync
+
+
 # restart CUPS
 /etc/init.d/cups restart
 
