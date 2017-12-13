@@ -241,6 +241,9 @@ WebInterface Yes
 #
 EOM
 
+# create stored_inventory_events.csv
+echo -en "event,timestamp,user\n" > /home/pi/ops_tools/data/stored_inventory_events.csv
+
 
 # Add inventory sync to cron daily tasks
 cat > /etc/cron.daily/inventory_sync <<- EOM
