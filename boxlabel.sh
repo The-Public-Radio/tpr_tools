@@ -51,7 +51,7 @@ elif [ $3 = "LGA" ]; then
 	/home/pi/ops_tools/temp/background.png
 	# merge with uncommon_goods logo
 	convert /home/pi/ops_tools/temp/background.png /home/pi/ops_tools/data/LGA_logo.png \
-	-gravity center -geometry +0-600 -composite /home/pi/ops_tools/temp/background.png
+	-gravity center -geometry +0-550 -composite /home/pi/ops_tools/temp/background.png
 	# merge two images into one
 	convert /home/pi/ops_tools/temp/background.png /home/pi/ops_tools/temp/sn.png \
 	-gravity center -geometry +0+300 -composite /home/pi/ops_tools/temp/label.png
