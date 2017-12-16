@@ -19,7 +19,7 @@ qrencode -o /home/pi/ops_tools/temp/sn.png "$2"
 convert -resize 300% /home/pi/ops_tools/temp/sn.png /home/pi/ops_tools/temp/sn.png
 
 # if order_source is NOT a radio station
-if [ $3 != "KUER" ] && [ $3 != "WMBR" ] && [ $3 != "WBEZ" ] && [ $3 != "WFAE" ] && [ $3 != "uncommon_goods" ]; then
+if [ $3 != "KUER" ] && [ $3 != "WMBR" ] && [ $3 != "WBEZ" ] && [ $3 != "WFAE" ] && [ $3 != "uncommon_goods" ] && [ $3 != "LGA" ]; then
 	# create text image
 	convert -density 300 -pointsize 12 -font \
 	/usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold.ttf \
@@ -39,6 +39,19 @@ elif [ $3 = "uncommon_goods" ]; then
 	# merge with uncommon_goods logo
 	convert /home/pi/ops_tools/temp/background.png /home/pi/ops_tools/data/uncommongoods_logo.png \
 	-gravity center -geometry +0-500 -composite /home/pi/ops_tools/temp/background.png
+	# merge two images into one
+	convert /home/pi/ops_tools/temp/background.png /home/pi/ops_tools/temp/sn.png \
+	-gravity center -geometry +0+300 -composite /home/pi/ops_tools/temp/label.png
+elif [ $3 = "LGA" ]; then
+	# create text image
+	convert -density 300 -pointsize 12 -font \
+	/usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold.ttf \
+	-size 637.5x1200 -gravity North \
+	label:'\n\n\n\nYour Public Radio\nis tuned to\n'"$1"' MHz\n\nEnjoy :)\n\n--------------------' \
+	/home/pi/ops_tools/temp/background.png
+	# merge with uncommon_goods logo
+	convert /home/pi/ops_tools/temp/background.png /home/pi/ops_tools/data/LGA_logo.png \
+	-gravity center -geometry +0-525 -composite /home/pi/ops_tools/temp/background.png
 	# merge two images into one
 	convert /home/pi/ops_tools/temp/background.png /home/pi/ops_tools/temp/sn.png \
 	-gravity center -geometry +0+300 -composite /home/pi/ops_tools/temp/label.png
