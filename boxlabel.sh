@@ -34,7 +34,7 @@ elif [ $3 = "uncommon_goods" ]; then
 	convert -density 300 -pointsize 12 -font \
 	/usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold.ttf \
 	-size 637.5x1200 -gravity North \
-	label:'\n\n\n\nYour Public Radio\nis tuned to\n'"$1"' MHz\n\nEnjoy :)\n\n--------------------' \
+	label:'\n\n\nYour Public Radio\nis tuned to\n'"$1"' MHz\n\n\nEnjoy :)\n\n--------------------' \
 	/home/pi/ops_tools/temp/background.png
 	# merge with uncommon_goods logo
 	convert /home/pi/ops_tools/temp/background.png /home/pi/ops_tools/data/uncommongoods_logo.png \
@@ -47,7 +47,7 @@ elif [ $3 = "LGA" ]; then
 	convert -density 300 -pointsize 12 -font \
 	/usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold.ttf \
 	-size 637.5x1200 -gravity North \
-	label:'\n\n\nYour Public Radio\nis tuned to\n'"$1"' MHz\n\n\nEnjoy :)\n\n--------------------' \
+	label:'\n\n\n\nYour Public Radio\nis tuned to\n'"$1"' MHz\n\nEnjoy :)\n\n--------------------' \
 	/home/pi/ops_tools/temp/background.png
 	# merge with uncommon_goods logo
 	convert /home/pi/ops_tools/temp/background.png /home/pi/ops_tools/data/LGA_logo.png \
