@@ -23,7 +23,7 @@ key = sys.argv[3]
 # email variables 
 request_url = 'https://api.mailgun.net/v2/{0}/messages'.format(subdomain)
 request = requests.post(request_url, auth=('api', key), data={
-    'from': 'PublicRadioShipments@thepublicrad.io',
+    'from': 'ops@thepublicrad.io',
     'to': recipient,
     'subject': "Your Public Radio is on its way!",
     'text': "Hi there,\n\n" +
