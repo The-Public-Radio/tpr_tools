@@ -19,7 +19,7 @@ qrencode -o /home/pi/ops_tools/temp/sn.png "$2"
 convert -resize 300% /home/pi/ops_tools/temp/sn.png /home/pi/ops_tools/temp/sn.png
 
 # if order_source is NOT a radio station
-if [ $3 != "KUER" ] && [ $3 != "WMBR" ] && [ $3 != "WBEZ" ] && [ $3 != "WFAE" ] && [ $3 != "uncommon_goods" ] && [ $3 != "LGA" ]; then
+if [ $3 != "KUER" ] && [ $3 != "WMBR" ] && [ $3 != "WBEZ" ] && [ $3 != "WFAE" ] && [ $3 != "uncommon_goods" ] && [ $3 != "LGA" ] && [ $3 != "KERA" ] && [ $3 != "KXT" ]; then
 	# create text image
 	convert -density 300 -pointsize 12 -font \
 	/usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold.ttf \
