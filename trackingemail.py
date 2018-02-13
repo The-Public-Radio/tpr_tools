@@ -11,7 +11,7 @@ subdomain = 'tracking.thepublicrad.io'
 
 if (len(sys.argv) != 4):
 	print 'ERROR - wrong number of arguments.'
-	print 'Usage: `$ trackingemail.py <email addressr> <tracking number> <mailgun api key>`'
+	print 'Usage: `$ trackingemail.py <email address> <tracking number> <mailgun api key>`'
 	sys.exit(1)
 
 # set input variables
