@@ -78,7 +78,7 @@ if [ -n "$id" ];	then
 else 
 	echo "No labels in the database!"
 	clean_up
-	exit
+	exit 3
 fi
 
 
