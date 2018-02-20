@@ -93,8 +93,8 @@ if [[ $? -ne 0 ]]; then
 fi
 
 # Update radio in tpr-coordinator
-echo "Updating shipment_id $id in the order database"
-curl -X PUT $url/shipments/$id -H "$headers" -H 'Content-Type: application/json' -d '{"shipment": {"shipment_status": "label_printed"}}' > /dev/null 2>&1
+#echo "Updating shipment_id $id in the order database"
+#curl -X PUT $url/shipments/$id -H "$headers" -H 'Content-Type: application/json' -d '{"shipment": {"shipment_status": "label_printed"}}' > /dev/null 2>&1
 
 clean_up
 echo 'All new labels sent to print ✅'
