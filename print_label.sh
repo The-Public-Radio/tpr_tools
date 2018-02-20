@@ -67,6 +67,7 @@ label_url=$(echo -n $next_shipment_to_print | jq -r '.label_url' | tr -d '\n')
 id=$(echo -n $next_shipment_to_print | jq '.id')
 
 echo '----------------'
+echo "id is" $id
 
 # if $id isn't null, download it and then confirm.
 if [ -n "$id" ];	then 
