@@ -67,9 +67,10 @@ label_url=$(echo -n $next_shipment_to_print | jq -r '.label_url' | tr -d '\n')
 id=$(echo -n $next_shipment_to_print | jq '.id')
 
 echo '----------------'
+echo "id is" $id
 
 # if $id isn't null, download it and then confirm.
-if [ -n "$id" ];	then 
+if [ "$id" != "null" ];	then 
 	# Download label from label_url
 	curl "$label_url" > ./$id.pdf;
 	# echo -n $label_data | base64 --decode > ./$id.pdf;
@@ -78,7 +79,7 @@ if [ -n "$id" ];	then
 else 
 	echo "No labels in the database!"
 	clean_up
-	exit
+	exit 3
 fi
 
 
