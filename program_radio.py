@@ -4,7 +4,7 @@ import time
 
 
 default_firmware = '/home/pi/ops_tools/data/3044a9415d9b2becb2ee44bd759a0c9f6be66109.hex'
-default_eeprom = '/home/pi/ops_tools/data/eeprom'
+default_eeprom = '/home/pi/ops_tools/temp/eeprom'
 
 
 #get arguments
