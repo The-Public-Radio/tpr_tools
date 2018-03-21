@@ -58,7 +58,7 @@ while True:
     		flash:w:'+firmware+ ' -U eeprom:w:'+eeprom)
         if avrdude_exit == 0:
         	print('Programming successful!')
-        else
+        else:
         	print('Programming FAILED with exit code:')
         	print(avrdude_exit)
         	exit(3)
