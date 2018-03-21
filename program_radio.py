@@ -49,6 +49,7 @@ GPIO.setmode(GPIO.BCM)
 # Set this pin as input and enable internal pull up resistor. Our button is active low.  
 GPIO.setup(2, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
+print('Waiting for button press...')
 
 while True:
     input_state = GPIO.input(2)
@@ -58,6 +59,7 @@ while True:
     		flash:w:'+firmware+ ' -U eeprom:w:'+eeprom)
         if avrdude_exit == 0:
         	print('Programming successful!')
+        	exit(0)
         else:
         	print('Programming FAILED with exit code:')
         	print(avrdude_exit)
