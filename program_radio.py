@@ -1,5 +1,5 @@
 import sys, os
-#import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 import time
 
 
