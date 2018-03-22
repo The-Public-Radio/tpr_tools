@@ -32,10 +32,9 @@ else:
 	exit(1)
 
 # confirm which parameters you're using
-print()
-print('eeprom: '+eeprom)
-print('firmware: '+firmware)
-print()
+
+print('\neeprom: '+eeprom)
+print('firmware: '+firmware+'\n')
 
 # now check to see that they're valid files
 if not os.path.exists(eeprom):
@@ -54,16 +53,15 @@ print('Setting up GPIO input...')
 # turn off GPIO warnings
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
-# Pin that our button is connected to. I think that GPIO 2 is open currently. Note, this is broadcom numbering.
+
+# Set pin 2 as input and enable internal pull up resistor. Button must be active low.
 # See https://pinout.xyz/ for pinout 
-# Set this pin as input and enable internal pull up resistor. Our button is active low.  
 GPIO.setup(2, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-
-
 
 
 print('Waiting for button press...')
 while True:
+	print('.')
 	input_state = GPIO.input(2)
 	if input_state == True:
 		time.sleep(0.01)
