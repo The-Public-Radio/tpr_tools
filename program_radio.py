@@ -71,8 +71,8 @@ while True:
 
 print('\nProgramming...\n')
 
-p = subprocess.Popen(['sudo', 'avrdude', '-P', 'usb', '-c', 'avrispmkii', '-p', 'attiny25', '-B', '5', '-b', '9600', '-U', 'flash:w:'+firmware, '-U', 'eeprom:w:'+eeprom], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-#stdout, stderr = process.communicate()
+p = subprocess.Popen(['sudo', 'avrdude', '-P', 'usb', '-c', 'avrispmkii', '-p', 'attiny25', '-B', '5', '-b', \
+	'9600', '-U', 'flash:w:'+firmware, '-U', 'eeprom:w:'+eeprom], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
 
 try:
@@ -92,55 +92,12 @@ while p.poll() is None:
 
 # Get return code from process
 avrdude_exit = p.returncode
-print('avrdude exit code is ', avrdude_exit)
-
-
 
 
 if avrdude_exit == 0:
 	print('Programming successful!')
 	exit(0)
 else:
-	print('Programming FAILED with exit code:')
+	print('Programming FAILED with exit code: 'avrdude_exit)
 	print(avrdude_exit)
 	exit(3)
-
-
-
-
-#while True:
-#    #input_state = GPIO.input(2)
-#    if input_state == False:
-#    	print('\nProgramming...\n')
-#    	#p = subprocess.Popen(['sudo', 'avrdude', '-P', 'usb', '-c', 'avrispmkii', '-p', 'attiny25', '-B', '5', '-b', '9600', '-U', 'flash:w:'+firmware, '-U', 'eeprom:w:'+eeprom], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-#    	p = subprocess.Popen(['sudo', 'avrdude', '-P', 'usb', '-c', 'avrispmkii', '-p', 'attiny25', '-B', '5', '-b', '9600', '-U', 'flash:w:foo', '-U', 'eeprom:w:foo'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-#		stdout, stderr = process.communicate()
-#		#try:
-#		#    # Filter stdout
-#		#    for line in iter(p.stdout.readline, ''):
-#		#        sys.stdout.flush()
-#		#        # Print status
-#		#        print(">>> " + line.rstrip())
-#		#        sys.stdout.flush()
-#		#except:
-#		#    sys.stdout.flush()
-#		#
-#		## Wait until process terminates (without using p.wait())
-#		#while p.poll() is None:
-#		#    # Process hasn't exited yet, let's wait some
-#		#    time.sleep(0.5)
-#		
-#		# Get return code from process
-#		avrdude_exit = p.returncode
-#		print(avrdude_exit)
-#		
-#
-#    	#avrdude_exit = os.WEXITSTATUS('sudo avrdude -P usb -c avrispmkii -p attiny25 -B 5 -b 9600 -U \
-#    	#	flash:w:'+firmware+ ' -U eeprom:w:'+eeprom)
-#        if avrdude_exit == 0:
-#        	print('Programming successful!')
-#        	exit(0)
-#        else:
-#        	print('Programming FAILED with exit code:')
-#        	print(avrdude_exit)
-#        	exit(3)
