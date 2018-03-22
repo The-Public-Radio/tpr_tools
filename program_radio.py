@@ -61,7 +61,7 @@ GPIO.setup(2, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 print('Waiting for button press...')
 while True:
-	print('.')
+	print('.', end='')
 	input_state = GPIO.input(2)
 	if input_state == True:
 		time.sleep(0.01)
