@@ -59,7 +59,8 @@ while True:
     input_state = GPIO.input(2)
     if input_state == False:
     	print('\nProgramming...\n')
-    	p = subprocess.Popen(['sudo', 'avrdude', '-P', 'usb', '-c', 'avrispmkii', '-p', 'attiny25', '-B', '5', '-b', '9600', '-U', 'flash:w:'+firmware, '-U', 'eeprom:w:'+eeprom], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    	#p = subprocess.Popen(['sudo', 'avrdude', '-P', 'usb', '-c', 'avrispmkii', '-p', 'attiny25', '-B', '5', '-b', '9600', '-U', 'flash:w:'+firmware, '-U', 'eeprom:w:'+eeprom], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    	p = subprocess.Popen(['sudo', 'avrdude', '-P', 'usb', '-c', 'avrispmkii', '-p', 'attiny25', '-B', '5', '-b', '9600', '-U', 'flash:w:foo', '-U', 'eeprom:w:foo'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 		stdout, stderr = process.communicate()
 		#try:
 		#    # Filter stdout
