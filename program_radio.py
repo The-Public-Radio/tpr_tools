@@ -1,3 +1,12 @@
+#!/usr/bin/env python
+# This script programs a Public Radio using PR9003_REV_B - the test board that has a button
+# on it.
+#
+# The script can be run with no arguments if you want to use the default settings (which correspond
+# with the firmware that's current on 2018.03.22 + the default eeprom location for eeprom.py). 
+# Alternately, the user can specify the firmware and eeprom locations that they want to use.
+
+
 import sys, os
 import RPi.GPIO as GPIO
 import time
@@ -15,7 +24,7 @@ default_eeprom = '/home/pi/ops_tools/temp/eeprom'
 
 
 if len(sys.argv) == 3:
-	#this means that three arguments were given: the command, the firmware, and the eeprom
+	# this means that three arguments were given: the command, the firmware, and the eeprom
 	eeprom = sys.argv[1]
 	firmware = sys.argv[2]
 elif len(sys.argv) == 1:
