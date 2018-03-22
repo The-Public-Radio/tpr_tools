@@ -56,7 +56,7 @@ while True:
     input_state = GPIO.input(2)
     if input_state == False:
     	print('\nProgramming...\n')
-    	avrdude_exit = os.system('sudo avrdude -P usb -c avrispmkii -p attiny25 -B 5 -b 9600 -U \
+    	avrdude_exit = os.WEXITSTATUS('sudo avrdude -P usb -c avrispmkii -p attiny25 -B 5 -b 9600 -U \
     		flash:w:'+firmware+ ' -U eeprom:w:'+eeprom)
         if avrdude_exit == 0:
         	print('Programming successful!')
