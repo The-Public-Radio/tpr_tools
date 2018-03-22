@@ -52,12 +52,13 @@ GPIO.setmode(GPIO.BCM)
 # See https://pinout.xyz/ for pinout 
 # Set this pin as input and enable internal pull up resistor. Our button is active low.  
 GPIO.setup(2, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-input_state = GPIO.input(2)
+
 
 
 
 print('Waiting for button press...')
 while True:
+	input_state = GPIO.input(2)
 	if input_state == True:
 		time.sleep(0.01)
 	else:
