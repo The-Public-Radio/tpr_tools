@@ -60,6 +60,7 @@ while True:
     if input_state == False:
     	print('\nProgramming...\n')
     	p = subprocess.Popen(['sudo', 'avrdude', '-P', 'usb', '-c', 'avrispmkii', '-p', 'attiny25', '-B', '5', '-b', '9600', '-U', 'flash:w:'+firmware, '-U', 'eeprom:w:'+eeprom], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+		stdout, stderr = process.communicate()
 		#try:
 		#    # Filter stdout
 		#    for line in iter(p.stdout.readline, ''):
