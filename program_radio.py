@@ -30,6 +30,9 @@ else:
 	print('Usage: $ python program_radio.py (path_to_eeprom_file) (path_to_firmware_file)\n')
 	exit(1)
 
+print('Using '+eeprom+' for eeprom image.')
+print('Using '+firmware+' for firmware.')
+
 # now check to see that they're valid files
 if not os.path.exists(eeprom):
 	print('Specified eeprom file does not exist. You specified:')
