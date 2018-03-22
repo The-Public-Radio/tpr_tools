@@ -26,7 +26,8 @@ elif len(sys.argv) == 1:
 	eeprom = default_eeprom
 	firmware = default_firmware
 else:
-	print('Wrong number of arguments. Exiting. \n')
+	print('ERROR: Wrong number of arguments.\n')
+	print('Usage: $ python program_radio.py (path_to_eeprom_file) (path_to_firmware_file)\n')
 	exit(1)
 
 # now check to see that they're valid files
@@ -54,7 +55,7 @@ print('Waiting for button press...')
 while True:
     input_state = GPIO.input(2)
     if input_state == False:
-    	print('Programming...')
+    	print('\nProgramming...\n')
     	avrdude_exit = os.system('sudo avrdude -P usb -c avrispmkii -p attiny25 -B 5 -b 9600 -U \
     		flash:w:'+firmware+ ' -U eeprom:w:'+eeprom)
         if avrdude_exit == 0:
