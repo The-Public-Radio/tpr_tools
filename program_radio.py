@@ -3,17 +3,15 @@ import RPi.GPIO as GPIO
 import time
 import subprocess
 
+# Semantic exit codes in this script:
+# * Exit 1 due to file and/or argument errors
+# * Exit 3 due to programming errors
+# * Exit 0 if programming is successful
+
+
 default_firmware = '/home/pi/ops_tools/data/3044a9415d9b2becb2ee44bd759a0c9f6be66109.hex'
 default_eeprom = '/home/pi/ops_tools/temp/eeprom'
 
-
-#get arguments
-# if --f is specified, set firmware to be the firmware argument
-# 	if the firmware that was specified doesn't exist, exit 1
-# else set firmware to default_firmware
-# if --e is specified, set eeprom to be the eeprom argument
-# 	if the eeprom that was specified doesn't exist, exit 1
-# else set eeprom to default_eeprom
 
 
 if len(sys.argv) == 3:
@@ -26,27 +24,35 @@ elif len(sys.argv) == 1:
 	eeprom = default_eeprom
 	firmware = default_firmware
 else:
+	# the user needs to specify either eeprom AND firmware, or accept the default values
+	# if the user specified only one parameter, fail with exit 1
+	# or if the user specified more than two parameters, fail with exit 1
 	print('ERROR: Wrong number of arguments.\n')
 	print('Usage: $ python program_radio.py (path_to_eeprom_file) (path_to_firmware_file)\n')
 	exit(1)
 
-print('Using '+eeprom+' for eeprom image.')
-print('Using '+firmware+' for firmware.')
+# confirm which parameters you're using
+print()
+print('eeprom: '+eeprom)
+print('firmware: '+firmware)
+print()
 
 # now check to see that they're valid files
 if not os.path.exists(eeprom):
 	print('Specified eeprom file does not exist. You specified:')
 	print(eeprom)
-	print('Exiting. \n')
+	print('Exiting.\n')
 	exit(1)
 elif not os.path.exists(firmware):
 	print('Specified firmware file does not exist. You specified:')
 	print(firmware)
-	print('Exiting. \n')
+	print('Exiting.\n')
 	exit(1)
 
 
-
+print('Setting up GPIO input...')
+# turn off GPIO warnings
+GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 # Pin that our button is connected to. I think that GPIO 2 is open currently. Note, this is broadcom numbering.
 # See https://pinout.xyz/ for pinout 
@@ -80,7 +86,7 @@ try:
 except:
     sys.stdout.flush()
 
-# Wait until process terminates (without using p.wait())
+# Wait until process terminates
 while p.poll() is None:
     # Process hasn't exited yet, let's wait some
     time.sleep(0.5)
