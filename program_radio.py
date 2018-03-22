@@ -1,7 +1,7 @@
 import sys, os
 import RPi.GPIO as GPIO
 import time
-
+import subprocess
 
 default_firmware = '/home/pi/ops_tools/data/3044a9415d9b2becb2ee44bd759a0c9f6be66109.hex'
 default_eeprom = '/home/pi/ops_tools/temp/eeprom'
@@ -59,8 +59,29 @@ while True:
     input_state = GPIO.input(2)
     if input_state == False:
     	print('\nProgramming...\n')
-    	avrdude_exit = os.WEXITSTATUS('sudo avrdude -P usb -c avrispmkii -p attiny25 -B 5 -b 9600 -U \
-    		flash:w:'+firmware+ ' -U eeprom:w:'+eeprom)
+    	p = subprocess.Popen(['sudo', 'avrdude', '-P', 'usb', '-c', 'avrispmkii', '-p', 'attiny25', '-B', '5', '-b', \
+    		'9600', '-U', 'flash:w:'+firmware, '-U', 'eeprom:w:'+eeprom], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+		try:
+		    # Filter stdout
+		    for line in iter(p.stdout.readline, ''):
+		        sys.stdout.flush()
+		        # Print status
+		        print(">>> " + line.rstrip())
+		        sys.stdout.flush()
+		except:
+		    sys.stdout.flush()
+		
+		# Wait until process terminates (without using p.wait())
+		while p.poll() is None:
+		    # Process hasn't exited yet, let's wait some
+		    time.sleep(0.5)
+		
+		# Get return code from process
+		avrdude_exit = p.returncode
+		
+
+    	#avrdude_exit = os.WEXITSTATUS('sudo avrdude -P usb -c avrispmkii -p attiny25 -B 5 -b 9600 -U \
+    	#	flash:w:'+firmware+ ' -U eeprom:w:'+eeprom)
         if avrdude_exit == 0:
         	print('Programming successful!')
         	exit(0)
