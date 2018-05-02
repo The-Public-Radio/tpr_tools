@@ -107,6 +107,6 @@ if avrdude_exit == 0:
 	print('Programming successful!')
 	exit(0)
 else:
-	print('Programming FAILED with exit code: 'avrdude_exit)
+	print('Programming FAILED with exit code: '+avrdude_exit)
 	print(avrdude_exit)
 	exit(3)
