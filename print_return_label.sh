@@ -24,7 +24,6 @@ Options:
 EOM
 exit
 }
-
 clean_up() {
 	rm -rf $tmp_dir/*
 }
@@ -65,11 +64,11 @@ cd $tmp_dir
 
 # Pull down the shipment by tracking number
 # if the result you get isn't "null," then save the id and return_label_url parameters and dump the label data into a pdf.
-return_label_url_to_print=$(curl -s -H "$headers" $url/shipments?$tracking_number | jq -c '[.data | {id: .id, return_label_url: .return_label_url}][]')
+shipment=$(curl -s -H "$headers" $url/shipments?$tracking_number | jq -c '[.data | {id: .id, return_label_url: .return_label_url}][]')
 
-return_label_url=$(echo -n $next_shipment_to_print | jq -r '.return_label_url' | tr -d '\n')
+return_label_url=$(echo -n $shipment | jq -r '.return_label_url' | tr -d '\n')
 
-id=$(echo -n $next_shipment_to_print | jq '.id')
+id=$(echo -n $shipment | jq '.id')
 
 echo '----------------'
 echo "id is" $id
