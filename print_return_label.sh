@@ -90,7 +90,7 @@ fi
 
 # add the label to the print queue. if lpr exit code != 0, clean up and exit.
 echo '----------------'
-echo "Printing $id_return.pdf"
+echo "Printing "$id"_return.pdf"
 lpr -P DYMO_LabelWriter_4XL ./$id_return.pdf
 if [[ $? -ne 0 ]]; then
 	echo "ERROR: $file could not be put in print queue. Removing file. Fix errors and re-run script."
