@@ -98,9 +98,10 @@ if [[ $? -ne 0 ]]; then
 	exit 1
 fi
 
-# Update radio in tpr-coordinator, this should be a no-operation because the primary label will be already printed
-echo "Updating shipment_id $id in the order database"
-curl -X PUT $url/shipments/$id -H "$headers" -H 'Content-Type: application/json' -d '{"shipment": {"shipment_status": "label_printed"}}' > /dev/null 2>&1
+# do NOT update shipment status in the database!
+# doing so might cause things to get out of sync, depending on when this happens relative to marking the shipment BOXED
+#echo "Updating shipment_id $id in the order database"
+#curl -X PUT $url/shipments/$id -H "$headers" -H 'Content-Type: application/json' -d '{"shipment": {"shipment_status": "label_printed"}}' > /dev/null 2>&1
 
 clean_up
 echo "Return label for shipment $id sent to print ✅"
