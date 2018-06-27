@@ -76,10 +76,10 @@ id=$(echo -n $shipment | jq '.id')
 echo '----------------'
 echo "id is" $id
 
-# if $id isn't null, download it and then confirm.
-if [ "$id" != "null" ];	then 
+# if the return label url isn't null, download it and then confirm.
+if [ "$return_label_url" != "null" ];	then 
 	# Download label from label_url
-	curl "$return_label_url" > ./$id.pdf;
+	curl "$return_label_url" > ./$id_return.pdf;
 	echo "Downloaded return label for shipment $id!";
 else 
 	echo "No return label in the database!"
@@ -90,8 +90,8 @@ fi
 
 # add the label to the print queue. if lpr exit code != 0, clean up and exit.
 echo '----------------'
-echo "Printing $id.pdf"
-lpr -P DYMO_LabelWriter_4XL ./$id.pdf
+echo "Printing $id_return.pdf"
+lpr -P DYMO_LabelWriter_4XL ./$id_return.pdf
 if [[ $? -ne 0 ]]; then
 	echo "ERROR: $file could not be put in print queue. Removing file. Fix errors and re-run script."
 	clean_up
