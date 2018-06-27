@@ -64,7 +64,7 @@ cd $tmp_dir
 
 # Pull down the shipment by tracking number
 # Save the ID and return_label_url into an array
-shipment=$(curl -s -H "$headers" $url/shipments?$tracking_number | jq -c '[.data | {id: .id, return_label_url: .return_label_url}][]')
+shipment=$(curl -s -H "$headers" $url/shipments?tracking_number=$tracking_number | jq -c '[.data | {id: .id, return_label_url: .return_label_url}][]')
 echo "shipment is" $shipment
 
 return_label_url=$(echo -n $shipment | jq -r '.return_label_url' | tr -d '\n')
