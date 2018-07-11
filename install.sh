@@ -9,7 +9,7 @@
 # enable SSH in `Raspberry Pi Configuration - Interfaces`
 # reboot
 
-# Now you can SSH in from another computer, which is usually easier beacuse you can copy/paste, etc
+# Now you can SSH in from another computer, which is usually easier because you can copy/paste, etc
 # To make it easier to ssh into the Pi from your computer, you can edit ~/.ssh/config and add something like this to it:
 #   host 0
 #     HostName TPR-0.local
