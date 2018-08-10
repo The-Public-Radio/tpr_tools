@@ -22,11 +22,11 @@ key = sys.argv[3]
 
 # email variables 
 request_url = 'https://api.mailgun.net/v2/{0}/messages'.format(subdomain)
-request = requests.post(request_url, auth=('api', key), data={
+request = requests.post(request_url, auth=('api', key), verify=False, data={
     'from': 'ops@thepublicrad.io',
     'to': recipient,
     'subject': "Your Public Radio is on its way!",
-    'text': "Hi there,\n\n" +
+    'text': "Why hello!\n\n" +
     "We're delighted to let you know that your Public Radio has been programmed & boxed and is waiting to be picked up!\n\n" + 
     "You can follow along with your USPS tracking number (which may take a day or so to update) here:\n\n" + 
     "https://tools.usps.com/go/TrackConfirmAction.action?tLabels="+tracking+
