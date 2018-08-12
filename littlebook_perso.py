@@ -27,7 +27,7 @@ if (len(sys.argv) != 4):
 	sys.exit(1)
 
 # set output filename
-eeprom_filename = '/home/pi/ops_tools/temp/eeprom'
+eeprom_filename = '/Users/snwright/Documents/GitHub/The-Public-Radio/ops_tools/temp/eeprom'
 
 # set regions
 EU = ['BE','BG','CZ','DE','EE','IE','EL','ES','FR','FO','HR','IT','CY','LV','LT','LU','HU','MT','NL','NO','NZ','AT','PL','PT','RO','SI','SK','FI','GB','DK','CH','ZA']
