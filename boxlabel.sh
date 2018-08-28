@@ -36,6 +36,7 @@ echo "match is $match"
 
 # if order_source is NOT a known customer
 if [ match = 0 ]; then
+	echo "i know that match is zero"
 	# create text image
 	convert -density 300 -pointsize 12 -font \
 	/usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold.ttf \
