@@ -18,8 +18,8 @@ qrencode -o /home/pi/ops_tools/temp/sn.png "$2"
 # resize QR code
 convert -resize 300% /home/pi/ops_tools/temp/sn.png /home/pi/ops_tools/temp/sn.png
 
-#declare -a customers=("KUER" "WMBR" "WBEZ" "WFAE" "uncommon_goods" "LGA" "KERA" "KXT" "KOSU" "WMFE" "WNYC" "GPB" "WAMU")
-customers=(KUER WMBR WBEZ WFAE uncommon_goods LGA KERA KXT KOSU WMFE WNYC GPB WAMU)
+customers=("KUER" "WMBR" "WBEZ" "WFAE" "uncommon_goods" "LGA" "KERA" "KXT" "KOSU" "WMFE" "WNYC" "GPB" "WAMU")
+#customers=(KUER WMBR WBEZ WFAE uncommon_goods LGA KERA KXT KOSU WMFE WNYC GPB WAMU)
 
 # check to see if source is a known customer
 match=0
@@ -27,9 +27,11 @@ for customer in "${customers[*]}"; do
 	echo "customer is $customer"
 	echo "source is $3"
 	if [[ $customer = "$3" ]]; then
+		echo "source is customer"
 		match=1
 		break
 	fi
+	echo "source is not customer"
 done
 
 echo "match is $match"
