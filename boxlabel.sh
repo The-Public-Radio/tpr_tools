@@ -36,7 +36,7 @@ echo "match is $match"
 
 # if order_source is NOT a known customer
 if [[ $match = 0 ]]; then
-	echo "i know that match is zero"
+	echo "i know that match is one"
 	# create text image
 	convert -density 300 -pointsize 12 -font \
 	/usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold.ttf \
@@ -86,14 +86,11 @@ elif [ $3 = "KOSU" ]; then
 	convert /home/pi/ops_tools/temp/background.png /home/pi/ops_tools/temp/sn.png \
 	-gravity center -geometry +0+300 -composite /home/pi/ops_tools/temp/label.png
 # else, i.e. if source is a customer but is NOT uncommon_goods, LGA, or KOSU
-elif [[ $match = 1 ]]; then
+else then
 	echo "i know that match is true"
 	bgname=/home/pi/ops_tools/data/label_$3.png
 	convert $bgname /home/pi/ops_tools/temp/sn.png \
 	-gravity center -geometry +0+300 -composite /home/pi/ops_tools/temp/label.png
-else
-	echo "I don't know what to do with this source!"
-	exit 1
 fi
 
 # print the result
