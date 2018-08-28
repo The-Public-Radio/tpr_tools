@@ -18,8 +18,25 @@ qrencode -o /home/pi/ops_tools/temp/sn.png "$2"
 # resize QR code
 convert -resize 300% /home/pi/ops_tools/temp/sn.png /home/pi/ops_tools/temp/sn.png
 
-# if order_source is NOT a radio station
-if [ $3 != "KUER" ] && [ $3 != "WMBR" ] && [ $3 != "WBEZ" ] && [ $3 != "WFAE" ] && [ $3 != "uncommon_goods" ] && [ $3 != "LGA" ] && [ $3 != "KERA" ] && [ $3 != "KXT" ] && [ $3 != "KOSU" ] && [ $3 != "WMFE" ]; then
+customers=("KUER" "WMBR" "WBEZ" "WFAE" "uncommon_goods" "LGA" "KERA" "KXT" "KOSU" "WMFE" "WNYC" "GPB" "WAMU")
+
+# check to see if source is a known customer
+match=0
+for customer in "${customers[@]}"; do
+	#echo "source is $3, customer is $customer"
+	if [[ $3 = "$customer" ]]; then
+		#echo "source is customer!"
+		match=1
+		break
+	fi
+	#echo "source is not customer"
+done
+
+#echo "match is $match"
+
+# if order_source is NOT a known customer
+if [[ $match = 0 ]]; then
+	#echo "i know that match is zero"
 	# create text image
 	convert -density 300 -pointsize 12 -font \
 	/usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold.ttf \
@@ -62,16 +79,15 @@ elif [ $3 = "KOSU" ]; then
 	-size 637.5x1200 -gravity North \
 	label:'\n\n\n\nYour Public Radio\nis tuned to\n'"$1"' MHz\n\nEnjoy :)\n\n--------------------' \
 	/home/pi/ops_tools/temp/background.png
-	# merge with uncommon_goods logo
+	# merge with KOSU logo
 	convert /home/pi/ops_tools/temp/background.png /home/pi/ops_tools/data/KOSU_logo.png \
 	-gravity center -geometry +0-525 -composite /home/pi/ops_tools/temp/background.png
 	# merge two images into one
 	convert /home/pi/ops_tools/temp/background.png /home/pi/ops_tools/temp/sn.png \
 	-gravity center -geometry +0+300 -composite /home/pi/ops_tools/temp/label.png
-
-
-# else, i.e. if order_source IS a radio station
+# else, i.e. if source is a customer but is NOT uncommon_goods, LGA, or KOSU
 else
+	#echo "i know that match is one"
 	bgname=/home/pi/ops_tools/data/label_$3.png
 	convert $bgname /home/pi/ops_tools/temp/sn.png \
 	-gravity center -geometry +0+300 -composite /home/pi/ops_tools/temp/label.png
