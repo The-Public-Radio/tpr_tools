@@ -32,7 +32,7 @@ for customer in "${customers[@]}"; do
 	#echo "source is not customer"
 done
 
-echo "match is $match"
+#echo "match is $match"
 
 # if order_source is NOT a known customer
 if [[ $match = 0 ]]; then
