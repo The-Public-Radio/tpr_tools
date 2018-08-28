@@ -25,7 +25,7 @@ match=0
 for customer in "${customers[@]}"; do
 	echo "source is $3, customer is $customer"
 	if [[ $3 = "$customer" ]]; then
-		echo "source is customer"
+		echo "source is customer!"
 		match=1
 		break
 	fi
@@ -86,6 +86,7 @@ elif [ $3 = "KOSU" ]; then
 	-gravity center -geometry +0+300 -composite /home/pi/ops_tools/temp/label.png
 # else, i.e. if source is a customer but is NOT uncommon_goods, LGA, or KOSU
 elif [ match = 1 ]; then
+	echo "i know that match is true"
 	bgname=/home/pi/ops_tools/data/label_$3.png
 	convert $bgname /home/pi/ops_tools/temp/sn.png \
 	-gravity center -geometry +0+300 -composite /home/pi/ops_tools/temp/label.png
