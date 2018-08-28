@@ -23,10 +23,10 @@ customers=("KUER" "WMBR" "WBEZ" "WFAE" "uncommon_goods" "LGA" "KERA" "KXT" "KOSU
 
 # check to see if source is a known customer
 match=0
-for customer in "${customers[*]}"; do
+for customer in "${customers[@]}"; do
 	echo "customer is $customer"
 	echo "source is $3"
-	if [[ $customer = "$3" ]]; then
+	if [[ $3 = "$customer" ]]; then
 		echo "source is customer"
 		match=1
 		break
