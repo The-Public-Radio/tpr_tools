@@ -25,6 +25,7 @@ customers=("KUER" "WMBR" "WBEZ" "WFAE" "uncommon_goods" \
 match=0
 for customer in "${customers}"; do
 	echo "customer is $customer"
+	echo "source is $3"
 	if [[ $customer = "$3" ]]; then
 		match=1
 		break
