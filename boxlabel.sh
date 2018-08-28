@@ -18,8 +18,12 @@ qrencode -o /home/pi/ops_tools/temp/sn.png "$2"
 # resize QR code
 convert -resize 300% /home/pi/ops_tools/temp/sn.png /home/pi/ops_tools/temp/sn.png
 
-# if order_source is NOT a radio station
-if [ $3 != "KUER" ] && [ $3 != "WMBR" ] && [ $3 != "WBEZ" ] && [ $3 != "WFAE" ] && [ $3 != "uncommon_goods" ] && [ $3 != "LGA" ] && [ $3 != "KERA" ] && [ $3 != "KXT" ] && [ $3 != "KOSU" ] && [ $3 != "WMFE" ]; then
+customers=("KUER" "WMBR" "WBEZ" "WFAE" "uncommon_goods" \
+	"LGA" "KERA" "KXT" "KOSU" "WMFE" "WNYC" "GPB" "WAMU")
+
+# if order_source is NOT a known customer
+#if [ $3 != "KUER" ] && [ $3 != "WMBR" ] && [ $3 != "WBEZ" ] && [ $3 != "WFAE" ] && [ $3 != "uncommon_goods" ] && [ $3 != "LGA" ] && [ $3 != "KERA" ] && [ $3 != "KXT" ] && [ $3 != "KOSU" ] && [ $3 != "WMFE" ]; then
+if ! [ $3 =~ "$customers" ]; then
 	# create text image
 	convert -density 300 -pointsize 12 -font \
 	/usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold.ttf \
