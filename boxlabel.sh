@@ -21,9 +21,20 @@ convert -resize 300% /home/pi/ops_tools/temp/sn.png /home/pi/ops_tools/temp/sn.p
 customers=("KUER" "WMBR" "WBEZ" "WFAE" "uncommon_goods" \
 	"LGA" "KERA" "KXT" "KOSU" "WMFE" "WNYC" "GPB" "WAMU")
 
+# check to see if source is a known customer
+match=0
+for customer in "${customers}"; do
+	if [[ $customer = "$3" ]]; then
+		match=1
+		break
+	fi
+done
+
+echo "match is $match"
+
 # if order_source is NOT a known customer
 #if [ $3 != "KUER" ] && [ $3 != "WMBR" ] && [ $3 != "WBEZ" ] && [ $3 != "WFAE" ] && [ $3 != "uncommon_goods" ] && [ $3 != "LGA" ] && [ $3 != "KERA" ] && [ $3 != "KXT" ] && [ $3 != "KOSU" ] && [ $3 != "WMFE" ]; then
-if ! [[ $3 =~ "$customers" ]]; then
+if ! [ match = 0 ]; then
 	# create text image
 	convert -density 300 -pointsize 12 -font \
 	/usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold.ttf \
