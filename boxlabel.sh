@@ -23,7 +23,7 @@ customers=(KUER WMBR WBEZ WFAE uncommon_goods LGA KERA KXT KOSU WMFE WNYC GPB WA
 
 # check to see if source is a known customer
 match=0
-for customer in "${customers}"; do
+for customer in "${customers[*]}"; do
 	echo "customer is $customer"
 	echo "source is $3"
 	if [[ $customer = "$3" ]]; then
