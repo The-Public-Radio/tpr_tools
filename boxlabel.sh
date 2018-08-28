@@ -86,7 +86,7 @@ elif [ $3 = "KOSU" ]; then
 	convert /home/pi/ops_tools/temp/background.png /home/pi/ops_tools/temp/sn.png \
 	-gravity center -geometry +0+300 -composite /home/pi/ops_tools/temp/label.png
 # else, i.e. if source is a customer but is NOT uncommon_goods, LGA, or KOSU
-else then
+else
 	echo "i know that match is true"
 	bgname=/home/pi/ops_tools/data/label_$3.png
 	convert $bgname /home/pi/ops_tools/temp/sn.png \
