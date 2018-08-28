@@ -24,6 +24,7 @@ customers=("KUER" "WMBR" "WBEZ" "WFAE" "uncommon_goods" \
 # check to see if source is a known customer
 match=0
 for customer in "${customers}"; do
+	echo "customer is $customer"
 	if [[ $customer = "$3" ]]; then
 		match=1
 		break
