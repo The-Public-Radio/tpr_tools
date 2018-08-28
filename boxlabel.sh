@@ -84,8 +84,6 @@ elif [ $3 = "KOSU" ]; then
 	# merge two images into one
 	convert /home/pi/ops_tools/temp/background.png /home/pi/ops_tools/temp/sn.png \
 	-gravity center -geometry +0+300 -composite /home/pi/ops_tools/temp/label.png
-
-
 # else, i.e. if source is a customer but is NOT uncommon_goods, LGA, or KOSU
 elif [ match = 1 ]; then
 	bgname=/home/pi/ops_tools/data/label_$3.png
