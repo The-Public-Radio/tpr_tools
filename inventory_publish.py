@@ -33,7 +33,7 @@ def append_rows(worksheet, list_of_values):
 	worksheet.update_cells(rng)
 
 # Assembly parts:
-PR9027 = []
+PR9028_REV_D = []
 PR1014 = []
 PR2039 = []
 PR2036 = []
@@ -45,7 +45,7 @@ PR2500 = []
 PR1016 = []
 PR2043 = []
 
-worksheets = [['PR9027', PR9027], ['PR1014', PR1014], ['PR2039', PR2039], ['PR2036', PR2036], ['PR2043', PR2043], ['PR2034', PR2034], ['PR2500', PR2500], ['PR1016', PR1016]]
+worksheets = [['PR9028_REV_D', PR9028_REV_D], ['PR1014', PR1014], ['PR2039', PR2039], ['PR2036', PR2036], ['PR2043', PR2043], ['PR2034', PR2034], ['PR2500', PR2500], ['PR1016', PR1016]]
 
 with open(stored_events_file, 'rwb') as f:
 	csvreader = csv.reader(f, delimiter = ',')
@@ -53,7 +53,7 @@ with open(stored_events_file, 'rwb') as f:
 	for row in csvreader:
 		if (row[0] == 'assemble'):
 			print 'Looks like', row[2], 'assembled a radio at', row[1]
-			PR9027.append([row[0], row[1], '-1', row[2]])
+			PR9028_REV_D.append([row[0], row[1], '-1', row[2]])
 			PR1014.append([row[0], row[1], '-1', row[2]])
 			PR2039.append([row[0], row[1], '-4', row[2]])
 			PR2036.append([row[0], row[1], '-1', row[2]])
