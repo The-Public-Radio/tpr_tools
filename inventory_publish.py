@@ -3,7 +3,7 @@
 
 import gspread
 import sys
-import os
+from os import uname
 import csv
 from oauth2client.service_account import ServiceAccountCredentials
 
