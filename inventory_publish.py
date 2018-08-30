@@ -11,7 +11,7 @@ scope = ['https://spreadsheets.google.com/feeds']
 credentials = ServiceAccountCredentials.from_json_keyfile_name('/home/pi/tpr-inv.json', scope)
 c = gspread.authorize(credentials)
 
-if (uname() == 'TPR-0'):
+if (uname()[1] == 'TPR-0'):
 	print 'this is TPR-0'
 	spreadsheet = c.open('PR9450 Part Usage_Brooklyn')
 else:
