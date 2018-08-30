@@ -3,6 +3,7 @@
 
 import gspread
 import sys
+from os import uname
 import csv
 from oauth2client.service_account import ServiceAccountCredentials
 
@@ -10,7 +11,13 @@ from oauth2client.service_account import ServiceAccountCredentials
 scope = ['https://spreadsheets.google.com/feeds']
 credentials = ServiceAccountCredentials.from_json_keyfile_name('/home/pi/tpr-inv.json', scope)
 c = gspread.authorize(credentials)
-spreadsheet = c.open('PR9450 Part Usage')
+
+if (uname()[1] == 'TPR-0'):
+	print 'this is TPR-0'
+	spreadsheet = c.open('PR9450 Part Usage_Brooklyn')
+else:
+	print 'this is *not* TPR-0'
+	spreadsheet = c.open('PR9450 Part Usage_WAi')
 
 stored_events_file = '/home/pi/ops_tools/data/stored_inventory_events.csv'
 
