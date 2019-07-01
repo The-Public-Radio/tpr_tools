@@ -4,7 +4,7 @@
 
 if [ "$#" -ne 3 ]; then
   echo "Wrong number of arguments!"
-  echo "Usage: $ lookup_shipment.sh <tracking_number> <env> <auth_token>" >&2
+  echo "Usage: $ packing_list.sh <tracking_number> <env> <auth_token>" >&2
   exit 1
 fi
 
