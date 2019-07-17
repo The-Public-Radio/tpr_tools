@@ -67,6 +67,7 @@ pip install discovery
 pip install gspread
 
 # Clone ops_tools
+mkdir /home/pi/ops_tools
 git clone git@github.com:The-Public-Radio/ops_tools.git /home/pi/ops_tools
 mkdir /home/pi/ops_tools/temp
 
