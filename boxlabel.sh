@@ -18,7 +18,7 @@ qrencode -o /home/pi/ops_tools/temp/sn.png "$2"
 # resize QR code
 convert -resize 300% /home/pi/ops_tools/temp/sn.png /home/pi/ops_tools/temp/sn.png
 
-customers=("KUER_90.1" "KUER_generic" "WMBR" "WBEZ" "WFAE" "uncommon_goods" "LGA" "KERA" "KXT" "KOSU" "WMFE" "WNYC" "GPB_Atlanta" "GPB" "WAMU" "CJSW" "883Jia" "Power98" "Woodstock")
+customers=("KUER_90.1" "KUER_generic" "WMBR" "WBEZ" "WFAE" "uncommon_goods" "LGA" "KERA" "KXT" "KOSU" "WMFE" "WNYC" "GPB_Atlanta" "GPB" "WAMU" "CJSW" "883Jia" "Power98" "Woodstock" "WUSF")
 
 # check to see if source is a known customer
 match=0
