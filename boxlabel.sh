@@ -18,7 +18,8 @@ qrencode -o /home/pi/ops_tools/temp/sn.png "$2"
 # resize QR code
 convert -resize 300% /home/pi/ops_tools/temp/sn.png /home/pi/ops_tools/temp/sn.png
 
-customers=("KUER_90.1" "KUER_generic" "WMBR" "WBEZ" "WFAE" "uncommon_goods" "LGA" "KERA" "KXT" "KOSU" "WMFE" "WNYC" "GPB_Atlanta" "GPB" "WAMU" "CJSW" "883Jia" "Power98" "Woodstock" "WUSF" "TTM")
+
+customers=("KUER_90.1" "KUER_generic" "WMBR" "WBEZ" "WFAE" "uncommon_goods" "LGA" "KERA" "KXT" "KOSU" "WMFE" "WNYC" "GPB_Atlanta" "GPB" "WAMU" "CJSW" "883Jia" "Power98" "Woodstock" "WUSF" "Louisville" "TTM")
 
 # check to see if source is a known customer
 match=0
@@ -56,6 +57,19 @@ elif [ $3 = "uncommon_goods" ]; then
 	# merge with uncommon_goods logo
 	convert /home/pi/ops_tools/temp/background.png /home/pi/ops_tools/data/uncommongoods_logo.png \
 	-gravity center -geometry +0-500 -composite /home/pi/ops_tools/temp/background.png
+	# merge two images into one
+	convert /home/pi/ops_tools/temp/background.png /home/pi/ops_tools/temp/sn.png \
+	-gravity center -geometry +0+300 -composite /home/pi/ops_tools/temp/label.png
+elif [ $3 = "Louisville" ]; then
+	# create text image
+	convert -density 300 -pointsize 12 -font \
+	/usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold.ttf \
+	-size 637.5x1200 -gravity North \
+	label:'\n\n\n\n\n\n\n\n\n'"$1"' MHz\n--------------------' \
+	/home/pi/ops_tools/temp/background.png
+	# merge with uncommon_goods logo
+	convert /home/pi/ops_tools/temp/background.png /home/pi/ops_tools/data/Louisville_logo.png \
+	-gravity center -geometry +0-350 -composite /home/pi/ops_tools/temp/background.png
 	# merge two images into one
 	convert /home/pi/ops_tools/temp/background.png /home/pi/ops_tools/temp/sn.png \
 	-gravity center -geometry +0+300 -composite /home/pi/ops_tools/temp/label.png
