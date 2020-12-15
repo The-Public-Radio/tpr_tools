@@ -1,6 +1,8 @@
 import shippo
 import datetime
 import time
+import requests
+import subprocess
 
 timestamp = datetime.datetime.now().isoformat()[:-3] + 'Z'
 
@@ -9,14 +11,26 @@ manifest = shippo.Manifest.create(
     shipment_date = timestamp,
     address_from = "c6036179a6f1412abf083cfe3fbd1867",
 )
-manifest_object = manifest["object_id"]
+manifest_object_id = manifest["object_id"]
 
 # the manifest will probably be queued (not completed) at this point
 # wait a minute so that the object gets through Shippo's queue
 print("waiting a minute...")
 time.sleep(60)
 
-shippo.Manifest.retrieve(manifest_object)
+manifest_object = shippo.Manifest.retrieve(manifest_object_id)
+documents = manifest_object["documents"]
+
+for url in documents:
+	document = requests.get(url, allow_redirects=True)
+	open('manifest.pdf', 'wb').write(r.content)
+	subprocess.run(["lp", document])
+	
+
+
+
+#https://shippo-delivery-east.s3.amazonaws.com/92750901649158000314205469_5630_usps.pdf?Signature=uszFTT4H%2Fj6T3z3saizZZr6G1B0%3D&Expires=1639533640&AWSAccessKeyId=AKIAT3Z7F7EU3MDETVFS
+#lpadmin -p M479FDW -v socket://192.168.1.128 -P
 
 #{
 #  "address_from": "c6036179a6f1412abf083cfe3fbd1867",
