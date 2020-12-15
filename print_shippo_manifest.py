@@ -3,6 +3,7 @@ import datetime
 import time
 import requests
 import subprocess
+import os
 
 timestamp = datetime.datetime.now().isoformat()[:-3] + 'Z'
 
@@ -25,7 +26,8 @@ for url in documents:
 	document = requests.get(url, allow_redirects=True)
 	open('manifest.pdf', 'wb').write(r.content)
 	subprocess.run(["lp", document])
-	
+	os.remove('manifest.pdf')
+
 
 
 
