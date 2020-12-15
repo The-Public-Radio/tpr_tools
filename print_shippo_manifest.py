@@ -18,7 +18,7 @@ from_address['theprepared'] = os.getenv('ADDRESS_FROM_THEPREPARED')
 
 
 
-for company in (tpr):
+for company in range(tpr):
 	manifest = shippo.Manifest.create(
 	    carrier_account = carrier_account['company'],
 	    shipment_date = timestamp,
