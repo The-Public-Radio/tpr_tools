@@ -7,26 +7,38 @@ import os
 
 timestamp = datetime.datetime.now().isoformat()[:-3] + 'Z'
 
-manifest = shippo.Manifest.create(
-    carrier_account = carrier_account,
-    shipment_date = timestamp,
-    address_from = "c6036179a6f1412abf083cfe3fbd1867",
-)
-manifest_object_id = manifest["object_id"]
+# get carrier accounts
+carrier_account = {}
+carrier_account['tpr'] = os.getenv('CARRIER_ACCOUNT_TPR')
+carrier_account['theprepared'] = os.getenv('CARRIER_ACCOUNT_THEPREPARED')
+# get from_addresses
+from_address = {}
+from_address['tpr'] = os.getenv('ADDRESS_FROM_TPR')
+from_address['theprepared'] = os.getenv('ADDRESS_FROM_THEPREPARED')
 
-# the manifest will probably be queued (not completed) at this point
-# wait a minute so that the object gets through Shippo's queue
-print("waiting a minute...")
-time.sleep(60)
 
-manifest_object = shippo.Manifest.retrieve(manifest_object_id)
-documents = manifest_object["documents"]
 
-for url in documents:
-	document = requests.get(url, allow_redirects=True)
-	open('manifest.pdf', 'wb').write(r.content)
-	subprocess.run(["lp", document])
-	os.remove('manifest.pdf')
+for company in (tpr):
+	manifest = shippo.Manifest.create(
+	    carrier_account = carrier_account['company'],
+	    shipment_date = timestamp,
+	    address_from = from_address['company'],
+	)
+	manifest_object_id = manifest["object_id"]
+
+	# the manifest will probably be queued (not completed) at this point
+	# wait a minute so that the object gets through Shippo's queue
+	print("waiting a minute...")
+	time.sleep(60)
+
+	manifest_object = shippo.Manifest.retrieve(manifest_object_id)
+	documents = manifest_object["documents"]
+
+	for url in documents:
+		document = requests.get(url, allow_redirects=True)
+		open('/home/pi/ops_tools/temp/manifest.pdf', 'wb').write(document.content)
+		subprocess.run(['lp', '/home/pi/ops_tools/temp/manifest.pdf', '-o', 'fit-to-page'])
+		os.remove('/home/pi/ops_tools/temp/manifest.pdf')
 
 
 
