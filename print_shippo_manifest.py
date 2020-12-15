@@ -20,9 +20,9 @@ companies = ['tpr']
 
 for company in companies:
 	manifest = shippo.Manifest.create(
-	    carrier_account = carrier_account['company'],
+	    carrier_account = carrier_account[company],
 	    shipment_date = timestamp,
-	    address_from = from_address['company'],
+	    address_from = from_address[company],
 	)
 	manifest_object_id = manifest["object_id"]
 
