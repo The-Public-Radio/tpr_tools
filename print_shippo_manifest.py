@@ -17,13 +17,13 @@ from_address['tpr'] = os.getenv('ADDRESS_FROM_TPR')
 from_address['theprepared'] = os.getenv('ADDRESS_FROM_THEPREPARED')
 # get api keys
 api_keys = {}
-api_key['tpr'] = os.getenv('SHIPPO_TOKEN_TPR')
-api_key['theprepared'] = os.getenv('SHIPPO_TOKEN_THEPREPARED')
+api_keys['tpr'] = os.getenv('SHIPPO_TOKEN_TPR')
+api_keys['theprepared'] = os.getenv('SHIPPO_TOKEN_THEPREPARED')
 
 companies = ['tpr']
 
 for company in companies:
-	shippo.config.api_key = api_key[company]
+	shippo.config.api_key = api_keys[company]
 	manifest = shippo.Manifest.create(
 	    carrier_account = carrier_account[company],
 	    shipment_date = timestamp,
