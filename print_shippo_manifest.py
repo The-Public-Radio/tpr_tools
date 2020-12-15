@@ -16,7 +16,7 @@ from_address = {}
 from_address['tpr'] = os.getenv('ADDRESS_FROM_TPR')
 from_address['theprepared'] = os.getenv('ADDRESS_FROM_THEPREPARED')
 
-companies = [tpr]
+companies = ['tpr']
 
 for company in companies:
 	manifest = shippo.Manifest.create(
