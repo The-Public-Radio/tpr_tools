@@ -20,7 +20,7 @@ api_keys = {}
 api_keys['tpr'] = os.getenv('SHIPPO_TOKEN_TPR')
 api_keys['theprepared'] = os.getenv('SHIPPO_TOKEN_THEPREPARED')
 
-companies = ['tpr']
+companies = ['tpr', 'theprepared']
 
 for company in companies:
 	shippo.config.api_key = api_keys[company]
