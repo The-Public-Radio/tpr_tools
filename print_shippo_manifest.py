@@ -24,9 +24,11 @@ api_keys['theprepared'] = os.getenv('SHIPPO_TOKEN_THEPREPARED')
 #	'tpr', 
 #	'theprepared',
 #]
-company = 'tpr'
+#company = 'tpr'
+company = 'theprepared'
 
 #for company in companies:
+print("Working on {}...").format(company)
 shippo.config.api_key = api_keys[company]
 try:
 	manifest = shippo.Manifest.create(
@@ -35,7 +37,6 @@ try:
 	    address_from = from_address[company],
 	    async = False,
 	)
-
 	# with async unspecified the manifest will be QUEUED. if you use async manifest creation
 	# sleep for a minute, then retrieve the manifest and grab the documents from it
 	#manifest_object_id = manifest["object_id"]
@@ -43,14 +44,17 @@ try:
 	#time.sleep(60)
 	#manifest_object = shippo.Manifest.retrieve(manifest_object_id)
 	#documents = manifest_object["documents"]
-
 	documents = manifest["documents"]
-	print("we have documents!")
+	print("We have documents!")
 except:
+	documents = ""
 	print("An error occurred creating a manifest via Shippo :(")
-if documents:
+if documents != "":
+	print("Let's print them.")
 	for url in documents:
 		document = requests.get(url, allow_redirects=True)
 		open('/home/pi/ops_tools/temp/manifest.pdf', 'wb').write(document.content)
 		subprocess.run(['lp', '/home/pi/ops_tools/temp/manifest.pdf', '-o', 'fit-to-page'])
 		os.remove('/home/pi/ops_tools/temp/manifest.pdf')
+else:
+	print("No documents to print!")
