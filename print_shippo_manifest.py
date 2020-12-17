@@ -46,9 +46,10 @@ try:
 	#documents = manifest_object["documents"]
 	documents = manifest["documents"]
 	print("We have documents!")
-except:
+except Exception as e:
 	documents = ""
 	print("An error occurred creating a manifest via Shippo :(")
+	print(e)
 if documents != "":
 	print("Let's print them.")
 	for url in documents:
