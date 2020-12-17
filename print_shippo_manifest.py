@@ -28,7 +28,7 @@ api_keys['theprepared'] = os.getenv('SHIPPO_TOKEN_THEPREPARED')
 company = 'theprepared'
 
 #for company in companies:
-print("Working on {}...").format(company)
+print("Working on {}...".format(company))
 shippo.config.api_key = api_keys[company]
 try:
 	manifest = shippo.Manifest.create(
