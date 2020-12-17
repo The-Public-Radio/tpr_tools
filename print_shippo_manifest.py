@@ -20,10 +20,14 @@ api_keys = {}
 api_keys['tpr'] = os.getenv('SHIPPO_TOKEN_TPR')
 api_keys['theprepared'] = os.getenv('SHIPPO_TOKEN_THEPREPARED')
 
+mailgun_key = os.getenv('MAILGUN_KEY')
+
 companies = [
-#	'tpr', 
+	'tpr', 
 	'theprepared',
 ]
+
+results = {}
 
 
 for company in companies:
@@ -44,17 +48,37 @@ for company in companies:
 		#manifest_object = shippo.Manifest.retrieve(manifest_object_id)
 		#documents = manifest_object["documents"]
 		documents = manifest["documents"]
+		results[company] = documents
 		print("\tWe have documents!")
 	except Exception as e:
 		documents = ""
 		print("\tAn error occurred creating a manifest via Shippo :(")
 		print("\t", e)
-if documents != "":
-	print("\tLet's print them.")
-	for url in documents:
-		document = requests.get(url, allow_redirects=True)
-		open('/home/pi/ops_tools/temp/manifest.pdf', 'wb').write(document.content)
-		subprocess.run(['lp', '/home/pi/ops_tools/temp/manifest.pdf', '-o', 'fit-to-page'])
-		os.remove('/home/pi/ops_tools/temp/manifest.pdf')
-else:
-	print("No documents to print!")
+		results[company] = e
+	if documents != "":
+		print("\tLet's print them.")
+		for url in documents:
+			document = requests.get(url, allow_redirects=True)
+			open('/home/pi/ops_tools/temp/manifest.pdf', 'wb').write(document.content)
+			subprocess.run(['lp', '/home/pi/ops_tools/temp/manifest.pdf', '-o', 'fit-to-page'])
+			os.remove('/home/pi/ops_tools/temp/manifest.pdf')
+	else:
+		print("\tNo documents to print for {}!".format(company))
+
+
+
+mailgun_request_url = 'https://api.mailgun.net/v2/tracking.thepublicrad.io/messages'
+request = requests.post(
+	mailgun_request_url, 
+	auth=(
+		'api', 
+		mailgun_key
+	), 
+	verify=False,
+	data={
+		'from': 'ops@thepublicrad.io',
+		'to': 'spencer@theprepared.org',
+		'subject': "Shipping manifests for {}".format(timestamp),
+		'text': "Today's shipping manifests have been attempted.\n\nThe Prepared's account had the following response:\n\t{}\n\nTPR's account had the following response:\n\t{}\n\n".format(results['theprepared'], results['tpr'])
+	}
+)
