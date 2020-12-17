@@ -20,38 +20,37 @@ api_keys = {}
 api_keys['tpr'] = os.getenv('SHIPPO_TOKEN_TPR')
 api_keys['theprepared'] = os.getenv('SHIPPO_TOKEN_THEPREPARED')
 
-#companies = [
+companies = [
 #	'tpr', 
-#	'theprepared',
-#]
-#company = 'tpr'
-company = 'theprepared'
+	'theprepared',
+]
 
-#for company in companies:
-print("Working on {}...".format(company))
-shippo.config.api_key = api_keys[company]
-try:
-	manifest = shippo.Manifest.create(
-	    carrier_account = carrier_account[company],
-	    shipment_date = timestamp,
-	    address_from = from_address[company],
-	    async = False,
-	)
-	# with async unspecified the manifest will be QUEUED. if you use async manifest creation
-	# sleep for a minute, then retrieve the manifest and grab the documents from it
-	#manifest_object_id = manifest["object_id"]
-	#print("waiting a minute...")
-	#time.sleep(60)
-	#manifest_object = shippo.Manifest.retrieve(manifest_object_id)
-	#documents = manifest_object["documents"]
-	documents = manifest["documents"]
-	print("We have documents!")
-except Exception as e:
-	documents = ""
-	print("An error occurred creating a manifest via Shippo :(")
-	print(e)
+
+for company in companies:
+	print("Working on {}...".format(company))
+	shippo.config.api_key = api_keys[company]
+	try:
+		manifest = shippo.Manifest.create(
+			carrier_account = carrier_account[company],
+			shipment_date = timestamp,
+			address_from = from_address[company],
+			async = False,
+		)
+		# with async unspecified the manifest will be QUEUED. if you use async manifest creation
+		# sleep for a minute, then retrieve the manifest and grab the documents from it
+		#manifest_object_id = manifest["object_id"]
+		#print("waiting a minute...")
+		#time.sleep(60)
+		#manifest_object = shippo.Manifest.retrieve(manifest_object_id)
+		#documents = manifest_object["documents"]
+		documents = manifest["documents"]
+		print("\tWe have documents!")
+	except Exception as e:
+		documents = ""
+		print("\tAn error occurred creating a manifest via Shippo :(")
+		print("\t", e)
 if documents != "":
-	print("Let's print them.")
+	print("\tLet's print them.")
 	for url in documents:
 		document = requests.get(url, allow_redirects=True)
 		open('/home/pi/ops_tools/temp/manifest.pdf', 'wb').write(document.content)
