@@ -67,18 +67,18 @@ for company in companies:
 
 
 
-mailgun_request_url = 'https://api.mailgun.net/v2/tracking.thepublicrad.io/messages'
-request = requests.post(
-	mailgun_request_url, 
-	auth=(
-		'api', 
-		mailgun_key
-	), 
-	verify=False,
-	data={
-		'from': 'ops@thepublicrad.io',
-		'to': 'spencer@theprepared.org',
-		'subject': "Shipping manifests for {}".format(timestamp),
-		'text': "Today's shipping manifests have been attempted.\n\nThe Prepared's account had the following response:\n\t{}\n\nTPR's account had the following response:\n\t{}\n\n".format(results['theprepared'], results['tpr'])
-	}
-)
+#mailgun_request_url = 'https://api.mailgun.net/v2/tracking.thepublicrad.io/messages'
+#request = requests.post(
+#	mailgun_request_url, 
+#	auth=(
+#		'api', 
+#		mailgun_key
+#	), 
+#	verify=False,
+#	data={
+#		'from': 'ops@thepublicrad.io',
+#		'to': 'spencer@theprepared.org',
+#		'subject': "Shipping manifests for {}".format(timestamp),
+#		'text': "Today's shipping manifests have been attempted.\n\nThe Prepared's account had the following response:\n\t{}\n\nTPR's account had the following response:\n\t{}\n\n".format(results['theprepared'], results['tpr'])
+#	}
+#)
