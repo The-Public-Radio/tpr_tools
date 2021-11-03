@@ -1,6 +1,6 @@
 #!/bin/bash
 # usage:
-# $ program_one_radio.sh <freq> <production>
+# $ program_one_radio.sh <freq>
 
 sudo /home/pi/ops_tools/perso.py foo $1 US 
 
@@ -8,12 +8,3 @@ sudo avrdude -P usb -c avrispmkii -p attiny25 -B 5 -b 9600 -U flash:w:/home/pi/o
 
 #sudo /home/pi/fm_transmitter/fm_transmitter -f $1 /home/pi/ops_tools/data/1KTest_5s.wav
 sudo /home/pi/PiFmRds/src/pi_fm_rds -freq $1 -audio /home/pi/ops_tools/data/Test_Tone2.wav
-
-
-
-if [[ -n "$2" ]] && [[ $2 = "production" ]]; then
-	echo 'Removing parts from inventory...'
-	sudo python /home/pi/ops_tools/inventory_event.py fulfill
-else
-	echo 'NOT IN PRODUCTION. Parts may still be in inventory.'
-fi
